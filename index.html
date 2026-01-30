@@ -2,131 +2,122 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Mis XV Años</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mis XV Años</title>
 
-<!-- FUENTES LUX -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- FUENTE LUX -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
-
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  margin:0;
   font-family:'Montserrat',sans-serif;
-  background:#f4f4f4;
-  color:#222;
-  text-align:center;
+  background:#0e0e0e;
+  color:#fff;
+  overflow-x:hidden;
 }
 
 /* INTRO */
 #intro{
   position:fixed;
   inset:0;
-  background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
-  url("https://images.unsplash.com/photo-1519741497674-611481863552") center/cover no-repeat; /* 👈 CAMBIA IMAGEN */
+  background:linear-gradient(135deg,#000,#1a1a1a);
   display:flex;
+  flex-direction:column;
   justify-content:center;
   align-items:center;
-  z-index:999;
+  z-index:1000;
+  transition:opacity .7s ease;
 }
 #intro h1{
   font-family:'Playfair Display',serif;
-  font-size:48px;
-  color:white;
+  font-size:3rem;
+  margin-bottom:20px;
+  letter-spacing:2px;
 }
 #intro button{
-  margin-top:25px;
-  padding:15px 35px;
+  padding:15px 40px;
   border:none;
-  border-radius:40px;
-  background:white;
-  font-size:16px;
+  background:#c9a14a;
+  color:#000;
+  font-size:1rem;
   cursor:pointer;
-}
-
-/* HERO */
-header{
-  min-height:100vh;
-  background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
-  url("https://images.unsplash.com/photo-1523430410476-0185cb1f6ff9") center/cover no-repeat; /* 👈 CAMBIA IMAGEN */
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:white;
-}
-header h1{
-  font-family:'Playfair Display',serif;
-  font-size:54px;
+  border-radius:30px;
 }
 
 /* SECCIONES */
 section{
-  padding:80px 20px;
+  padding:70px 20px;
   max-width:900px;
   margin:auto;
+  text-align:center;
 }
 h2{
   font-family:'Playfair Display',serif;
-  font-size:34px;
-  margin-bottom:25px;
-}
-.card{
-  background:white;
-  border-radius:22px;
-  padding:40px;
-  box-shadow:0 20px 50px rgba(0,0,0,.08);
+  font-size:2.2rem;
+  margin-bottom:20px;
 }
 
-/* CONTADOR */
+/* HERO */
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:3rem;
+}
+.hero p{margin-top:10px;font-size:1.1rem}
+
+/* CUENTA */
 #contador{
   display:flex;
   justify-content:center;
-  gap:25px;
+  gap:15px;
+  margin-top:30px;
 }
-.tiempo{
-  font-size:28px;
-}
-.tiempo span{
-  display:block;
-  font-size:14px;
-  margin-top:5px;
-}
-
-/* DESPLEGABLE */
-.toggle{
-  cursor:pointer;
-  font-weight:500;
-  margin-top:20px;
-}
-.contenido{
-  max-height:0;
-  overflow:hidden;
-  transition:max-height .6s ease;
+.time{
+  background:#1c1c1c;
+  padding:15px;
+  border-radius:12px;
+  min-width:70px;
 }
 
 /* GALERÍA */
 .galeria{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:15px;
 }
 .galeria img{
   width:100%;
-  border-radius:18px;
+  border-radius:14px;
+}
+
+/* DESPLEGABLES */
+.accordion{
+  background:#1c1c1c;
+  padding:18px;
+  border-radius:15px;
+  cursor:pointer;
+  margin-top:15px;
+}
+.panel{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .4s ease;
+  background:#111;
+  border-radius:0 0 15px 15px;
+  padding:0 15px;
+}
+.panel p{padding:15px 0}
+
+/* MAPA */
+iframe{
+  width:100%;
+  height:300px;
+  border-radius:15px;
+  border:none;
 }
 
 /* AUDIO */
-audio{
-  position:fixed;
-  bottom:15px;
-  right:15px;
-}
-footer{
-  padding:40px;
-  font-size:14px;
-  color:#777;
-}
+audio{display:none}
 </style>
 </head>
 
@@ -134,110 +125,93 @@ footer{
 
 <!-- INTRO -->
 <div id="intro">
-  <div>
-    <h1>Mis XV Años</h1> <!-- 👈 CAMBIA TEXTO -->
-    <p style="color:white">Daphne Guadalupe</p> <!-- 👈 CAMBIA NOMBRE -->
-    <button onclick="entrar()">Entrar</button>
-  </div>
+  <h1>Mis XV Años</h1>
+  <button onclick="entrar()">Entrar</button>
 </div>
 
-<!-- MÚSICA -->
+<!-- AUDIO -->
 <audio id="musica" loop>
-  <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_3fdd6e7b6f.mp3"> <!-- 👈 CAMBIA MP3 -->
+  <!-- 🔴 CAMBIA AQUÍ LA MÚSICA -->
+  <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_3fdd6e7b6f.mp3" type="audio/mpeg">
 </audio>
 
 <!-- HERO -->
-<header>
-  <div>
-    <h1>Mis XV Años</h1>
-    <p>Daphne Guadalupe</p>
-  </div>
-</header>
+<section class="hero">
+  <!-- 🔴 CAMBIA NOMBRE -->
+  <h1>Daphne Guadalupe</h1>
+  <!-- 🔴 CAMBIA FECHA -->
+  <p>15 de Agosto 2026</p>
 
-<!-- CONTADOR -->
-<section>
-  <h2>Faltan</h2>
-  <div class="card">
-    <div id="contador">
-      <div class="tiempo"><div id="dias"></div><span>Días</span></div>
-      <div class="tiempo"><div id="horas"></div><span>Horas</span></div>
-      <div class="tiempo"><div id="min"></div><span>Min</span></div>
-      <div class="tiempo"><div id="seg"></div><span>Seg</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- EVENTO -->
-<section>
-  <h2>Detalles del evento</h2>
-  <div class="card">
-    📅 15 de Agosto 2026 <!-- 👈 CAMBIA FECHA -->
-    <br>⏰ 6:00 PM
-    <br>📍 Salón de Eventos
+  <div id="contador">
+    <div class="time"><span id="dias"></span><br>Días</div>
+    <div class="time"><span id="horas"></span><br>Horas</div>
+    <div class="time"><span id="minutos"></span><br>Min</div>
+    <div class="time"><span id="segundos"></span><br>Seg</div>
   </div>
 </section>
 
 <!-- GALERÍA -->
 <section>
-  <h2>Galería</h2>
+  <h2>Momentos</h2>
   <div class="galeria">
-    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"> <!-- 👈 CAMBIA FOTO -->
+    <!-- 🔴 CAMBIA IMÁGENES -->
     <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
-    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
+    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1">
+    <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb">
   </div>
 </section>
 
 <!-- MESA DE REGALOS -->
 <section>
-  <h2>Mesa de regalos</h2>
-  <div class="card">
-    <div class="toggle" onclick="toggle(this)">
-      💝 Ver información
-    </div>
-    <div class="contenido">
-      <p>Tu presencia es mi mejor regalo.</p>
-      <p>CLABE: 000000000000</p> <!-- 👈 CAMBIA DATOS -->
-      <p>Amazon / Liverpool</p>
-    </div>
+  <h2>Mesa de Regalos</h2>
+  <div class="accordion" onclick="togglePanel(this)">
+    Ver opciones
+  </div>
+  <div class="panel">
+    <!-- 🔴 CAMBIA TEXTO / DATOS -->
+    <p>Transferencia: 1234 5678 9012</p>
+    <p>Liverpool – Evento #456789</p>
   </div>
 </section>
 
-<!-- CONFIRMAR -->
+<!-- UBICACIÓN -->
 <section>
-  <h2>Confirmar asistencia</h2>
-  <div class="card">
-    📲 WhatsApp: 55 1234 5678 <!-- 👈 CAMBIA NÚMERO -->
-  </div>
+  <h2>Ubicación</h2>
+  <!-- 🔴 CAMBIA MAPA -->
+  <iframe 
+    src="https://www.google.com/maps?q=San+Pedro+Pozohuacan&output=embed">
+  </iframe>
 </section>
-
-<footer>
-  Invitación digital LUX ✨
-</footer>
 
 <script>
-// INTRO
+/* INTRO + MÚSICA */
 function entrar(){
-  document.getElementById("intro").style.display="none";
-  document.getElementById("musica").play();
+  const musica=document.getElementById("musica");
+  musica.volume=0.6;
+  musica.play();
+
+  const intro=document.getElementById("intro");
+  intro.style.opacity="0";
+  setTimeout(()=>{intro.style.display="none"},700);
 }
 
-// CONTADOR
-const fechaEvento = new Date("August 15, 2026 18:00:00").getTime(); // 👈 CAMBIA FECHA
-
+/* CUENTA REGRESIVA */
+/* 🔴 CAMBIA FECHA AQUÍ */
+const fechaEvento=new Date("2026-08-15T18:00:00").getTime();
 setInterval(()=>{
-  const ahora = new Date().getTime();
-  const diff = fechaEvento - ahora;
+  const ahora=new Date().getTime();
+  const diff=fechaEvento-ahora;
 
-  document.getElementById("dias").innerHTML = Math.floor(diff / (1000*60*60*24));
-  document.getElementById("horas").innerHTML = Math.floor((diff / (1000*60*60)) % 24);
-  document.getElementById("min").innerHTML = Math.floor((diff / (1000*60)) % 60);
-  document.getElementById("seg").innerHTML = Math.floor((diff / 1000) % 60);
+  document.getElementById("dias").innerHTML=Math.floor(diff/(1000*60*60*24));
+  document.getElementById("horas").innerHTML=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  document.getElementById("minutos").innerHTML=Math.floor((diff%(1000*60*60))/(1000*60));
+  document.getElementById("segundos").innerHTML=Math.floor((diff%(1000*60))/1000);
 },1000);
 
-// DESPLEGABLE
-function toggle(el){
-  const cont = el.nextElementSibling;
-  cont.style.maxHeight = cont.style.maxHeight ? null : cont.scrollHeight + "px";
+/* DESPLEGABLE */
+function togglePanel(el){
+  const panel=el.nextElementSibling;
+  panel.style.maxHeight ? panel.style.maxHeight=null : panel.style.maxHeight=panel.scrollHeight+"px";
 }
 </script>
 
