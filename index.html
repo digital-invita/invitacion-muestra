@@ -148,15 +148,12 @@ audio{display:none}
 
 <!-- ================= AUDIO ================= -->
 <audio id="musica" loop>
-  <!-- ===== CAMBIA AQUÍ: MÚSICA (link .mp3) ===== -->
-   <source src="https://github.com/TU-USUARIO/TU-REPO/raw/main/𝙋𝙖𝙩𝙞𝙚𝙣𝙘𝙚-𝙖𝙣𝙙-𝙋𝙧𝙪𝙙𝙚𝙣𝙘𝙚--𝙇𝙚𝙩𝙧𝙖.mp3" type="audio/mpeg">
+  <source src="https://github.com/digital-invita/invitación-muestra/raw/main/𝙋𝙖𝙩𝙞𝙚𝙣𝙘𝙚-𝙖𝙣𝙙-𝙋𝙧𝙪𝙙𝙚𝙣𝙘𝙚--𝙇𝙚𝙩𝙧𝙖.mp3" type="audio/mpeg">
 </audio>
 
 <!-- ================= HERO ================= -->
 <section class="hero">
-  <!-- ===== CAMBIA AQUÍ: NOMBRE ===== -->
   <h1>Daphne Guadalupe</h1>
-  <!-- ===== CAMBIA AQUÍ: FECHA ===== -->
   <span>15 de Agosto de 2026</span>
 
   <div id="contador">
@@ -170,7 +167,6 @@ audio{display:none}
 <!-- ================= MENSAJE ================= -->
 <section>
   <h2>Te invitamos a celebrar</h2>
-  <!-- ===== CAMBIA AQUÍ: MENSAJE ===== -->
   <p>Con la bendición de Dios y el amor de mi familia,
   te invito a compartir conmigo esta noche tan especial.</p>
 </section>
@@ -179,7 +175,6 @@ audio{display:none}
 <section>
   <h2>Mis Momentos</h2>
   <div class="galeria">
-    <!-- ===== CAMBIA AQUÍ: IMÁGENES ===== -->
     <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
     <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1">
     <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb">
@@ -191,7 +186,6 @@ audio{display:none}
   <h2>Mesa de Regalos</h2>
   <div class="accordion" onclick="togglePanel(this)">Ver detalles</div>
   <div class="panel">
-    <!-- ===== CAMBIA AQUÍ: REGALOS ===== -->
     <p>Transferencia: 1234 5678 9012</p>
     <p>Liverpool – Evento #987654</p>
   </div>
@@ -200,7 +194,6 @@ audio{display:none}
 <!-- ================= UBICACIÓN ================= -->
 <section>
   <h2>Ubicación</h2>
-  <!-- ===== CAMBIA AQUÍ: MAPA ===== -->
   <iframe src="https://www.google.com/maps?q=San+Pedro+Pozohuacan&output=embed"></iframe>
 </section>
 
@@ -209,7 +202,7 @@ audio{display:none}
 function entrar(){
   const musica=document.getElementById("musica");
   musica.volume=0.6;
-  musica.play(); // 🔥 AQUÍ SE DISPARA LA MÚSICA (click humano)
+  musica.play();
 
   const intro=document.getElementById("intro");
   intro.style.opacity="0";
@@ -217,7 +210,6 @@ function entrar(){
 }
 
 /* ================= CUENTA REGRESIVA ================= */
-/* ===== CAMBIA AQUÍ: FECHA Y HORA ===== */
 const fechaEvento=new Date("2026-08-15T18:00:00").getTime();
 
 setInterval(()=>{
