@@ -3,201 +3,223 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mis XV Años</title>
+<title>Invitación XV Años</title>
 
-<!-- FUENTE LUX -->
+<!-- FUENTES LUX -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:'Montserrat',sans-serif;
-  background:#0e0e0e;
+  background:#0b0b0b;
   color:#fff;
   overflow-x:hidden;
 }
 
-/* INTRO */
+/* ================= INTRO ================= */
 #intro{
   position:fixed;
   inset:0;
-  background:linear-gradient(135deg,#000,#1a1a1a);
+  background:radial-gradient(circle at top,#1a1a1a,#000);
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  z-index:1000;
-  transition:opacity .7s ease;
+  text-align:center;
+  z-index:9999;
+  transition:opacity .9s ease;
 }
 #intro h1{
   font-family:'Playfair Display',serif;
-  font-size:3rem;
-  margin-bottom:20px;
-  letter-spacing:2px;
+  font-size:3.2rem;
+  letter-spacing:3px;
+}
+#intro p{
+  margin-top:15px;
+  font-size:1.1rem;
+  opacity:.8;
 }
 #intro button{
-  padding:15px 40px;
+  margin-top:40px;
+  padding:16px 50px;
   border:none;
+  border-radius:40px;
   background:#c9a14a;
   color:#000;
   font-size:1rem;
   cursor:pointer;
-  border-radius:30px;
 }
 
-/* SECCIONES */
+/* ================= SECCIONES ================= */
 section{
-  padding:70px 20px;
-  max-width:900px;
+  max-width:1000px;
   margin:auto;
+  padding:90px 20px;
   text-align:center;
 }
 h2{
   font-family:'Playfair Display',serif;
-  font-size:2.2rem;
-  margin-bottom:20px;
+  font-size:2.4rem;
+  margin-bottom:25px;
 }
 
-/* HERO */
+/* ================= HERO ================= */
 .hero h1{
   font-family:'Playfair Display',serif;
-  font-size:3rem;
+  font-size:3.5rem;
 }
-.hero p{margin-top:10px;font-size:1.1rem}
+.hero span{
+  display:block;
+  margin-top:10px;
+  font-size:1.1rem;
+  opacity:.85;
+}
 
-/* CUENTA */
+/* ================= CUENTA REGRESIVA ================= */
 #contador{
   display:flex;
   justify-content:center;
-  gap:15px;
-  margin-top:30px;
+  gap:18px;
+  margin-top:40px;
 }
 .time{
-  background:#1c1c1c;
-  padding:15px;
-  border-radius:12px;
-  min-width:70px;
+  background:rgba(255,255,255,.05);
+  padding:18px;
+  border-radius:16px;
+  min-width:80px;
+}
+.time strong{
+  font-size:1.6rem;
+  display:block;
 }
 
-/* GALERÍA */
+/* ================= GALERÍA ================= */
 .galeria{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:15px;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
 }
 .galeria img{
   width:100%;
-  border-radius:14px;
+  border-radius:18px;
 }
 
-/* DESPLEGABLES */
+/* ================= ACORDEÓN ================= */
 .accordion{
-  background:#1c1c1c;
-  padding:18px;
-  border-radius:15px;
+  background:rgba(255,255,255,.06);
+  padding:20px;
+  border-radius:18px;
   cursor:pointer;
-  margin-top:15px;
+  font-weight:500;
 }
 .panel{
   max-height:0;
   overflow:hidden;
-  transition:max-height .4s ease;
+  transition:max-height .5s ease;
   background:#111;
-  border-radius:0 0 15px 15px;
-  padding:0 15px;
+  border-radius:0 0 18px 18px;
 }
-.panel p{padding:15px 0}
+.panel p{
+  padding:18px;
+}
 
-/* MAPA */
+/* ================= MAPA ================= */
 iframe{
   width:100%;
-  height:300px;
-  border-radius:15px;
+  height:360px;
   border:none;
+  border-radius:20px;
 }
 
-/* AUDIO */
+/* ================= AUDIO ================= */
 audio{display:none}
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
+<!-- ================= INTRO ================= -->
 <div id="intro">
   <h1>Mis XV Años</h1>
+  <p>Una noche inolvidable</p>
   <button onclick="entrar()">Entrar</button>
 </div>
 
-<!-- AUDIO -->
+<!-- ================= AUDIO ================= -->
 <audio id="musica" loop>
-  <!-- 🔴 CAMBIA AQUÍ LA MÚSICA -->
+  <!-- ===== CAMBIA AQUÍ: MÚSICA (link .mp3) ===== -->
   <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_3fdd6e7b6f.mp3" type="audio/mpeg">
 </audio>
 
-<!-- HERO -->
+<!-- ================= HERO ================= -->
 <section class="hero">
-  <!-- 🔴 CAMBIA NOMBRE -->
+  <!-- ===== CAMBIA AQUÍ: NOMBRE ===== -->
   <h1>Daphne Guadalupe</h1>
-  <!-- 🔴 CAMBIA FECHA -->
-  <p>15 de Agosto 2026</p>
+  <!-- ===== CAMBIA AQUÍ: FECHA ===== -->
+  <span>15 de Agosto de 2026</span>
 
   <div id="contador">
-    <div class="time"><span id="dias"></span><br>Días</div>
-    <div class="time"><span id="horas"></span><br>Horas</div>
-    <div class="time"><span id="minutos"></span><br>Min</div>
-    <div class="time"><span id="segundos"></span><br>Seg</div>
+    <div class="time"><strong id="dias"></strong>Días</div>
+    <div class="time"><strong id="horas"></strong>Horas</div>
+    <div class="time"><strong id="minutos"></strong>Min</div>
+    <div class="time"><strong id="segundos"></strong>Seg</div>
   </div>
 </section>
 
-<!-- GALERÍA -->
+<!-- ================= MENSAJE ================= -->
 <section>
-  <h2>Momentos</h2>
+  <h2>Te invitamos a celebrar</h2>
+  <!-- ===== CAMBIA AQUÍ: MENSAJE ===== -->
+  <p>Con la bendición de Dios y el amor de mi familia,
+  te invito a compartir conmigo esta noche tan especial.</p>
+</section>
+
+<!-- ================= GALERÍA ================= -->
+<section>
+  <h2>Mis Momentos</h2>
   <div class="galeria">
-    <!-- 🔴 CAMBIA IMÁGENES -->
+    <!-- ===== CAMBIA AQUÍ: IMÁGENES ===== -->
     <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
     <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1">
     <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb">
   </div>
 </section>
 
-<!-- MESA DE REGALOS -->
+<!-- ================= MESA DE REGALOS ================= -->
 <section>
   <h2>Mesa de Regalos</h2>
-  <div class="accordion" onclick="togglePanel(this)">
-    Ver opciones
-  </div>
+  <div class="accordion" onclick="togglePanel(this)">Ver detalles</div>
   <div class="panel">
-    <!-- 🔴 CAMBIA TEXTO / DATOS -->
+    <!-- ===== CAMBIA AQUÍ: REGALOS ===== -->
     <p>Transferencia: 1234 5678 9012</p>
-    <p>Liverpool – Evento #456789</p>
+    <p>Liverpool – Evento #987654</p>
   </div>
 </section>
 
-<!-- UBICACIÓN -->
+<!-- ================= UBICACIÓN ================= -->
 <section>
   <h2>Ubicación</h2>
-  <!-- 🔴 CAMBIA MAPA -->
-  <iframe 
-    src="https://www.google.com/maps?q=San+Pedro+Pozohuacan&output=embed">
-  </iframe>
+  <!-- ===== CAMBIA AQUÍ: MAPA ===== -->
+  <iframe src="https://www.google.com/maps?q=San+Pedro+Pozohuacan&output=embed"></iframe>
 </section>
 
 <script>
-/* INTRO + MÚSICA */
+/* ================= INTRO + MÚSICA ================= */
 function entrar(){
   const musica=document.getElementById("musica");
   musica.volume=0.6;
-  musica.play();
+  musica.play(); // 🔥 AQUÍ SE DISPARA LA MÚSICA (click humano)
 
   const intro=document.getElementById("intro");
   intro.style.opacity="0";
-  setTimeout(()=>{intro.style.display="none"},700);
+  setTimeout(()=>{intro.style.display="none"},900);
 }
 
-/* CUENTA REGRESIVA */
-/* 🔴 CAMBIA FECHA AQUÍ */
+/* ================= CUENTA REGRESIVA ================= */
+/* ===== CAMBIA AQUÍ: FECHA Y HORA ===== */
 const fechaEvento=new Date("2026-08-15T18:00:00").getTime();
+
 setInterval(()=>{
   const ahora=new Date().getTime();
   const diff=fechaEvento-ahora;
@@ -208,7 +230,7 @@ setInterval(()=>{
   document.getElementById("segundos").innerHTML=Math.floor((diff%(1000*60))/1000);
 },1000);
 
-/* DESPLEGABLE */
+/* ================= ACORDEÓN ================= */
 function togglePanel(el){
   const panel=el.nextElementSibling;
   panel.style.maxHeight ? panel.style.maxHeight=null : panel.style.maxHeight=panel.scrollHeight+"px";
