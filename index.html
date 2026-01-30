@@ -5,13 +5,11 @@
   <title>Mis XV Años</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fuente elegante -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -21,41 +19,59 @@
       text-align: center;
     }
 
-    header {
-      min-height: 100vh;
-      background: linear-gradient(
-        rgba(0,0,0,0.45),
-        rgba(0,0,0,0.45)
-      ),
-      url("https://images.unsplash.com/photo-1519741497674-611481863552") center/cover no-repeat;
+    /* INTRO */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),
+        url("https://images.unsplash.com/photo-1519741497674-611481863552") center/cover no-repeat;
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 999;
+    }
+
+    #intro .box {
+      color: white;
+      padding: 40px;
+    }
+
+    #intro h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    #intro button {
+      margin-top: 20px;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 30px;
+      background: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* SECCIONES */
+    header {
+      min-height: 100vh;
+      background: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+        url("https://images.unsplash.com/photo-1523430410476-0185cb1f6ff9") center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
       padding: 40px 20px;
     }
 
-    .hero {
-      color: white;
-      max-width: 700px;
-    }
-
-    .hero h1 {
+    header h1 {
       font-family: 'Playfair Display', serif;
       font-size: 52px;
-      margin: 0;
-      font-weight: 600;
-      letter-spacing: 2px;
-    }
-
-    .hero p {
-      margin-top: 15px;
-      font-size: 18px;
-      opacity: 0.9;
     }
 
     section {
       padding: 70px 20px;
-      max-width: 800px;
+      max-width: 900px;
       margin: auto;
     }
 
@@ -65,84 +81,139 @@
       margin-bottom: 25px;
     }
 
-    .info {
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 40px;
-    }
-
-    .tarjeta {
+    .card {
       background: white;
       border-radius: 18px;
-      padding: 35px 25px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+      padding: 35px;
+      box-shadow: 0 15px 40px rgba(0,0,0,.08);
       margin-bottom: 40px;
     }
 
-    .boton {
+    .btn {
       display: inline-block;
-      padding: 15px 36px;
+      margin-top: 15px;
+      padding: 14px 32px;
       background: #111;
       color: white;
       text-decoration: none;
-      border-radius: 40px;
-      font-size: 16px;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
+      border-radius: 30px;
+      transition: .3s;
     }
 
-    .boton:hover {
+    .btn:hover {
       background: #444;
-      transform: translateY(-2px);
+    }
+
+    /* GALERÍA */
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 15px;
+    }
+
+    .galeria img {
+      width: 100%;
+      border-radius: 15px;
     }
 
     footer {
-      padding: 40px 20px;
+      padding: 40px;
       font-size: 14px;
       color: #777;
-      background: #fafafa;
+    }
+
+    audio {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      z-index: 50;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- PORTADA -->
-  <header>
-    <div class="hero">
-      <p>Estás cordialmente invitado a celebrar</p>
-      <h1>Mis XV Años</h1>
-      <p>Daphne Guadalupe</p>
-    </div>
-  </header>
+<!-- INTRO -->
+<div id="intro">
+  <div class="box">
+    <h1>Mis XV Años</h1>
+    <p>Daphne Guadalupe</p>
+    <button onclick="entrar()">Entrar a la invitación</button>
+  </div>
+</div>
 
-  <!-- INVITACIÓN -->
-  <section>
-    <h2>Una noche inolvidable</h2>
+<!-- MÚSICA -->
+<audio id="musica" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_3fdd6e7b6f.mp3" type="audio/mpeg">
+</audio>
 
-    <div class="tarjeta">
-      <p class="info">
-        Con la bendición de Dios y el amor de mi familia,<br>
-        te invito a compartir conmigo este día tan especial.
-      </p>
+<!-- PORTADA -->
+<header>
+  <div>
+    <h1>Mis XV Años</h1>
+    <p>Daphne Guadalupe</p>
+  </div>
+</header>
 
-      <p class="info">
-        📅 <strong>Fecha:</strong> 15 de Agosto de 2026<br>
-        ⏰ <strong>Hora:</strong> 6:00 PM<br>
-        📍 <strong>Lugar:</strong> Salón de Eventos
-      </p>
+<!-- INFO -->
+<section>
+  <h2>Estás invitado</h2>
+  <div class="card">
+    <p>
+      📅 <strong>Fecha:</strong> 15 de Agosto 2026<br>
+      ⏰ <strong>Hora:</strong> 6:00 PM<br>
+      📍 <strong>Lugar:</strong> Salón de Eventos
+    </p>
 
-      <a class="boton" href="https://wa.me/52XXXXXXXXXX" target="_blank">
-        Confirmar asistencia
-      </a>
-    </div>
-  </section>
+    <a class="btn" href="https://maps.google.com" target="_blank">
+      Ver ubicación
+    </a>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    Con cariño 💖<br>
-    Invitación digital
-  </footer>
+<!-- GALERÍA -->
+<section>
+  <h2>Galería</h2>
+  <div class="galeria">
+    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
+    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
+    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
+  </div>
+</section>
+
+<!-- MESA DE REGALOS -->
+<section>
+  <h2>Mesa de regalos</h2>
+  <div class="card">
+    <p>Tu presencia es mi mejor regalo 💖<br>
+    Si deseas obsequiarme algo, puedes hacerlo aquí:</p>
+
+    <a class="btn" href="#" target="_blank">
+      Ver mesa de regalos
+    </a>
+  </div>
+</section>
+
+<!-- CONFIRMAR -->
+<section>
+  <h2>Confirmar asistencia</h2>
+  <div class="card">
+    <a class="btn" href="https://wa.me/52XXXXXXXXXX" target="_blank">
+      Confirmar por WhatsApp
+    </a>
+  </div>
+</section>
+
+<footer>
+  Con cariño 💖 | Invitación digital
+</footer>
+
+<script>
+  function entrar() {
+    document.getElementById('intro').style.display = 'none';
+    document.getElementById('musica').play();
+  }
+</script>
 
 </body>
 </html>
