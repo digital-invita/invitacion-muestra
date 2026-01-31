@@ -3,237 +3,329 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Invitación – Sofía Montes</title>
+<title>Invitación XV Sofía</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#5b2d91; /* fondo morado */
+  --bg:#4a1f73;
+  --bg2:#2b0f45;
   --gold1:#fff2c2;
   --gold2:#d4af37;
   --gold3:#fff7d6;
 }
 
-*{box-sizing:border-box}
-html,body{margin:0; background:var(--bg); color:#fff; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto}
-body.lock{overflow:hidden}
-
-section{padding:80px 20px}
-.apple{max-width:900px; margin:0 auto}
-
-.reveal{opacity:0; transform:translateY(50px); transition:1.2s cubic-bezier(.19,1,.22,1)}
-.reveal.visible{opacity:1; transform:none}
-
-/* OVERLAY ABRIR */
-#overlay{
-  position:fixed; inset:0; z-index:9999;
-  backdrop-filter: blur(14px);
-  background:rgba(40,10,70,.6);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  min-height:100%;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,215,140,.12), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(255,215,140,.10), transparent 45%),
+    linear-gradient(180deg, var(--bg), var(--bg2));
+  background-attachment: fixed;
+  color:#fff;
+  font-family:'Montserrat',sans-serif;
+  overflow-x:hidden;
 }
-#overlay button{
-  padding:14px 28px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.5);
-  background:rgba(255,255,255,.12);
-  color:#fff; font-size:16px; letter-spacing:.12em;
-  cursor:pointer;
+
+/* ===== INTRO BLUR ===== */
+#intro{
+  position:fixed; inset:0;
+  backdrop-filter: blur(16px);
+  background:rgba(45,10,70,.75);
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  z-index:9999;
+  transition:opacity .8s ease;
+}
+#intro h1{
+  font-family:'Playfair Display',serif;
+  letter-spacing:4px;
+  font-size:2.4rem;
   animation:pulse 2s infinite;
 }
-@keyframes pulse{50%{transform:scale(1.06)}}
+#intro button{
+  margin-top:26px;
+  padding:14px 44px;
+  border:none; border-radius:999px;
+  background:linear-gradient(135deg,var(--gold1),var(--gold2));
+  color:#000; font-weight:600;
+  cursor:pointer;
+  animation:glow 2s infinite alternate;
+}
+@keyframes glow{from{box-shadow:0 0 10px var(--gold1)}to{box-shadow:0 0 24px var(--gold2)}}
+@keyframes pulse{50%{transform:scale(1.05)}}
 
-/* HERO 9:16 */
+/* ===== HERO 9:16 FORZADO ===== */
 .hero{
-  position:relative;
-  width:100%;
-  height:100vh;
+  position:relative; width:100%;
   aspect-ratio:9/16;
+  height:100vh;
+  max-height:calc(100vw * 16 / 9);
   overflow:hidden;
+  background:url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+  display:flex; justify-content:center; align-items:flex-end;
 }
-.hero img{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  object-fit:cover; /* forzado */
-  transform:scale(1.1);
+.hero::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.65), transparent 60%);
 }
-.hero .overlay{
-  position:absolute; inset:0;
-  background:linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.45));
-}
-.hero .txt{
-  position:absolute; bottom:12%;
-  width:100%; text-align:center;
-}
+.hero-content{position:relative; padding-bottom:120px; text-align:center; z-index:2}
 
-/* Nombre con trazo dorado */
-.name{
-  font-family:'Great Vibes',cursive;
-  font-size:3.2rem;
-  letter-spacing:.12em;
-  background:linear-gradient(135deg,var(--gold1),var(--gold2),var(--gold3));
+/* ===== NOMBRE DORADO ===== */
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:3rem; letter-spacing:3px;
+  background:linear-gradient(135deg,#fff1b8,var(--gold1),var(--gold2));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 6px 20px rgba(0,0,0,.5));
-  stroke-dasharray:600;
-  stroke-dashoffset:600;
-  animation:draw 3s ease forwards;
+  position:relative; opacity:0;
 }
-@keyframes draw{to{stroke-dashoffset:0}}
+.hero h1::after{
+  content:attr(data-text);
+  position:absolute; inset:0;
+  -webkit-text-fill-color:transparent;
+  -webkit-text-stroke:1px rgba(255,215,130,.85);
+}
+.hero h1.animate{animation:strokeReveal 2.2s ease forwards}
+@keyframes strokeReveal{
+  from{clip-path: polygon(0 0,0 0,0 100%,0 100%);opacity:1}
+  to{clip-path: polygon(0 0,100% 0,100% 100%,0 100%);opacity:1}
+}
+.hero span{display:block;margin-top:10px;opacity:.9}
 
-.date{opacity:.9; margin-top:8px}
+/* ===== SECCIONES CINEMATOGRÁFICAS ===== */
+section{
+  padding:80px 18px; max-width:1100px; margin:auto; text-align:center;
+  opacity:0; transform:translateY(60px);
+  transition:1.2s cubic-bezier(.19,1,.22,1);
+}
+section.show{opacity:1; transform:none}
+h2{font-family:'Playfair Display',serif;margin-bottom:16px}
 
-/* Papás y padrinos */
-.familia{text-align:center}
+/* ===== SEPARADORES DORADOS ===== */
+.sep{
+  width:140px;
+  height:2px;
+  margin:60px auto;
+  background:linear-gradient(90deg, transparent, var(--gold2), transparent);
+  opacity:0;
+  transform:scaleX(.4);
+  transition:1.2s cubic-bezier(.19,1,.22,1);
+}
+.sep.show{
+  opacity:1;
+  transform:scaleX(1);
+}
+
+/* ===== FAMILIA DORADA ===== */
+.familia{padding:80px 20px}
 .gold-title{
-  font-size:2rem; margin-bottom:50px;
-  background:linear-gradient(135deg,var(--gold1),var(--gold2),var(--gold3));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  font-size:2.2rem; margin-bottom:50px; letter-spacing:.08em;
+  background:linear-gradient(135deg,var(--gold3),var(--gold2),var(--gold3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-.gold-sub{letter-spacing:.2em; color:#e6c878}
-.gold-frase{opacity:.85; font-style:italic}
+.familia-grupo{margin-bottom:60px}
+.gold-sub{font-size:1.6rem;margin-bottom:10px;letter-spacing:.15em;color:#e6c878}
+.gold-frase{font-size:.95rem;opacity:.85;margin-bottom:25px;font-style:italic}
 .nombres-dorados{
-  display:flex; gap:18px; justify-content:center; flex-wrap:wrap;
-  background:linear-gradient(135deg,var(--gold1),var(--gold2),var(--gold3));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  font-size:1.3rem;
+  display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;
+  font-size:1.4rem;letter-spacing:.08em;
+  background:linear-gradient(135deg,var(--gold3),var(--gold2),var(--gold3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:500;
 }
+.nombres-dorados .amp{font-size:1.8rem;opacity:.9}
 
-/* Galería columnas */
-.galeria{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-.galeria .big{grid-column:1/3; height:260px}
+/* ===== CUENTA REGRESIVA ===== */
+#contador{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.time{background:rgba(255,255,255,.08);padding:14px 16px;border-radius:16px;min-width:74px}
+.time strong{font-size:1.5rem;display:block}
+
+/* ===== GALERÍA ===== */
+.galeria{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.galeria .wide{grid-column:1 / -1}
 .galeria img{
-  width:100%; height:200px; object-fit:cover;
-  border-radius:16px;
-  cursor:pointer;
-  opacity:0; transform:translateY(40px) scale(.96);
-  transition:1s cubic-bezier(.19,1,.22,1);
+  width:100%; height:100%; object-fit:cover;
+  border-radius:16px; cursor:pointer;
+  opacity:0; transform:translateY(30px) scale(.96);
+  transition:.6s cubic-bezier(.19,1,.22,1);
 }
-.galeria img.visible{opacity:1; transform:none}
+.galeria img.show{opacity:1; transform:none}
+.galeria img:hover{transform:scale(1.02)}
 
-/* Lightbox */
-#lightbox{
-  position:fixed; inset:0; display:none;
-  background:rgba(0,0,0,.85);
-  justify-content:center; align-items:center;
-  z-index:99999; backdrop-filter: blur(6px);
+/* ===== MODAL IMAGEN ===== */
+#imgModal{
+  position:fixed; inset:0; background:rgba(0,0,0,.85);
+  display:none; justify-content:center; align-items:center; z-index:9998;
 }
-#lightbox img{
-  max-width:90%; max-height:90%;
-  border-radius:20px;
-  box-shadow:0 20px 60px rgba(0,0,0,.6);
-  animation:zoomIn .4s ease;
-}
-@keyframes zoomIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+#imgModal img{max-width:90%;max-height:90%;border-radius:16px}
 
-footer{text-align:center; opacity:.6; padding:40px 0}
+/* ===== BOTÓN ===== */
+.btn{
+  display:inline-block;margin-top:12px;padding:12px 22px;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold1),var(--gold2));
+  color:#000;text-decoration:none;font-weight:600
+}
+
+audio{display:none}
+footer{text-align:center;opacity:.6;padding:40px 10px}
 </style>
 </head>
 
-<body class="lock">
+<body>
 
-<!-- AUDIO -->
-<audio id="bgMusic" src="cancio.mp3.mp3" preload="auto"></audio>
-
-<!-- OVERLAY -->
-<div id="overlay">
-  <h2>Abrir invitación</h2>
-  <button id="openBtn">Abrir</button>
+<div id="intro">
+  <h1>Estás invitado</h1>
+  <button onclick="entrar()">Abrir</button>
 </div>
 
-<!-- HERO -->
-<div class="hero">
-  <img src="https://picsum.photos/900/1600?random=1">
-  <div class="overlay"></div>
-  <div class="txt">
-    <div class="name">Sofía Montes</div>
-    <div class="date">15 de Agosto de 2026</div>
+<audio id="musica" loop>
+  <source src="https://github.com/digital-invita/invitacion-muestra/raw/main/cancio.mp3.mp3" type="audio/mpeg">
+</audio>
+
+<section class="hero show">
+  <div class="hero-content">
+    <h1 data-text="Sofía Montes">Sofía Montes</h1>
+    <span>15 de Agosto de 2026</span>
   </div>
-</div>
-
-<section class="apple reveal">
-  <h2>Mi historia…</h2>
-  <p>Aquí va un texto relacionado</p>
-  <img src="https://picsum.photos/900/600?random=2" style="width:100%;border-radius:18px">
 </section>
 
-<section class="apple reveal">
-  <p>Continuamos con la historia</p>
-  <img src="https://picsum.photos/900/600?random=3" style="width:100%;border-radius:18px">
+<div class="sep"></div>
+
+<section>
+  <h2>Mi historia...</h2>
+  <p>Aquí va un texto relacionado...</p>
 </section>
 
-<section class="familia apple reveal">
+<div class="sep"></div>
+
+<section class="familia">
   <h2 class="gold-title">Con amor de mis</h2>
 
-  <h3 class="gold-sub">MIS PAPÁS</h3>
-  <p class="gold-frase">Gracias por ser mi raíz y mi fuerza</p>
-  <div class="nombres-dorados">
-    <span>Nombre de la mamá</span><span>&</span><span>Nombre del papá</span>
+  <div class="familia-grupo">
+    <h3 class="gold-sub">Mis papás</h3>
+    <p class="gold-frase">Gracias por ser mi raíz y mi fuerza cada día ✨</p>
+    <div class="nombres-dorados">
+      <span>Nombre de la mamá</span><span class="amp">&</span><span>Nombre del papá</span>
+    </div>
   </div>
 
-  <br><br>
-
-  <h3 class="gold-sub">MIS PADRINOS</h3>
-  <p class="gold-frase">Por acompañarme en este momento tan especial</p>
-  <div class="nombres-dorados">
-    <span>Nombre madrina</span><span>&</span><span>Nombre padrino</span>
+  <div class="familia-grupo">
+    <h3 class="gold-sub">Mis padrinos</h3>
+    <p class="gold-frase">Por acompañarme en cada paso de este momento tan especial 💛</p>
+    <div class="nombres-dorados">
+      <span>Nombre madrina</span><span class="amp">&</span><span>Nombre padrino</span>
+    </div>
   </div>
 </section>
 
-<section class="apple reveal">
+<div class="sep"></div>
+
+<section>
+  <h2>Mesa de regalos</h2>
+  <p>Liverpool – Evento #123456<br>Transferencia: 1234 5678 9012</p>
+</section>
+
+<div class="sep"></div>
+
+<section>
+  <h2>Faltan...</h2>
+  <div id="contador">
+    <div class="time"><strong id="dias"></strong>Días</div>
+    <div class="time"><strong id="horas"></strong>Horas</div>
+    <div class="time"><strong id="minutos"></strong>Min</div>
+    <div class="time"><strong id="segundos"></strong>Seg</div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<section>
+  <h2>Ceremonia</h2>
+  <p>🕰 18:00 hrs<br>Parroquia Ejemplo</p>
+  <a class="btn" href="https://maps.google.com" target="_blank">Ver ubicación</a>
+
+  <h2 style="margin-top:40px">Recepción</h2>
+  <p>🎉 20:00 hrs<br>Salón Ejemplo</p>
+  <a class="btn" href="https://maps.google.com" target="_blank">Ver ubicación</a>
+
+  <h2 style="margin-top:40px">Código de vestimenta</h2>
+  <p>✨ Divinas y guapos ✨</p>
+</section>
+
+<div class="sep"></div>
+
+<section>
   <h2>Galería</h2>
   <div class="galeria">
-    <img src="https://picsum.photos/600/900?random=4">
-    <img src="https://picsum.photos/600/900?random=5">
-    <img class="big" src="https://picsum.photos/900/500?random=6">
-    <img class="big" src="https://picsum.photos/900/900?random=7">
+    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
+    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1">
+    <img class="wide" src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb">
+    <img class="wide" src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
   </div>
 </section>
 
-<footer>digital invita</footer>
+<div class="sep"></div>
 
-<!-- LIGHTBOX -->
-<div id="lightbox"><img id="lightboxImg"></div>
+<section><h2>¡Estás invitado!</h2></section>
+
+<footer>Digital Invita ✨</footer>
+
+<div id="imgModal" onclick="this.style.display='none'">
+  <img id="modalImg" src="">
+</div>
 
 <script>
-const overlay=document.getElementById("overlay");
-const openBtn=document.getElementById("openBtn");
-const audio=document.getElementById("bgMusic");
+document.body.style.overflow="hidden";
 
-openBtn.onclick=()=>{
-  overlay.style.display="none";
-  document.body.classList.remove("lock");
+function entrar(){
+  document.body.style.overflow="auto";
+  document.querySelector('.hero h1').classList.add('animate');
 
-  audio.currentTime=6;
-  audio.volume=0;
-  audio.play();
+  const musica=document.getElementById("musica");
+  musica.currentTime=6;
+  musica.volume=0;
+  musica.play().catch(()=>{});
   let v=0;
   const fade=setInterval(()=>{
-    v+=0.05; audio.volume=Math.min(v,1);
-    if(v>=1) clearInterval(fade);
+    v+=0.05; musica.volume=Math.min(v,0.6);
+    if(v>=0.6) clearInterval(fade);
   },200);
-};
 
-// reveal antes (threshold bajo)
-const reveals=document.querySelectorAll(".reveal, .galeria img");
-const obs=new IntersectionObserver(entries=>{
+  const intro=document.getElementById("intro");
+  intro.style.opacity="0";
+  setTimeout(()=>intro.remove(),800);
+}
+
+/* ===== REVEAL AL SCROLL (APARECEN ANTES) ===== */
+const observer=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
-    if(e.isIntersecting) e.target.classList.add("visible");
+    if(e.isIntersecting){
+      e.target.classList.add('show');
+    }
   });
-},{threshold:.1});
-reveals.forEach(r=>obs.observe(r));
+},{threshold:.05, rootMargin:"0px 0px -120px 0px"});
 
-// lightbox
-const lb=document.getElementById("lightbox");
-const lbImg=document.getElementById("lightboxImg");
+document.querySelectorAll("section, .sep, .galeria img").forEach(el=>observer.observe(el));
+
+/* ===== GALERÍA CLICK ===== */
 document.querySelectorAll(".galeria img").forEach(img=>{
-  img.onclick=()=>{lbImg.src=img.src; lb.style.display="flex";}
+  img.addEventListener("click",()=>{
+    document.getElementById("modalImg").src=img.src;
+    document.getElementById("imgModal").style.display="flex";
+  });
 });
-lb.onclick=()=>lb.style.display="none";
+
+/* ===== CUENTA REGRESIVA ===== */
+const fechaEvento=new Date("2026-08-15T18:00:00").getTime();
+setInterval(()=>{
+  const diff=fechaEvento-new Date().getTime();
+  document.getElementById("dias").innerHTML=Math.max(0,Math.floor(diff/(1000*60*60*24)));
+  document.getElementById("horas").innerHTML=Math.max(0,Math.floor((diff%(1000*60*60*24))/(1000*60*60)));
+  document.getElementById("minutos").innerHTML=Math.max(0,Math.floor((diff%(1000*60*60))/(1000*60)));
+  document.getElementById("segundos").innerHTML=Math.max(0,Math.floor((diff%(1000*60))/1000));
+},1000);
 </script>
 
 </body>
