@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Invitación XV Sofía</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg-main:#3b1b5a; /* 💜 COLOR FONDO GENERAL */
+  --bg-main:#3b1b5a; /* 💜 Fondo general */
+  --gold-1:#f7d27c;
+  --gold-2:#c9a14a;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -24,51 +26,44 @@ body{
 #intro{
   position:fixed;
   inset:0;
-  backdrop-filter: blur(14px);
-  background:rgba(30,0,50,.75);
+  backdrop-filter: blur(16px);
+  background:rgba(45,10,70,.75);
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  text-align:center;
   z-index:9999;
 }
 #intro h1{
   font-family:'Playfair Display',serif;
   letter-spacing:4px;
-  font-size:2.6rem;
-  margin-bottom:12px;
+  font-size:2.4rem;
   animation:pulse 2s infinite;
 }
 #intro button{
-  margin-top:30px;
-  padding:14px 48px;
+  margin-top:26px;
+  padding:14px 44px;
   border:none;
-  border-radius:40px;
-  background:linear-gradient(135deg,#f7d27c,#c9a14a);
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
   color:#000;
   font-weight:600;
   cursor:pointer;
   animation:glow 2s infinite alternate;
 }
 
-@keyframes glow{
-  from{box-shadow:0 0 10px #f7d27c}
-  to{box-shadow:0 0 25px #c9a14a}
-}
-@keyframes pulse{
-  50%{transform:scale(1.05)}
-}
+@keyframes glow{from{box-shadow:0 0 10px var(--gold-1)}to{box-shadow:0 0 24px var(--gold-2)}}
+@keyframes pulse{50%{transform:scale(1.05)}}
 
-/* ===== HERO 16:9 ===== */
+/* ===== HERO 9:16 FORZADO ===== */
 .hero{
   position:relative;
   width:100%;
   height:100vh;
-  max-height:calc(100vw * 9 / 16);
-  aspect-ratio:16/9;
+  aspect-ratio:9/16;
+  max-height:calc(100vw * 16 / 9); /* fuerza 9:16 real */
   overflow:hidden;
-  background:url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+  background:url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
   display:flex;
   justify-content:center;
   align-items:flex-end;
@@ -81,78 +76,94 @@ body{
 }
 .hero-content{
   position:relative;
-  padding-bottom:70px;
+  padding-bottom:90px; /* texto más abajo */
   text-align:center;
   z-index:2;
 }
 
-/* ===== TEXTO DORADO TRAZO ===== */
+/* ===== TEXTO DORADO CON TRAZO ===== */
 .hero h1{
   font-family:'Playfair Display',serif;
-  font-size:3.2rem;
+  font-size:3rem;
   letter-spacing:3px;
-  background:linear-gradient(135deg,#f7d27c,#fff1b8,#c9a14a);
+  background:linear-gradient(135deg,#fff1b8,var(--gold-1),var(--gold-2));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   position:relative;
-  animation:strokeReveal 2.4s ease forwards;
   opacity:0;
+  animation:strokeReveal 2.2s ease forwards;
 }
 .hero h1::after{
   content:attr(data-text);
   position:absolute;
   inset:0;
   -webkit-text-fill-color:transparent;
-  -webkit-text-stroke:1px rgba(255,215,130,.8);
+  -webkit-text-stroke:1px rgba(255,215,130,.85);
 }
-
 @keyframes strokeReveal{
-  from{
-    clip-path: polygon(0 0,0 0,0 100%,0 100%);
-    opacity:1;
-  }
-  to{
-    clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
-    opacity:1;
-  }
+  from{clip-path: polygon(0 0,0 0,0 100%,0 100%);opacity:1}
+  to{clip-path: polygon(0 0,100% 0,100% 100%,0 100%);opacity:1}
 }
-
-.hero span{
-  display:block;
-  margin-top:10px;
-  font-size:1.1rem;
-  opacity:.85;
-}
+.hero span{display:block;margin-top:10px;opacity:.9}
 
 /* ===== SECCIONES ===== */
-section{padding:90px 20px;max-width:1100px;margin:auto;text-align:center}
+section{padding:80px 18px;max-width:1100px;margin:auto;text-align:center}
+h2{font-family:'Playfair Display',serif;margin-bottom:16px}
 
-/* ===== GALERÍA ===== */
+/* ===== CARDS PAPÁS / PADRINOS ===== */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{
+  background:rgba(255,255,255,.08);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  animation:pulse 3s infinite;
+}
+
+/* ===== CUENTA REGRESIVA ===== */
+#contador{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.time{
+  background:rgba(255,255,255,.08);
+  padding:14px 16px;
+  border-radius:16px;
+  min-width:74px;
+}
+.time strong{font-size:1.5rem;display:block}
+
+/* ===== GALERÍA (COLUMNAS CON ORDEN PEDIDO) ===== */
 .galeria{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:14px;
+  gap:12px;
 }
 .galeria .wide{grid-column:1 / -1}
 .galeria img{
   width:100%;
   height:100%;
   object-fit:cover;
-  border-radius:18px;
-  animation:floatIn 1s ease forwards;
+  border-radius:16px;
   opacity:0;
+  transform:translateY(30px) scale(.96);
+  animation:floatIn 1s ease forwards;
 }
 .galeria img:nth-child(1){animation-delay:.2s}
 .galeria img:nth-child(2){animation-delay:.4s}
 .galeria img:nth-child(3){animation-delay:.6s}
 .galeria img:nth-child(4){animation-delay:.8s}
+@keyframes floatIn{to{opacity:1;transform:none}}
 
-@keyframes floatIn{
-  from{transform:translateY(40px) scale(.95);opacity:0}
-  to{transform:translateY(0) scale(1);opacity:1}
+/* ===== BOTONES UBICACIÓN ===== */
+.btn{
+  display:inline-block;
+  margin-top:12px;
+  padding:12px 22px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
+  color:#000;
+  text-decoration:none;
+  font-weight:600;
 }
 
-/* ===== AUDIO ===== */
 audio{display:none}
 </style>
 </head>
@@ -160,7 +171,7 @@ audio{display:none}
 <body>
 
 <div id="intro">
-  <h1>Invitación XV Años</h1>
+  <h1>Estás invitado</h1>
   <button onclick="entrar()">Abrir</button>
 </div>
 
@@ -168,6 +179,7 @@ audio{display:none}
   <source src="https://github.com/digital-invita/invitacion-muestra/raw/main/cancio.mp3.mp3" type="audio/mpeg">
 </audio>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
     <h1 data-text="Sofía Montes">Sofía Montes</h1>
@@ -175,6 +187,60 @@ audio{display:none}
   </div>
 </section>
 
+<!-- HISTORIA -->
+<section>
+  <h2>Mi historia...</h2>
+  <p>Aquí va un texto relacionado con su historia, momentos, sueños y agradecimientos.</p>
+  <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" style="width:100%;border-radius:16px;margin-top:16px">
+  <p style="margin-top:16px">Continuamos con la historia...</p>
+  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1" style="width:100%;border-radius:16px;margin-top:16px">
+</section>
+
+<!-- PAPÁS -->
+<section>
+  <h2>Mi mamá</h2>
+  <div class="cards">
+    <div class="card">“Gracias por ser mi luz.”<br><strong>Nombre de la mamá</strong></div>
+    <div class="card">“Por guiar mis pasos.”<br><strong>Nombre del papá</strong></div>
+  </div>
+</section>
+
+<!-- PADRINOS -->
+<section>
+  <h2>Mis padrinos</h2>
+  <div class="cards">
+    <div class="card">“Gracias por acompañarme.”<br><strong>Nombre madrina</strong></div>
+    <div class="card">“Siempre en mi corazón.”<br><strong>Nombre padrino</strong></div>
+  </div>
+</section>
+
+<!-- CUENTA REGRESIVA -->
+<section>
+  <h2>Faltan...</h2>
+  <div id="contador">
+    <div class="time"><strong id="dias"></strong>Días</div>
+    <div class="time"><strong id="horas"></strong>Horas</div>
+    <div class="time"><strong id="minutos"></strong>Min</div>
+    <div class="time"><strong id="segundos"></strong>Seg</div>
+  </div>
+  <p style="margin-top:14px">Me gustaría que seas parte de este momento 💜</p>
+</section>
+
+<!-- FECHA Y UBICACIÓN -->
+<section>
+  <h2>Ceremonia</h2>
+  <p>🕰 18:00 hrs<br>Parroquia Ejemplo<br>Dirección de la parroquia</p>
+  <a class="btn" href="https://maps.google.com" target="_blank">Ver ubicación</a>
+
+  <h2 style="margin-top:40px">Recepción</h2>
+  <p>🎉 20:00 hrs<br>Salón Ejemplo<br>Dirección del salón</p>
+  <a class="btn" href="https://maps.google.com" target="_blank">Ver ubicación</a>
+
+  <h2 style="margin-top:40px">Código de vestimenta</h2>
+  <p>✨ Divinas y guapos ✨</p>
+</section>
+
+<!-- GALERÍA -->
 <section>
   <h2>Galería</h2>
   <div class="galeria">
@@ -185,20 +251,28 @@ audio{display:none}
   </div>
 </section>
 
+<section>
+  <h2>¡Estás invitado!</h2>
+</section>
+
 <script>
+/* ===== BLOQUEO SCROLL ===== */
+document.body.style.overflow="hidden";
+
+/* ===== INTRO + MÚSICA (desde seg 6 con fundido) ===== */
 function entrar(){
   document.body.style.overflow="auto";
 
   const musica=document.getElementById("musica");
   musica.currentTime=6;
   musica.volume=0;
-  musica.play();
+  musica.play().catch(()=>{});
 
-  let vol=0;
+  let v=0;
   const fade=setInterval(()=>{
-    vol+=0.05;
-    musica.volume=Math.min(vol,0.6);
-    if(vol>=0.6) clearInterval(fade);
+    v+=0.05;
+    musica.volume=Math.min(v,0.6);
+    if(v>=0.6) clearInterval(fade);
   },200);
 
   const intro=document.getElementById("intro");
@@ -206,7 +280,15 @@ function entrar(){
   setTimeout(()=>intro.remove(),800);
 }
 
-document.body.style.overflow="hidden";
+/* ===== CUENTA REGRESIVA ===== */
+const fechaEvento=new Date("2026-08-15T18:00:00").getTime();
+setInterval(()=>{
+  const diff=fechaEvento-new Date().getTime();
+  document.getElementById("dias").innerHTML=Math.max(0,Math.floor(diff/(1000*60*60*24)));
+  document.getElementById("horas").innerHTML=Math.max(0,Math.floor((diff%(1000*60*60*24))/(1000*60*60)));
+  document.getElementById("minutos").innerHTML=Math.max(0,Math.floor((diff%(1000*60*60))/(1000*60)));
+  document.getElementById("segundos").innerHTML=Math.max(0,Math.floor((diff%(1000*60))/1000));
+},1000);
 </script>
 
 </body>
