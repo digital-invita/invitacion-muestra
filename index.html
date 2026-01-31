@@ -9,7 +9,7 @@
 
 <style>
 :root{
-  --bg-main:#3b1b5a; /* 💜 Fondo general */
+  --bg-main:#3b1b5a;
   --gold-1:#f7d27c;
   --gold-2:#c9a14a;
 }
@@ -24,15 +24,13 @@ body{
 
 /* ===== INTRO BLUR ===== */
 #intro{
-  position:fixed;
-  inset:0;
+  position:fixed; inset:0;
   backdrop-filter: blur(16px);
   background:rgba(45,10,70,.75);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
   z-index:9999;
+  transition:opacity .8s ease;
 }
 #intro h1{
   font-family:'Playfair Display',serif;
@@ -43,63 +41,46 @@ body{
 #intro button{
   margin-top:26px;
   padding:14px 44px;
-  border:none;
-  border-radius:999px;
+  border:none; border-radius:999px;
   background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
-  color:#000;
-  font-weight:600;
+  color:#000; font-weight:600;
   cursor:pointer;
   animation:glow 2s infinite alternate;
 }
-
 @keyframes glow{from{box-shadow:0 0 10px var(--gold-1)}to{box-shadow:0 0 24px var(--gold-2)}}
 @keyframes pulse{50%{transform:scale(1.05)}}
 
-/* ===== HERO 9:16 FORZADO ===== */
+/* ===== HERO 9:16 ===== */
 .hero{
-  position:relative;
-  width:100%;
-  height:100vh;
-  aspect-ratio:9/16;
-  max-height:calc(100vw * 16 / 9); /* fuerza 9:16 real */
+  position:relative; width:100%;
+  height:100vh; aspect-ratio:9/16;
+  max-height:calc(100vw * 16 / 9);
   overflow:hidden;
   background:url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-  display:flex;
-  justify-content:center;
-  align-items:flex-end;
+  display:flex; justify-content:center; align-items:flex-end;
 }
 .hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
+  content:""; position:absolute; inset:0;
   background:linear-gradient(to top, rgba(0,0,0,.65), transparent 60%);
 }
-.hero-content{
-  position:relative;
-  padding-bottom:90px; /* texto más abajo */
-  text-align:center;
-  z-index:2;
-}
+.hero-content{position:relative; padding-bottom:90px; text-align:center; z-index:2}
 
-/* ===== TEXTO DORADO CON TRAZO ===== */
+/* ===== NOMBRE DORADO (SE ANIMA DESPUÉS DE ABRIR) ===== */
 .hero h1{
   font-family:'Playfair Display',serif;
-  font-size:3rem;
-  letter-spacing:3px;
+  font-size:3rem; letter-spacing:3px;
   background:linear-gradient(135deg,#fff1b8,var(--gold-1),var(--gold-2));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  position:relative;
-  opacity:0;
-  animation:strokeReveal 2.2s ease forwards;
+  position:relative; opacity:0;
 }
 .hero h1::after{
   content:attr(data-text);
-  position:absolute;
-  inset:0;
+  position:absolute; inset:0;
   -webkit-text-fill-color:transparent;
   -webkit-text-stroke:1px rgba(255,215,130,.85);
 }
+.hero h1.animate{animation:strokeReveal 2.2s ease forwards}
 @keyframes strokeReveal{
   from{clip-path: polygon(0 0,0 0,0 100%,0 100%);opacity:1}
   to{clip-path: polygon(0 0,100% 0,100% 100%,0 100%);opacity:1}
@@ -107,42 +88,34 @@ body{
 .hero span{display:block;margin-top:10px;opacity:.9}
 
 /* ===== SECCIONES ===== */
-section{padding:80px 18px;max-width:1100px;margin:auto;text-align:center}
+section{
+  padding:80px 18px; max-width:1100px; margin:auto; text-align:center;
+  opacity:0; transform:translateY(60px);
+  transition:1s ease;
+}
+section.show{opacity:1; transform:none}
 h2{font-family:'Playfair Display',serif;margin-bottom:16px}
 
-/* ===== CARDS PAPÁS / PADRINOS ===== */
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-.card{
-  background:rgba(255,255,255,.08);
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-  animation:pulse 3s infinite;
+/* ===== PAPÁS / PADRINOS DORADO ===== */
+.gold-names p{opacity:.85;margin-bottom:10px}
+.gold-names h3{
+  font-family:'Playfair Display',serif; font-size:1.6rem;
+  background:linear-gradient(135deg,#fff1b8,var(--gold-1),var(--gold-2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
+.gold-names span{display:block;margin:6px 0;opacity:.7}
 
 /* ===== CUENTA REGRESIVA ===== */
 #contador{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-.time{
-  background:rgba(255,255,255,.08);
-  padding:14px 16px;
-  border-radius:16px;
-  min-width:74px;
-}
+.time{background:rgba(255,255,255,.08);padding:14px 16px;border-radius:16px;min-width:74px}
 .time strong{font-size:1.5rem;display:block}
 
-/* ===== GALERÍA (COLUMNAS CON ORDEN PEDIDO) ===== */
-.galeria{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
+/* ===== GALERÍA ===== */
+.galeria{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .galeria .wide{grid-column:1 / -1}
 .galeria img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:16px;
-  opacity:0;
+  width:100%; height:100%; object-fit:cover;
+  border-radius:16px; opacity:0;
   transform:translateY(30px) scale(.96);
   animation:floatIn 1s ease forwards;
 }
@@ -152,19 +125,26 @@ h2{font-family:'Playfair Display',serif;margin-bottom:16px}
 .galeria img:nth-child(4){animation-delay:.8s}
 @keyframes floatIn{to{opacity:1;transform:none}}
 
-/* ===== BOTONES UBICACIÓN ===== */
+/* ===== BOTÓN ===== */
 .btn{
-  display:inline-block;
-  margin-top:12px;
-  padding:12px 22px;
-  border-radius:999px;
+  display:inline-block;margin-top:12px;padding:12px 22px;border-radius:999px;
   background:linear-gradient(135deg,var(--gold-1),var(--gold-2));
-  color:#000;
-  text-decoration:none;
-  font-weight:600;
+  color:#000;text-decoration:none;font-weight:600
 }
 
+/* ===== BRILLOS ===== */
+.sparkles::before,.sparkles::after{
+  content:""; position:fixed; inset:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,215,130,.15), transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(255,215,130,.12), transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(255,215,130,.1), transparent 50%);
+  animation:sparkleMove 12s linear infinite;
+}
+@keyframes sparkleMove{50%{transform:translateY(-20px)}}
+
 audio{display:none}
+footer{text-align:center;opacity:.6;padding:40px 10px}
 </style>
 </head>
 
@@ -175,11 +155,12 @@ audio{display:none}
   <button onclick="entrar()">Abrir</button>
 </div>
 
+<div class="sparkles"></div>
+
 <audio id="musica" loop>
   <source src="https://github.com/digital-invita/invitacion-muestra/raw/main/cancio.mp3.mp3" type="audio/mpeg">
 </audio>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
     <h1 data-text="Sofía Montes">Sofía Montes</h1>
@@ -187,34 +168,32 @@ audio{display:none}
   </div>
 </section>
 
-<!-- HISTORIA -->
 <section>
   <h2>Mi historia...</h2>
-  <p>Aquí va un texto relacionado con su historia, momentos, sueños y agradecimientos.</p>
-  <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" style="width:100%;border-radius:16px;margin-top:16px">
-  <p style="margin-top:16px">Continuamos con la historia...</p>
-  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1" style="width:100%;border-radius:16px;margin-top:16px">
+  <p>Aquí va un texto relacionado...</p>
 </section>
 
-<!-- PAPÁS -->
 <section>
-  <h2>Mi mamá</h2>
-  <div class="cards">
-    <div class="card">“Gracias por ser mi luz.”<br><strong>Nombre de la mamá</strong></div>
-    <div class="card">“Por guiar mis pasos.”<br><strong>Nombre del papá</strong></div>
+  <h2>Mis papás</h2>
+  <div class="gold-names">
+    <p>“Gracias por enseñarme a volar.”</p>
+    <h3>Nombre de la mamá</h3><span>&</span><h3>Nombre del papá</h3>
   </div>
 </section>
 
-<!-- PADRINOS -->
 <section>
   <h2>Mis padrinos</h2>
-  <div class="cards">
-    <div class="card">“Gracias por acompañarme.”<br><strong>Nombre madrina</strong></div>
-    <div class="card">“Siempre en mi corazón.”<br><strong>Nombre padrino</strong></div>
+  <div class="gold-names">
+    <p>“Gracias por acompañarme.”</p>
+    <h3>Nombre madrina</h3><span>&</span><h3>Nombre padrino</h3>
   </div>
 </section>
 
-<!-- CUENTA REGRESIVA -->
+<section>
+  <h2>Mesa de regalos</h2>
+  <p>Liverpool – Evento #123456<br>Transferencia: 1234 5678 9012</p>
+</section>
+
 <section>
   <h2>Faltan...</h2>
   <div id="contador">
@@ -223,24 +202,21 @@ audio{display:none}
     <div class="time"><strong id="minutos"></strong>Min</div>
     <div class="time"><strong id="segundos"></strong>Seg</div>
   </div>
-  <p style="margin-top:14px">Me gustaría que seas parte de este momento 💜</p>
 </section>
 
-<!-- FECHA Y UBICACIÓN -->
 <section>
   <h2>Ceremonia</h2>
-  <p>🕰 18:00 hrs<br>Parroquia Ejemplo<br>Dirección de la parroquia</p>
+  <p>🕰 18:00 hrs<br>Parroquia Ejemplo</p>
   <a class="btn" href="https://maps.google.com" target="_blank">Ver ubicación</a>
 
   <h2 style="margin-top:40px">Recepción</h2>
-  <p>🎉 20:00 hrs<br>Salón Ejemplo<br>Dirección del salón</p>
+  <p>🎉 20:00 hrs<br>Salón Ejemplo</p>
   <a class="btn" href="https://maps.google.com" target="_blank">Ver ubicación</a>
 
   <h2 style="margin-top:40px">Código de vestimenta</h2>
   <p>✨ Divinas y guapos ✨</p>
 </section>
 
-<!-- GALERÍA -->
 <section>
   <h2>Galería</h2>
   <div class="galeria">
@@ -251,27 +227,24 @@ audio{display:none}
   </div>
 </section>
 
-<section>
-  <h2>¡Estás invitado!</h2>
-</section>
+<section><h2>¡Estás invitado!</h2></section>
+
+<footer>Digital Invita ✨</footer>
 
 <script>
-/* ===== BLOQUEO SCROLL ===== */
 document.body.style.overflow="hidden";
 
-/* ===== INTRO + MÚSICA (desde seg 6 con fundido) ===== */
 function entrar(){
   document.body.style.overflow="auto";
+  document.querySelector('.hero h1').classList.add('animate');
 
   const musica=document.getElementById("musica");
   musica.currentTime=6;
   musica.volume=0;
   musica.play().catch(()=>{});
-
   let v=0;
   const fade=setInterval(()=>{
-    v+=0.05;
-    musica.volume=Math.min(v,0.6);
+    v+=0.05; musica.volume=Math.min(v,0.6);
     if(v>=0.6) clearInterval(fade);
   },200);
 
@@ -279,6 +252,12 @@ function entrar(){
   intro.style.opacity="0";
   setTimeout(()=>intro.remove(),800);
 }
+
+/* ===== REVEAL AL SCROLL ===== */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+},{threshold:.2});
+document.querySelectorAll("section").forEach(s=>observer.observe(s));
 
 /* ===== CUENTA REGRESIVA ===== */
 const fechaEvento=new Date("2026-08-15T18:00:00").getTime();
