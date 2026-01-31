@@ -10,9 +10,8 @@
 
 <style>
 :root{
-  /* ==== PERSONALIZACION === */
-  --fondo-invitacion: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1950&q=80'); /* cambia por tu fondo */
-  --color-principal: #c9a14a; /* color dorado */
+  --fondo-invitacion: #6a0dad; /* color morado de fondo */
+  --color-principal: #c9a14a; /* dorado */
   --color-texto: #fff;
 }
 
@@ -21,8 +20,62 @@
 body{
   font-family:'Montserrat',sans-serif;
   color:var(--color-texto);
+  background: var(--fondo-invitacion);
   overflow-x:hidden;
-  background:#000;
+}
+
+/* ================= INTRO ANIMADO ================= */
+#intro{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  z-index:9999;
+  transition:opacity 1s ease;
+}
+#intro h1{
+  font-family:'Playfair Display',serif;
+  font-size:3rem;
+  letter-spacing:3px;
+  margin-bottom:15px;
+  animation: slideIn 1.2s ease forwards;
+  opacity:0;
+}
+#intro p{
+  font-size:1.2rem;
+  margin-bottom:30px;
+  opacity:0;
+  animation: fadeIn 1.5s ease forwards 0.5s;
+}
+#intro button{
+  padding:16px 50px;
+  border:none;
+  border-radius:50px;
+  background:var(--color-principal);
+  color:#000;
+  font-size:1.1rem;
+  cursor:pointer;
+  transform:scale(0);
+  animation: pop 1s ease forwards 1s;
+}
+
+/* ANIMACIONES */
+@keyframes slideIn {
+  0% {opacity:0; transform:translateY(-50px);}
+  100% {opacity:1; transform:translateY(0);}
+}
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@keyframes pop {
+  0% {transform:scale(0);}
+  70% {transform:scale(1.2);}
+  100% {transform:scale(1);}
 }
 
 /* ================= HERO ================= */
@@ -35,26 +88,14 @@ body{
   justify-content:center;
   align-items:center;
   text-align:center;
-  background-image: var(--fondo-invitacion);
-  background-size: cover;
-  background-position: center;
-}
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.4); /* sombra para que contraste la tipografía */
 }
 .hero h1{
-  position:relative;
   font-family:'Playfair Display',serif;
   font-size:3rem;
   letter-spacing:3px;
-  margin-bottom:10px;
 }
 .hero span{
-  position:relative;
-  font-size:1.2rem;
+  font-size:1.3rem;
   opacity:.9;
 }
 
@@ -79,15 +120,17 @@ section p{
   margin-bottom:20px;
 }
 
-/* ================= FOTOS CON DEGRADADO ================= */
+/* ================= FOTOS CON DEGRADADO SUAVE ================= */
 .foto-texto{
   position:relative;
   width:100%;
   margin:40px 0;
+  overflow:hidden;
+  border-radius:20px;
 }
 .foto-texto img{
   width:100%;
-  border-radius:20px;
+  display:block;
 }
 .foto-texto::after{
   content:"";
@@ -96,22 +139,42 @@ section p{
   left:0;
   width:100%;
   height:50%;
-  border-radius:0 0 20px 20px;
-  background:linear-gradient(to top,rgba(0,0,0,0.6),transparent);
+  background:linear-gradient(to top, rgba(0,0,0,0), rgba(0,0,0,0.5));
 }
 
-/* ================= INFORMACION DE PADRES Y PADRINOS ================= */
+/* ================= SECCION PADRES Y PADRINOS ================= */
 .persona{
   margin:30px 0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
 }
 .persona h3{
   font-family:'Playfair Display',serif;
-  color:var(--color-principal);
   font-size:1.4rem;
+  color:var(--color-principal);
 }
 .persona p{
   font-size:1rem;
   opacity:.9;
+}
+.persona .grafica{
+  width:150px;
+  height:150px;
+  background:var(--color-principal);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2rem;
+  color:#000;
+  margin-top:10px;
+  animation: bounce 1s infinite alternate;
+}
+@keyframes bounce {
+  0%{transform:translateY(0);}
+  100%{transform:translateY(-15px);}
 }
 
 /* ================= CUENTA REGRESIVA ================= */
@@ -138,6 +201,7 @@ section p{
   align-items:center;
   justify-content:center;
   gap:15px;
+  flex-wrap:wrap;
   margin:20px 0;
 }
 .detalle span{
@@ -152,20 +216,21 @@ section p{
 /* ================= GALERIA CREATIVA ================= */
 .galeria{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
+  grid-auto-rows:150px;
   gap:15px;
   margin-top:30px;
 }
 .galeria div{
   position:relative;
-  padding-top:100%;
-  border-radius:15px;
   overflow:hidden;
+  border-radius:15px;
   background:var(--color-principal);
-  transition: transform .3s;
+  transition: transform .4s, box-shadow .4s;
 }
 .galeria div:hover{
-  transform:scale(1.05);
+  transform:scale(1.1) rotate(-2deg);
+  box-shadow:0 10px 20px rgba(0,0,0,0.4);
 }
 .galeria div img{
   position:absolute;
@@ -193,16 +258,28 @@ section p{
 </head>
 <body>
 
+<!-- ================= INTRO ANIMADO ================= -->
+<div id="intro">
+  <h1>¡Por abrir la invitación!</h1>
+  <p>Haz clic en entrar para descubrir la sorpresa</p>
+  <button onclick="entrar()">Entrar</button>
+</div>
+
+<!-- ================= AUDIO ================= -->
+<audio id="musica" loop>
+  <source src="https://github.com/digital-invita/invitacion-muestra/raw/main/cancio.mp3.mp3" type="audio/mpeg">
+</audio>
+
 <!-- ================= HERO ================= -->
 <section class="hero">
-  <h1>Daphne Guadalupe</h1>
+  <h1>Sofía Montes</h1>
   <span>15 de Agosto de 2026</span>
 </section>
 
 <!-- ================= MI HISTORIA ================= -->
 <section>
   <h2>Mi Historia</h2>
-  <p>Aquí va un texto relacionado con la historia de Daphne...</p>
+  <p>Aquí va un texto relacionado con la historia de Sofía...</p>
   <div class="foto-texto">
     <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
   </div>
@@ -216,14 +293,16 @@ section p{
 <section>
   <h2>Mi Mamá</h2>
   <div class="persona">
-    <p>Frase bonita sobre mamá</p>
-    <h3>Nombre de la mamá & Nombre del papá</h3>
+    <p>"La bendición más grande"</p>
+    <h3>Sofía & Papá</h3>
+    <div class="grafica">👩‍👧</div>
   </div>
 
   <h2>Mis Padrinos</h2>
   <div class="persona">
-    <p>Frase bonita sobre padrinos</p>
-    <h3>Nombre madrina & Nombre padrino</h3>
+    <p>"Siempre presentes"</p>
+    <h3>Madrina & Padrino</h3>
+    <div class="grafica">🎉</div>
   </div>
 
   <div class="foto-texto">
@@ -294,9 +373,19 @@ section p{
 </section>
 
 <script>
+/* ================= INTRO + MÚSICA ================= */
+function entrar(){
+  const musica=document.getElementById("musica");
+  musica.volume=0.6;
+  musica.play();
+
+  const intro=document.getElementById("intro");
+  intro.style.opacity="0";
+  setTimeout(()=>{intro.style.display="none"},1000);
+}
+
 /* ================= CUENTA REGRESIVA ================= */
 const fechaEvento=new Date("2026-08-15T18:00:00").getTime();
-
 setInterval(()=>{
   const ahora=new Date().getTime();
   const diff=fechaEvento-ahora;
