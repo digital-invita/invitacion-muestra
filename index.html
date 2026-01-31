@@ -74,19 +74,23 @@ body.no-scroll{
   position:relative;
   text-align:center;
   color:#fff;
-  padding:120px 20px;
+  width:100%;
+  aspect-ratio:16/9; /* 16:9 */
   background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1950&q=80') no-repeat center center;
   background-size: cover;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end; /* Texto más abajo */
 }
 .hero::before{
   content:"";
   position:absolute;
   inset:0;
-  background: rgba(0,0,0,0.4); /* overlay para resaltar texto */
+  background: rgba(0,0,0,0.4);
 }
 .hero div{
-  position:relative; /* sobre el overlay */
-  display:inline-block;
+  position:relative;
+  margin-bottom:50px; /* baja el texto */
   padding:40px;
   border-radius:20px;
   background: rgba(0,0,0,0.3);
@@ -193,11 +197,11 @@ section p{
   height:40px;
 }
 
-/* ================= GALERIA COLUMNAS ================= */
+/* ================= GALERIA COLUMNAS PERSONALIZADA ================= */
 .galeria{
   display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows:200px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 200px;
   gap:10px;
   margin-top:30px;
 }
@@ -216,6 +220,18 @@ section p{
   width:100%;
   height:100%;
   object-fit:cover;
+}
+
+/* Ajuste para filas personalizadas */
+.galeria .horizontal{
+  grid-column: span 2;
+  height:200px;
+}
+
+/* Última vertical ancho completo */
+.galeria .fullwidth{
+  grid-column: span 2;
+  height:300px;
 }
 
 /* ================= BOTONES ================= */
@@ -311,14 +327,14 @@ section p{
   </div>
 </section>
 
-<!-- ================= GALERIA COLUMNAS ================= -->
+<!-- ================= GALERIA COLUMNAS PERSONALIZADA ================= -->
 <section>
   <h2>Galería de Fotos</h2>
   <div class="galeria">
     <div><img src="https://images.unsplash.com/photo-1"></div>
     <div><img src="https://images.unsplash.com/photo-2"></div>
-    <div><img src="https://images.unsplash.com/photo-3"></div>
-    <div><img src="https://images.unsplash.com/photo-4"></div>
+    <div class="horizontal"><img src="https://images.unsplash.com/photo-3"></div>
+    <div class="fullwidth"><img src="https://images.unsplash.com/photo-4"></div>
   </div>
 </section>
 
@@ -335,7 +351,7 @@ function abrirInvitacion(){
   intro.style.opacity="0";
   setTimeout(()=>{intro.style.display="none"},1000);
 
-  // Reproducir musica desde el segundo 6 con fade
+  // Musica desde segundo 6 con fade
   const musica=document.getElementById("musica");
   musica.currentTime = 6;
   musica.volume = 0;
