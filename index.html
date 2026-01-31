@@ -50,11 +50,12 @@ body{
 @keyframes glow{from{box-shadow:0 0 10px var(--gold-1)}to{box-shadow:0 0 24px var(--gold-2)}}
 @keyframes pulse{50%{transform:scale(1.05)}}
 
-/* ===== HERO 9:16 ===== */
+/* ===== HERO 9:16 FORZADO REAL ===== */
 .hero{
-  position:relative; width:100%;
-  height:100vh; aspect-ratio:9/16;
-  max-height:calc(100vw * 16 / 9);
+  position:relative;
+  width:100%;
+  aspect-ratio:9/16;
+  max-height:100vh;
   overflow:hidden;
   background:url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
   display:flex; justify-content:center; align-items:flex-end;
@@ -65,7 +66,7 @@ body{
 }
 .hero-content{position:relative; padding-bottom:90px; text-align:center; z-index:2}
 
-/* ===== NOMBRE DORADO (SE ANIMA DESPUÉS DE ABRIR) ===== */
+/* ===== NOMBRE DORADO ===== */
 .hero h1{
   font-family:'Playfair Display',serif;
   font-size:3rem; letter-spacing:3px;
@@ -87,16 +88,17 @@ body{
 }
 .hero span{display:block;margin-top:10px;opacity:.9}
 
-/* ===== SECCIONES ===== */
+/* ===== SECCIONES CINEMATOGRÁFICAS ===== */
 section{
   padding:80px 18px; max-width:1100px; margin:auto; text-align:center;
-  opacity:0; transform:translateY(60px);
-  transition:1s ease;
+  opacity:0;
+  transform: translateY(80px) scale(.96);
+  transition:1.2s cubic-bezier(.19,1,.22,1);
 }
 section.show{opacity:1; transform:none}
 h2{font-family:'Playfair Display',serif;margin-bottom:16px}
 
-/* ===== PAPÁS / PADRINOS DORADO ===== */
+/* ===== PAPÁS / PADRINOS ===== */
 .gold-names p{opacity:.85;margin-bottom:10px}
 .gold-names h3{
   font-family:'Playfair Display',serif; font-size:1.6rem;
@@ -115,15 +117,12 @@ h2{font-family:'Playfair Display',serif;margin-bottom:16px}
 .galeria .wide{grid-column:1 / -1}
 .galeria img{
   width:100%; height:100%; object-fit:cover;
-  border-radius:16px; opacity:0;
-  transform:translateY(30px) scale(.96);
-  animation:floatIn 1s ease forwards;
+  border-radius:16px;
+  opacity:0;
+  transform:translateY(40px) scale(.96);
+  transition:1s cubic-bezier(.19,1,.22,1);
 }
-.galeria img:nth-child(1){animation-delay:.2s}
-.galeria img:nth-child(2){animation-delay:.4s}
-.galeria img:nth-child(3){animation-delay:.6s}
-.galeria img:nth-child(4){animation-delay:.8s}
-@keyframes floatIn{to{opacity:1;transform:none}}
+.galeria img.show-img{opacity:1; transform:none}
 
 /* ===== BOTÓN ===== */
 .btn{
@@ -255,9 +254,20 @@ function entrar(){
 
 /* ===== REVEAL AL SCROLL ===== */
 const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
-},{threshold:.2});
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('show');
+  });
+},{threshold:.25});
 document.querySelectorAll("section").forEach(s=>observer.observe(s));
+
+/* ===== GALERÍA ANIMADA AL SCROLL ===== */
+const galImgs=document.querySelectorAll('.galeria img');
+const galObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('show-img');
+  });
+},{threshold:.3});
+galImgs.forEach(i=>galObs.observe(i));
 
 /* ===== CUENTA REGRESIVA ===== */
 const fechaEvento=new Date("2026-08-15T18:00:00").getTime();
