@@ -5,14 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Invitación XV Años</title>
 
-<!-- FUENTES -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --fondo-invitacion: #6a0dad; /* color morado de fondo */
-  --color-principal: #c9a14a; /* dorado */
-  --color-texto: #fff;
+  --fondo-invitacion:#6a0dad;
+  --color-principal:#c9a14a;
+  --color-texto:#fff;
 }
 
 /* RESET */
@@ -20,37 +19,55 @@
 body{
   font-family:'Montserrat',sans-serif;
   color:var(--color-texto);
-  background: var(--fondo-invitacion);
+  background:var(--fondo-invitacion);
   overflow-x:hidden;
 }
 
-/* ================= INTRO ANIMADO ================= */
+/* ================= INTRO / PORTADA ================= */
 #intro{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.6);
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
+  background:#000;
   z-index:9999;
-  transition:opacity 1s ease;
+  overflow:hidden;
 }
+
+#intro img{
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0.7;
+  animation: zoom 8s ease-in-out infinite alternate;
+}
+
+@keyframes zoom{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+  100%{transform:scale(1);}
+}
+
 #intro h1{
+  position:relative;
   font-family:'Playfair Display',serif;
   font-size:3rem;
   letter-spacing:3px;
+  color:#fff;
   margin-bottom:15px;
-  animation: slideIn 1.2s ease forwards;
-  opacity:0;
+  animation: floatText 2s ease-in-out infinite alternate;
 }
-#intro p{
-  font-size:1.2rem;
-  margin-bottom:30px;
-  opacity:0;
-  animation: fadeIn 1.5s ease forwards 0.5s;
+
+@keyframes floatText{
+  0%{transform:translateY(0);}
+  100%{transform:translateY(-10px);}
 }
+
 #intro button{
   padding:16px 50px;
   border:none;
@@ -59,34 +76,19 @@ body{
   color:#000;
   font-size:1.1rem;
   cursor:pointer;
-  transform:scale(0);
-  animation: pop 1s ease forwards 1s;
+  animation: pulse 2s ease-in-out infinite;
 }
 
-/* ANIMACIONES */
-@keyframes slideIn {
-  0% {opacity:0; transform:translateY(-50px);}
-  100% {opacity:1; transform:translateY(0);}
-}
-@keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-}
-@keyframes pop {
-  0% {transform:scale(0);}
-  70% {transform:scale(1.2);}
-  100% {transform:scale(1);}
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+  100%{transform:scale(1);}
 }
 
 /* ================= HERO ================= */
 .hero{
   position:relative;
-  height:100vh;
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+  padding:60px 20px;
   text-align:center;
 }
 .hero h1{
@@ -120,29 +122,7 @@ section p{
   margin-bottom:20px;
 }
 
-/* ================= FOTOS CON DEGRADADO SUAVE ================= */
-.foto-texto{
-  position:relative;
-  width:100%;
-  margin:40px 0;
-  overflow:hidden;
-  border-radius:20px;
-}
-.foto-texto img{
-  width:100%;
-  display:block;
-}
-.foto-texto::after{
-  content:"";
-  position:absolute;
-  bottom:0;
-  left:0;
-  width:100%;
-  height:50%;
-  background:linear-gradient(to top, rgba(0,0,0,0), rgba(0,0,0,0.5));
-}
-
-/* ================= SECCION PADRES Y PADRINOS ================= */
+/* ================= PADRES Y PADRINOS ================= */
 .persona{
   margin:30px 0;
   display:flex;
@@ -160,8 +140,8 @@ section p{
   opacity:.9;
 }
 .persona .grafica{
-  width:150px;
-  height:150px;
+  width:120px;
+  height:120px;
   background:var(--color-principal);
   border-radius:50%;
   display:flex;
@@ -172,7 +152,7 @@ section p{
   margin-top:10px;
   animation: bounce 1s infinite alternate;
 }
-@keyframes bounce {
+@keyframes bounce{
   0%{transform:translateY(0);}
   100%{transform:translateY(-15px);}
 }
@@ -195,7 +175,7 @@ section p{
   display:block;
 }
 
-/* ================= ICONOS Y DETALLES ================= */
+/* ================= DETALLES ================= */
 .detalle{
   display:flex;
   align-items:center;
@@ -213,14 +193,15 @@ section p{
   height:40px;
 }
 
-/* ================= GALERIA CREATIVA ================= */
+/* ================= GALERIA MOSAICO ================= */
 .galeria{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
-  grid-auto-rows:150px;
-  gap:15px;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows: repeat(3,200px);
+  gap:10px;
   margin-top:30px;
 }
+
 .galeria div{
   position:relative;
   overflow:hidden;
@@ -229,45 +210,36 @@ section p{
   transition: transform .4s, box-shadow .4s;
 }
 .galeria div:hover{
-  transform:scale(1.1) rotate(-2deg);
+  transform:scale(1.05);
   box-shadow:0 10px 20px rgba(0,0,0,0.4);
 }
 .galeria div img{
   position:absolute;
-  top:0;
-  left:0;
+  top:0; left:0;
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-/* ================= BOTONES ================= */
-.boton{
-  padding:12px 30px;
-  background:var(--color-principal);
-  color:#000;
-  border:none;
-  border-radius:30px;
-  cursor:pointer;
-  font-weight:600;
-  text-decoration:none;
-  display:inline-block;
-  margin-top:15px;
-}
+/* Posicionando mosaico según tu pedido */
+.g1{grid-column:1; grid-row:1 / 3;} /* vertical */
+.g2{grid-column:2; grid-row:1 / 3;} /* vertical */
+.g3{grid-column:3; grid-row:1; }   /* horizontal 1 fila */
+.g4{grid-column:3; grid-row:2 /4;} /* vertical */
 </style>
 </head>
 <body>
 
-<!-- ================= INTRO ANIMADO ================= -->
+<!-- ================= INTRO / PORTADA ================= -->
 <div id="intro">
-  <h1>¡Por abrir la invitación!</h1>
-  <p>Haz clic en entrar para descubrir la sorpresa</p>
+  <img src="https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1950&q=80" alt="Portada">
+  <h1>Abrir invitación</h1>
   <button onclick="entrar()">Entrar</button>
 </div>
 
 <!-- ================= AUDIO ================= -->
 <audio id="musica" loop>
-  <source src="https://github.com/digital-invita/invitacion-muestra/raw/main/cancio.mp3.mp3" type="audio/mpeg">
+  <source src="https://github.com/digital-invita/invitacion-muestra/raw/main/cancio.mp3" type="audio/mpeg">
 </audio>
 
 <!-- ================= HERO ================= -->
@@ -279,17 +251,13 @@ section p{
 <!-- ================= MI HISTORIA ================= -->
 <section>
   <h2>Mi Historia</h2>
-  <p>Aquí va un texto relacionado con la historia de Sofía...</p>
-  <div class="foto-texto">
-    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
-  </div>
-  <p>Continuamos con la historia...</p>
-  <div class="foto-texto">
-    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1">
-  </div>
+  <p>Aquí va un texto de historia...</p>
+  <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e" style="width:100%;border-radius:20px;margin:20px 0;">
+  <p>Continuamos...</p>
+  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1" style="width:100%;border-radius:20px;margin:20px 0;">
 </section>
 
-<!-- ================= FAMILIA ================= -->
+<!-- ================= PADRES Y PADRINOS ================= -->
 <section>
   <h2>Mi Mamá</h2>
   <div class="persona">
@@ -303,10 +271,6 @@ section p{
     <p>"Siempre presentes"</p>
     <h3>Madrina & Padrino</h3>
     <div class="grafica">🎉</div>
-  </div>
-
-  <div class="foto-texto">
-    <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb">
   </div>
 </section>
 
@@ -322,47 +286,33 @@ section p{
   <p>Me gustaría que seas parte de este momento especial</p>
 </section>
 
-<!-- ================= DETALLES DEL EVENTO ================= -->
+<!-- ================= DETALLES ================= -->
 <section>
   <h2>Fecha y Lugar</h2>
-
   <div class="detalle">
     <img src="https://img.icons8.com/ios-filled/50/000000/marker.png"/>
-    <span>
-      <strong>Ceremonia:</strong> 18:00<br>
-      Nombre de la parroquia<br>
-      Dirección de la parroquia
-    </span>
+    <span><strong>Ceremonia:</strong> 18:00<br>Parroquia<br>Dirección</span>
     <a class="boton" href="https://maps.google.com" target="_blank">Ver en Maps</a>
   </div>
-
   <div class="detalle">
     <img src="https://img.icons8.com/ios-filled/50/000000/party.png"/>
-    <span>
-      <strong>Recepción:</strong> 20:00<br>
-      Nombre del salón<br>
-      Dirección del salón
-    </span>
+    <span><strong>Recepción:</strong> 20:00<br>Salón<br>Dirección</span>
     <a class="boton" href="https://maps.google.com" target="_blank">Ver en Maps</a>
   </div>
-
   <div class="detalle">
     <img src="https://img.icons8.com/ios-filled/50/000000/dress-code.png"/>
-    <span>
-      <strong>Vestimenta:</strong> Divinas y guapos
-    </span>
+    <span><strong>Vestimenta:</strong> Divinas y guapos</span>
   </div>
 </section>
 
-<!-- ================= GALERIA CREATIVA ================= -->
+<!-- ================= GALERIA MOSAICO ================= -->
 <section>
   <h2>Galería de Fotos</h2>
   <div class="galeria">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
+    <div class="g1"><img src="https://images.unsplash.com/photo-1"></div>
+    <div class="g2"><img src="https://images.unsplash.com/photo-2"></div>
+    <div class="g3"><img src="https://images.unsplash.com/photo-3"></div>
+    <div class="g4"><img src="https://images.unsplash.com/photo-4"></div>
   </div>
 </section>
 
@@ -373,15 +323,23 @@ section p{
 </section>
 
 <script>
-/* ================= INTRO + MÚSICA ================= */
+/* ================= INTRO + AUDIO ================= */
 function entrar(){
-  const musica=document.getElementById("musica");
-  musica.volume=0.6;
-  musica.play();
-
   const intro=document.getElementById("intro");
   intro.style.opacity="0";
   setTimeout(()=>{intro.style.display="none"},1000);
+
+  const musica=document.getElementById("musica");
+  setTimeout(()=>{
+    musica.volume=0;
+    musica.play();
+    let vol=0;
+    let fadeIn=setInterval(()=>{
+      vol += 0.02;
+      if(vol>=0.6){vol=0.6; clearInterval(fadeIn);}
+      musica.volume = vol;
+    },100);
+  },6000); // inicia despues de 6s con fade
 }
 
 /* ================= CUENTA REGRESIVA ================= */
@@ -389,7 +347,6 @@ const fechaEvento=new Date("2026-08-15T18:00:00").getTime();
 setInterval(()=>{
   const ahora=new Date().getTime();
   const diff=fechaEvento-ahora;
-
   document.getElementById("dias").innerHTML=Math.floor(diff/(1000*60*60*24));
   document.getElementById("horas").innerHTML=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
   document.getElementById("minutos").innerHTML=Math.floor((diff%(1000*60*60))/(1000*60));
