@@ -409,3 +409,93 @@ document.querySelectorAll('img').forEach(img => {
   img.addEventListener('click', () => window.open(img.src, '_blank'));
 });
 </script>
+<!-- =========================
+  OPTIMIZACIÓN MOBILE-FIRST
+========================= -->
+<style>
+/* Ajustes solo para celular */
+@media (max-width: 768px) {
+
+  body {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .hero {
+    height: 100svh; /* mejor para móviles modernos */
+  }
+
+  .hero-content {
+    bottom: 8%;
+    padding: 0 16px;
+  }
+
+  .mis15 {
+    font-size: 1.1rem;
+    letter-spacing: 1.5px;
+  }
+
+  .nombre {
+    font-size: 2.2rem;
+  }
+
+  .section {
+    padding: 28px 18px 22px; /* menos aire */
+  }
+
+  .section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+  }
+
+  .section p {
+    font-size: .95rem;
+  }
+
+  .sep {
+    width: 80px;
+    margin: 18px auto;
+  }
+
+  .photo {
+    margin: 10px 0;
+    border-radius: 14px;
+  }
+
+  .gallery {
+    gap: 8px;
+  }
+
+  .gallery img {
+    border-radius: 12px;
+  }
+
+  .btn {
+    padding: 12px 20px;
+    font-size: .95rem;
+  }
+
+  #overlay h2 {
+    font-size: 1.4rem;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  #openBtn {
+    padding: 14px 26px;
+    font-size: 1rem;
+  }
+
+  #countdown {
+    font-size: 1.15rem;
+  }
+}
+
+/* Mejora de rendimiento en móviles */
+.section,
+.hero img,
+.gallery img {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+</style>
