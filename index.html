@@ -6,7 +6,7 @@
 
 <title>Invitación XV Sofía</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -16,6 +16,9 @@
   --text-light: #f4f1f7;
 }
 
+/* =========================
+  BASE MOBILE FIRST
+========================= */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -24,27 +27,27 @@ body {
   background-attachment: fixed;
   color: var(--text-light);
   overflow: hidden;
-  font-size: 20px;
+  font-size: 20px; /* ⬆️ texto grande real para móvil */
   line-height: 1.8;
 }
 
 /* =========================
-  PARTÍCULAS DE FONDO
+  PARTÍCULAS DE FONDO (SUTILES)
 ========================= */
-.particles {
+body::before {
+  content: "";
   position: fixed;
   inset: 0;
-  z-index: 0;
   pointer-events: none;
-  background-image:
-    radial-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
-    radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
-  background-size: 60px 60px, 120px 120px;
-  animation: moveParticles 40s linear infinite;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,.06), transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(255,255,255,.05), transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(255,255,255,.04), transparent 50%);
+  animation: floatBg 16s linear infinite;
+  z-index: 0;
 }
-@keyframes moveParticles {
-  from { background-position: 0 0, 0 0; }
-  to { background-position: 300px 600px, 600px 300px; }
+@keyframes floatBg {
+  50% { transform: translateY(-20px); }
 }
 
 /* =========================
@@ -54,7 +57,7 @@ body {
   position: fixed;
   inset: 0;
   backdrop-filter: blur(16px);
-  background: rgba(0,0,0,0.45);
+  background: rgba(0,0,0,0.55);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -63,10 +66,10 @@ body {
 }
 #overlay h2 {
   font-size: 1.6rem;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   text-align: center;
-  font-weight: 500;
-  max-width: 260px;
+  padding: 0 20px;
+  max-width: 320px;
 }
 #openBtn {
   padding: 12px 26px;
@@ -77,7 +80,6 @@ body {
   background: var(--gold);
   color: #2b1b0f;
   font-weight: 600;
-  box-shadow: 0 10px 25px rgba(212,175,55,.45);
 }
 
 /* =========================
@@ -89,7 +91,6 @@ body {
   height: 100vh;
   aspect-ratio: 9/16;
   overflow: hidden;
-  z-index: 1;
 }
 .hero img {
   width: 100%;
@@ -98,21 +99,20 @@ body {
 }
 .hero-content {
   position: absolute;
-  bottom: 18%; /* 🔥 subido un poco */
+  bottom: 18%; /* ⬆️ subido un poco */
   width: 100%;
   text-align: center;
   padding: 0 20px;
 }
 .mis15 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
-  letter-spacing: 3px;
+  font-size: 1.9rem;
+  letter-spacing: 2px;
   margin-bottom: 6px;
 }
 .nombre {
-  font-family: 'Great Vibes', cursive;
-  font-size: 3.4rem;
-  font-weight: 400;
+  font-family: 'Pacifico', cursive;
+  font-size: 3.6rem;
   background: var(--gold);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -122,22 +122,21 @@ body {
   SECCIONES
 ========================= */
 .section {
-  padding: 36px 22px 26px;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(40px) scale(.98);
-  transition: all 1s ease;
   position: relative;
   z-index: 1;
+  padding: 34px 22px 26px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 1s ease;
 }
 .section.show {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
 }
 .section h2 {
-  font-size: 1.9rem;
+  font-size: 2rem;
   margin-bottom: 10px;
-  font-weight: 500;
 }
 .section p {
   font-size: 1.2rem;
@@ -145,7 +144,7 @@ body {
 
 .sep {
   height: 2px;
-  width: 120px;
+  width: 110px;
   margin: 18px auto;
   background: var(--gold);
   border-radius: 2px;
@@ -154,16 +153,10 @@ body {
 /* =========================
   FOTOS
 ========================= */
-.photo {
+.photo img,
+.gallery img {
   width: 100%;
-  border-radius: 18px;
-  overflow: hidden;
-  margin: 14px 0;
-}
-.photo img {
-  width: 100%;
-  display: block;
-  transition: transform .4s ease;
+  border-radius: 16px;
   cursor: pointer;
 }
 
@@ -175,14 +168,7 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
-.gallery .big {
-  grid-column: span 2;
-}
-.gallery img {
-  width: 100%;
-  border-radius: 16px;
-  cursor: pointer;
-}
+.gallery .big { grid-column: span 2; }
 
 /* =========================
   BOTONES
@@ -190,55 +176,36 @@ body {
 .btn {
   display: inline-block;
   margin-top: 12px;
-  padding: 14px 28px;
+  padding: 16px 30px;
   border-radius: 999px;
   background: var(--gold);
   color: #2b1b0f;
   text-decoration: none;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 /* =========================
-  FOOTER PEQUEÑO
+  FOOTER UTILIDADES
 ========================= */
 .footer-util {
-  font-size: .75rem;
-  opacity: .65;
-  margin-top: 10px;
+  font-size: .9rem;
+  opacity: .7;
 }
-
-/* =========================
-  MAPA
-========================= */
-.map {
-  width: 100%;
-  height: 220px;
-  border-radius: 16px;
-  overflow: hidden;
-  margin: 12px 0;
-}
-
-/* =========================
-  AUDIO
-========================= */
-#audio { display:none; }
 </style>
 </head>
 
 <body>
 
-<div class="particles"></div>
-
 <div id="overlay">
-  <h2>Descubre una invitación creada para ti</h2>
-  <button id="openBtn">Ver invitación</button>
+  <h2>Estás a punto de descubrir una noche inolvidable</h2>
+  <button id="openBtn">Abrir invitación</button>
 </div>
 
 <audio id="audio" src="cancio.mp3.mp3"></audio>
 
 <section class="hero">
-  <img src="https://placehold.co/900x1600" alt="Foto principal">
+  <img src="https://placehold.co/900x1600">
   <div class="hero-content">
     <div class="mis15">Mis 15 años</div>
     <div class="nombre">Sofía Montes</div>
@@ -249,68 +216,36 @@ body {
 
 <section class="section">
   <h2>Mi historia</h2>
-  <p>
-    Hoy celebro no solo mis 15 años, sino cada sonrisa, cada aprendizaje
-    y cada sueño que me ha traído hasta aquí. Gracias por acompañarme en
-    este capítulo tan especial de mi vida.
-  </p>
-  <div class="photo">
-    <img src="https://placehold.co/800x600">
-  </div>
-  <p>
-    Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones.
-  </p>
+  <p>Hoy celebro no solo mis 15 años, sino cada sonrisa y cada sueño que me ha traído hasta aquí.</p>
+  <div class="photo"><img src="https://placehold.co/800x600"></div>
+  <p>Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones.</p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Mis papás</h2>
-  <p>Gracias por ser mi raíz y mi fuerza cada día</p>
-  <p style="font-family:'Great Vibes',cursive;font-size:1.9rem;">
-    María González & Carlos Montes
-  </p>
-</section>
-
-<div class="sep"></div>
-
-<section class="section">
-  <h2>Mis padrinos</h2>
-  <p>Por acompañarme en cada paso de este momento tan especial</p>
-  <p style="font-family:'Great Vibes',cursive;font-size:1.9rem;">
-    Laura Pérez & José Hernández
-  </p>
-</section>
-
-<div class="sep"></div>
-
-<section class="section">
-  <h2>Mesa de regalos</h2>
-  <p>Liverpool – Evento #123456</p>
-  <p>Transferencia: <span style="text-decoration:none;color:inherit;">1234 5678 9012</span></p>
-</section>
-
-<div class="sep"></div>
-
-<section class="section">
-  <h2>Ceremonia</h2>
+  <h2>📍 Ceremonia</h2>
   <p>18:00 hrs</p>
   <p>Parroquia Ejemplo</p>
-  <div class="map">
-    <iframe src="https://maps.google.com/maps?q=parroquia%20ejemplo&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" frameborder="0"></iframe>
-  </div>
+
+  <!-- MAPA (CAMBIA LA UBICACIÓN AQUÍ) -->
+  <iframe 
+    src="https://www.google.com/maps?q=Parroquia%20Ejemplo&output=embed"
+    width="100%" 
+    height="220" 
+    style="border:0;border-radius:14px;" 
+    loading="lazy">
+  </iframe>
+
   <a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
 </section>
 
 <div class="sep"></div>
 
-<section class="section">
+<section class="section footer-util">
   <p>Invitación creada con amor</p>
   <strong>Digital Invita</strong>
-  <div class="footer-util">
-    ¿No cuentas con invitación aún?  
-    <a href="#" style="color:#fff;text-decoration:underline;">Solicita la tuya</a>
-  </div>
+  <p>¿No cuentas con invitación aún? <a href="#" style="color:#fff;text-decoration:underline;">Consigue la tuya aquí</a></p>
 </section>
 
 <script>
@@ -332,14 +267,10 @@ btn.addEventListener('click', () => {
   }, 200);
 });
 
-const sections = document.querySelectorAll('.section');
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('show');
-  });
-},{ threshold: 0.1 });
-
-sections.forEach(sec => observer.observe(sec));
+  entries.forEach(e => e.isIntersecting && e.target.classList.add('show'));
+},{ threshold: .1 });
+document.querySelectorAll('.section').forEach(s => observer.observe(s));
 </script>
 
 </body>
