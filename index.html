@@ -8,13 +8,10 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
 
-<!-- =========================
-  CONFIGURACIÓN RÁPIDA
-========================= -->
 <style>
 :root {
-  --bg-color: #4b1d6b; /* Fondo morado general (puedes cambiar color) */
-  --bg-image: none; /* Ejemplo: url('https://tusitio.com/fondo.jpg') */
+  --bg-color: #4b1d6b;
+  --bg-image: none;
   --gold: linear-gradient(135deg, #d4af37, #fff1a8, #c9a43c);
   --text-light: #f4f1f7;
 }
@@ -26,14 +23,12 @@ body {
   background-size: cover;
   background-attachment: fixed;
   color: var(--text-light);
-  overflow: hidden; /* bloqueado hasta abrir */
-  font-size: 18px; /* 🔥 BASE DE TEXTO MÁS GRANDE PARA CELULAR */
+  overflow: hidden;
+  font-size: 19px;
   line-height: 1.7;
 }
 
-/* =========================
-  OVERLAY ABRIR INVITACIÓN
-========================= */
+/* OVERLAY */
 #overlay {
   position: fixed;
   inset: 0;
@@ -47,16 +42,16 @@ body {
   animation: pulse 2s infinite;
 }
 #overlay h2 {
-  font-size: 2.1rem; /* ⬆️ */
-  margin-bottom: 16px;
+  font-size: 2.4rem;
+  margin-bottom: 20px;
   text-align: center;
-  padding: 0 16px;
+  padding: 0 20px;
 }
 #openBtn {
-  padding: 16px 34px; /* ⬆️ */
+  padding: 18px 38px;
   border-radius: 999px;
   border: none;
-  font-size: 1.15rem; /* ⬆️ */
+  font-size: 1.2rem;
   cursor: pointer;
   background: var(--gold);
   color: #2b1b0f;
@@ -68,9 +63,7 @@ body {
 @keyframes pulse { 0%{opacity:.9} 100%{opacity:1} }
 @keyframes glow { from{box-shadow:0 0 10px #d4af37} to{box-shadow:0 0 25px #fff1a8} }
 
-/* =========================
-  HERO PRINCIPAL (9:16)
-========================= */
+/* HERO */
 .hero {
   position: relative;
   width: 100%;
@@ -81,24 +74,24 @@ body {
 .hero img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* fuerza 9:16 aunque haga zoom */
+  object-fit: cover;
 }
 .hero-content {
   position: absolute;
-  bottom: 12%;
+  bottom: 10%;
   width: 100%;
   text-align: center;
   padding: 0 20px;
 }
 .mis15 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.6rem; /* ⬆️ */
+  font-size: 2rem;
   letter-spacing: 2px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .nombre {
   font-family: 'Pacifico', cursive;
-  font-size: 3.4rem; /* ⬆️ PROTAGONISTA */
+  font-size: 3.8rem;
   background: var(--gold);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -106,15 +99,13 @@ body {
 }
 
 @keyframes drawText {
-  from { letter-spacing: 10px; opacity: 0; }
+  from { letter-spacing: 12px; opacity: 0; }
   to { letter-spacing: 2px; opacity: 1; }
 }
 
-/* =========================
-  SECCIONES
-========================= */
+/* SECCIONES */
 .section {
-  padding: 36px 22px 26px; /* un poquito más compacto */
+  padding: 34px 22px 22px;
   text-align: center;
   opacity: 0;
   transform: translateY(40px) scale(.98);
@@ -125,29 +116,27 @@ body {
   transform: translateY(0) scale(1);
 }
 .section h2 {
-  font-size: 1.7rem; /* ⬆️ */
-  margin-bottom: 10px;
+  font-size: 2rem;
+  margin-bottom: 12px;
 }
 .section p {
-  font-size: 1.1rem; /* ⬆️ */
+  font-size: 1.25rem;
 }
 
 .sep {
   height: 2px;
   width: 120px;
-  margin: 20px auto;
+  margin: 18px auto;
   background: var(--gold);
   border-radius: 2px;
 }
 
-/* =========================
-  FOTOS
-========================= */
+/* FOTOS */
 .photo {
   width: 100%;
   border-radius: 18px;
   overflow: hidden;
-  margin: 14px 0;
+  margin: 16px 0;
 }
 .photo img {
   width: 100%;
@@ -157,9 +146,7 @@ body {
 }
 .photo img:hover { transform: scale(1.05); }
 
-/* =========================
-  GALERÍA (COLUMNAS)
-========================= */
+/* GALERÍA */
 .gallery {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -179,41 +166,33 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,.4);
 }
 
-/* =========================
-  BOTONES
-========================= */
+/* BOTONES */
 .btn {
   display: inline-block;
-  margin-top: 12px;
-  padding: 14px 26px; /* ⬆️ */
+  margin-top: 16px;
+  padding: 16px 30px;
   border-radius: 999px;
   background: var(--gold);
   color: #2b1b0f;
   text-decoration: none;
   font-weight: 600;
-  font-size: 1.1rem; /* ⬆️ */
+  font-size: 1.2rem;
 }
 
-/* =========================
-  CUENTA REGRESIVA
-========================= */
+/* CUENTA REGRESIVA */
 #countdown {
-  font-size: 1.7rem; /* ⬆️ */
+  font-size: 2rem;
   letter-spacing: 2px;
+  margin: 10px 0;
 }
 
-/* =========================
-  AUDIO
-========================= */
+/* AUDIO */
 #audio { display:none; }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-  OVERLAY ABRIR
-========================= -->
 <div id="overlay">
   <h2>Estás por abrir la invitación ✨</h2>
   <button id="openBtn">Abrir invitación</button>
@@ -221,9 +200,6 @@ body {
 
 <audio id="audio" src="cancio.mp3.mp3"></audio>
 
-<!-- =========================
-  HERO
-========================= -->
 <section class="hero">
   <img src="https://placehold.co/900x1600" alt="Foto principal">
   <div class="hero-content">
@@ -234,55 +210,31 @@ body {
 
 <div class="sep"></div>
 
-<!-- =========================
-  MI HISTORIA
-========================= -->
 <section class="section">
   <h2>Mi historia</h2>
-  <p>
-    Hoy celebro no solo mis 15 años, sino cada sonrisa, cada aprendizaje
-    y cada sueño que me ha traído hasta aquí. Gracias por acompañarme en
-    este capítulo tan especial de mi vida.
-  </p>
-  <div class="photo">
-    <img src="https://placehold.co/800x600">
-  </div>
-  <p>
-    Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones ✨
-  </p>
+  <p>Hoy celebro no solo mis 15 años, sino cada sonrisa, cada aprendizaje y cada sueño que me ha traído hasta aquí.</p>
+  <div class="photo"><img src="https://placehold.co/800x600"></div>
+  <p>Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones ✨</p>
 </section>
 
 <div class="sep"></div>
 
-<!-- =========================
-  PAPÁS
-========================= -->
 <section class="section">
   <h2>Mis papás</h2>
   <p>Gracias por ser mi raíz y mi fuerza cada día ✨</p>
-  <p style="font-family:'Pacifico',cursive;font-size:1.6rem;">
-    María González & Carlos Montes
-  </p>
+  <p style="font-family:'Pacifico',cursive;font-size:2rem;">María González & Carlos Montes</p>
 </section>
 
 <div class="sep"></div>
 
-<!-- =========================
-  PADRINOS
-========================= -->
 <section class="section">
   <h2>Mis padrinos</h2>
   <p>Por acompañarme en cada paso de este momento tan especial 💛</p>
-  <p style="font-family:'Pacifico',cursive;font-size:1.6rem;">
-    Laura Pérez & José Hernández
-  </p>
+  <p style="font-family:'Pacifico',cursive;font-size:2rem;">Laura Pérez & José Hernández</p>
 </section>
 
 <div class="sep"></div>
 
-<!-- =========================
-  MESA DE REGALOS
-========================= -->
 <section class="section">
   <h2>🎁 Mesa de regalos</h2>
   <p>Liverpool – Evento #123456</p>
@@ -291,9 +243,6 @@ body {
 
 <div class="sep"></div>
 
-<!-- =========================
-  CUENTA REGRESIVA
-========================= -->
 <section class="section">
   <h2>Faltan…</h2>
   <div id="countdown"></div>
@@ -302,9 +251,6 @@ body {
 
 <div class="sep"></div>
 
-<!-- =========================
-  CEREMONIA
-========================= -->
 <section class="section">
   <h2>📍 Ceremonia</h2>
   <p>🕰 18:00 hrs</p>
@@ -314,9 +260,6 @@ body {
 
 <div class="sep"></div>
 
-<!-- =========================
-  RECEPCIÓN
-========================= -->
 <section class="section">
   <h2>🎉 Recepción</h2>
   <p>20:00 hrs</p>
@@ -326,9 +269,6 @@ body {
 
 <div class="sep"></div>
 
-<!-- =========================
-  VESTIMENTA
-========================= -->
 <section class="section">
   <h2>👗🤵 Código de vestimenta</h2>
   <p>✨ Divinas y guapos ✨</p>
@@ -336,9 +276,6 @@ body {
 
 <div class="sep"></div>
 
-<!-- =========================
-  GALERÍA
-========================= -->
 <section class="section">
   <h2>Galería</h2>
   <div class="gallery">
@@ -353,16 +290,9 @@ body {
 
 <div class="sep"></div>
 
-<!-- =========================
-  CONFIRMACIÓN
-========================= -->
 <section class="section">
   <h2>¡Estás invitado!</h2>
-  <a 
-    class="btn" 
-    href="https://wa.me/5210000000000?text=Hola%20quiero%20confirmar%20mi%20asistencia%20a%20los%2015%20de%20Sofía%20Montes%20✨"
-    target="_blank"
-  >
+  <a class="btn" href="https://wa.me/5210000000000?text=Hola%20quiero%20confirmar%20mi%20asistencia%20a%20los%2015%20de%20Sofía%20Montes%20✨" target="_blank">
     Confirmar asistencia
   </a>
   <p>Te esperamos con cariño para compartir este momento inolvidable 💜</p>
@@ -370,22 +300,16 @@ body {
 
 <div class="sep"></div>
 
-<!-- =========================
-  FOOTER
-========================= -->
 <section class="section">
   <p>Invitación creada con amor</p>
   <strong>Digital Invita</strong>
   <p style="opacity:.7;">
-    ¿No cuentas con invitación aún?  
+    ¿No cuentas con invitación aún?
     <a href="#" style="color:#fff;text-decoration:underline;">Consigue la tuya aquí</a>
   </p>
 </section>
 
 <script>
-/* =========================
-  ABRIR + AUDIO (desde segundo 6 con fundido)
-========================= */
 const btn = document.getElementById('openBtn');
 const overlay = document.getElementById('overlay');
 const audio = document.getElementById('audio');
@@ -393,7 +317,6 @@ const audio = document.getElementById('audio');
 btn.addEventListener('click', () => {
   overlay.style.display = 'none';
   document.body.style.overflow = 'auto';
-
   audio.currentTime = 6;
   audio.volume = 0;
   audio.play().catch(()=>{});
@@ -405,21 +328,15 @@ btn.addEventListener('click', () => {
   }, 200);
 });
 
-/* =========================
-  ANIMACIONES AL SCROLL
-========================= */
 const sections = document.querySelectorAll('.section');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) entry.target.classList.add('show');
   });
-},{ threshold: 0.15 });
+},{ threshold: 0.05 });
 
 sections.forEach(sec => observer.observe(sec));
 
-/* =========================
-  CUENTA REGRESIVA
-========================= */
 const targetDate = new Date('2026-08-15T18:00:00').getTime();
 setInterval(() => {
   const now = new Date().getTime();
@@ -430,9 +347,6 @@ setInterval(() => {
   document.getElementById('countdown').innerText = `${d} días ${h} hrs ${m} min`;
 }, 1000);
 
-/* =========================
-  ABRIR IMÁGENES
-========================= */
 document.querySelectorAll('img').forEach(img => {
   img.addEventListener('click', () => window.open(img.src, '_blank'));
 });
