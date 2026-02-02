@@ -120,9 +120,12 @@ body {
 .sep {
   height: 2px;
   width: 120px;
-  margin: 18px auto;
-  background: var(--gold);
+  margin: 22px auto;
+  background: linear-gradient(90deg, transparent, #d4af37, #fff1a8, #d4af37, transparent);
   border-radius: 2px;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 /* FOTO HISTORIA */
@@ -165,12 +168,13 @@ body {
   justify-content: center;
   gap: 10px;
   margin-top: 10px;
+  flex-wrap: wrap;
 }
 .count-box {
   background: rgba(255,255,255,.08);
   border-radius: 16px;
   padding: 10px 12px;
-  min-width: 70px;
+  min-width: 80px;
 }
 .count-box strong {
   font-size: 1.6rem;
@@ -182,6 +186,31 @@ body {
   margin: 14px 0;
   border-radius: 16px;
   overflow: hidden;
+}
+
+/* UTILIDADES */
+.utilities {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  max-width: 420px;
+  margin: 18px auto 0;
+}
+.util {
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  padding: 14px 12px;
+  text-decoration: none;
+  color: #fff;
+  font-size: .95rem;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+}
+.util:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 28px rgba(0,0,0,.35);
+  background: rgba(255,255,255,.12);
 }
 
 #audio { display:none; }
@@ -304,7 +333,16 @@ body {
 <section class="section" style="font-size:.9rem;opacity:.7">
   <p>Invitación creada con amor</p>
   <strong>Digital Invita</strong>
-  <p>
+
+  <!-- UTILIDADES -->
+  <div class="utilities">
+    <a class="util" href="#" onclick="navigator.clipboard.writeText(location.href)">📋 Copiar enlace</a>
+    <a class="util" href="https://wa.me/?text=Mira%20la%20invitación:%20" target="_blank">💬 Compartir por Whats</a>
+    <a class="util" href="#" onclick="addToCalendar()">📅 Agregar al calendario</a>
+    <a class="util" href="#countdown">⏱️ Ver cuenta regresiva</a>
+  </div>
+
+  <p style="margin-top:14px;">
     ¿No cuentas con invitación aún?
     <a href="#" style="color:#fff;text-decoration:underline;">Consigue la tuya aquí</a>
   </p>
@@ -318,15 +356,17 @@ const audio = document.getElementById('audio');
 btn.addEventListener('click', () => {
   overlay.style.display = 'none';
   document.body.style.overflow = 'auto';
-  audio.currentTime = 6;
-  audio.volume = 0;
-  audio.play().catch(()=>{});
-  let vol = 0;
-  const fade = setInterval(() => {
-    vol += 0.05;
-    audio.volume = Math.min(vol, 1);
-    if (vol >= 1) clearInterval(fade);
-  }, 200);
+  if(audio){
+    audio.currentTime = 6;
+    audio.volume = 0;
+    audio.play().catch(()=>{});
+    let vol = 0;
+    const fade = setInterval(() => {
+      vol += 0.05;
+      audio.volume = Math.min(vol, 1);
+      if (vol >= 1) clearInterval(fade);
+    }, 200);
+  }
 });
 
 const sections = document.querySelectorAll('.section');
@@ -341,10 +381,10 @@ const targetDate = new Date('2026-08-15T18:00:00').getTime();
 setInterval(() => {
   const now = new Date().getTime();
   const diff = targetDate - now;
-  const d = Math.floor(diff / (1000*60*60*24));
-  const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-  const m = Math.floor((diff % (1000*60*60)) / (1000*60));
-  const s = Math.floor((diff % (1000*60)) / 1000);
+  const d = Math.max(0, Math.floor(diff / (1000*60*60*24)));
+  const h = Math.max(0, Math.floor((diff % (1000*60*60*24)) / (1000*60*60)));
+  const m = Math.max(0, Math.floor((diff % (1000*60*60)) / (1000*60)));
+  const s = Math.max(0, Math.floor((diff % (1000*60)) / 1000));
 
   document.getElementById('countdown').innerHTML = `
     <div class="count-box"><strong>${d}</strong>Días</div>
@@ -354,33 +394,39 @@ setInterval(() => {
   `;
 }, 1000);
 
-/* PARTÍCULAS ESPACIO */
+/* PARTÍCULAS CON TRAZO */
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let w, h;
 function resize(){ w = canvas.width = innerWidth; h = canvas.height = innerHeight; }
 resize(); window.addEventListener('resize', resize);
 
-const particles = Array.from({length: 40}, () => ({
+const particles = Array.from({length: 28}, () => ({
   x: Math.random()*w,
   y: Math.random()*h,
-  vx: (Math.random()-.5)*.4,
-  vy: Math.random()*1.2 + .2,
-  size: Math.random()*2 + 1,
-  life: Math.random()*100
+  vx: (Math.random()-.5)*0.6,
+  vy: Math.random()*1.4 + .3,
+  len: Math.random()*18 + 8,
+  speed: Math.random()*1.2 + .4,
+  alpha: Math.random()*.6 + .2
 }));
 
 function animate(){
-  ctx.fillStyle = 'rgba(75,29,107,0.2)';
+  ctx.fillStyle = 'rgba(75,29,107,0.15)';
   ctx.fillRect(0,0,w,h);
   particles.forEach(p=>{
+    ctx.strokeStyle = `rgba(255,215,130,${p.alpha})`;
+    ctx.lineWidth = 1.2;
     ctx.beginPath();
-    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-    ctx.fillStyle = 'rgba(255,215,130,.8)';
-    ctx.fill();
-    p.x += p.vx;
-    p.y += p.vy;
-    if(p.y>h){ p.y=0; p.x=Math.random()*w; }
+    ctx.moveTo(p.x, p.y);
+    ctx.lineTo(p.x - p.vx* p.len, p.y - p.vy* p.len);
+    ctx.stroke();
+
+    p.x += p.vx * p.speed;
+    p.y += p.vy * p.speed;
+    if(p.y > h + 20 || p.x < -20 || p.x > w + 20){
+      p.y = -10; p.x = Math.random()*w;
+    }
   });
   requestAnimationFrame(animate);
 }
@@ -389,6 +435,15 @@ animate();
 document.querySelectorAll('img').forEach(img => {
   img.addEventListener('click', () => window.open(img.src, '_blank'));
 });
+
+function addToCalendar(){
+  const title = encodeURIComponent('XV Años Sofía Montes');
+  const details = encodeURIComponent('Celebración de XV años');
+  const location = encodeURIComponent('Parroquia Ejemplo / Salón Ejemplo');
+  const dates = '20260815T180000/20260815T230000';
+  const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${dates}`;
+  window.open(url, '_blank');
+}
 </script>
 
 </body>
