@@ -51,10 +51,12 @@ body {
   z-index: 9999;
   gap: 14px;
 }
+
 #overlay .intro-text {
   font-size: 1.6rem;
   max-width: 280px;
 }
+
 #openBtn {
   padding: 14px 30px;
   border-radius: 999px;
@@ -68,6 +70,7 @@ body {
   box-shadow: inset 0 1px 1px rgba(255,255,255,.6), 0 10px 30px rgba(212,175,55,.6);
   transition: transform .3s ease, box-shadow .3s ease;
 }
+
 #openBtn:hover {
   transform: translateY(-2px) scale(1.03);
   box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 18px 40px rgba(212,175,55,.8);
@@ -82,23 +85,28 @@ body {
   overflow: hidden;
   z-index: 1;
 }
+
 .hero img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .hero-content {
   position: absolute;
-  bottom: 18%;
+  bottom: 50%;
+  transform: translateY(50%);
   width: 100%;
   text-align: center;
   padding: 0 20px;
 }
+
 .mis15 {
   font-size: 2rem;
   letter-spacing: 2px;
   margin-bottom: 4px;
 }
+
 .nombre {
   font-family: 'Great Vibes', cursive;
   font-size: 3.8rem;
@@ -110,9 +118,11 @@ body {
   transform: translateY(20px) scale(.9);
   display: inline-block;
 }
+
 .nombre.show {
   animation: drawName 2.2s ease forwards;
 }
+
 @keyframes drawName {
   0% { filter: drop-shadow(0 0 0 rgba(255,215,160,0)); opacity: 0; }
   100% { filter: drop-shadow(0 10px 24px rgba(255,215,160,.9)); opacity: 1; transform: none; }
@@ -126,15 +136,29 @@ body {
   opacity: 0;
   transform: translateY(40px) scale(.98);
   transition: all 1s ease;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
+
 .section.show {
   opacity: 1;
   transform: none;
 }
-.section h2 { font-size: 2rem; margin-bottom: 12px; }
-.section p { font-size: 1.25rem; }
 
-/* SEPARADORES CORREGIDOS */
+.section h2 {
+  font-size: 1.7rem;
+  margin-bottom: 12px;
+}
+
+.section p {
+  font-size: 1.05rem;
+}
+
+/* SEPARADORES */
 .sep {
   height: 3px;
   width: 160px;
@@ -149,7 +173,7 @@ body {
   pointer-events: none;
 }
 
-/* FOTO HISTORIA */
+/* FOTO */
 .photo img {
   width: 100%;
   max-width: 360px;
@@ -163,19 +187,24 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
-.gallery .big { grid-column: span 2; }
+
+.gallery .big {
+  grid-column: span 2;
+}
+
 .gallery img {
   width: 100%;
   border-radius: 16px;
   cursor: pointer;
   transition: transform .5s ease, box-shadow .5s ease;
 }
+
 .gallery img:hover {
   transform: scale(1.05);
   box-shadow: 0 18px 40px rgba(0,0,0,.5);
 }
 
-/* BOTONES DORADO PREMIUM */
+/* BOTONES */
 .btn {
   display: inline-block;
   margin-top: 16px;
@@ -189,6 +218,7 @@ body {
   box-shadow: inset 0 1px 1px rgba(255,255,255,.6), 0 12px 32px rgba(212,175,55,.6);
   transition: transform .3s ease, box-shadow .3s ease;
 }
+
 .btn:hover {
   transform: translateY(-2px) scale(1.04);
   box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 18px 45px rgba(212,175,55,.85);
@@ -198,19 +228,19 @@ body {
 #countdown {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   margin: 6px auto 0;
-  flex-wrap: nowrap;
-  max-width: 90%;
 }
+
 .count-box {
   background: rgba(255,255,255,.08);
   border-radius: 14px;
-  padding: 8px 10px;
-  min-width: 68px;
+  padding: 6px 8px;
+  min-width: 58px;
 }
+
 .count-box strong {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   display: block;
 }
 
@@ -229,6 +259,7 @@ body {
   max-width: 300px;
   margin: 24px auto 6px;
 }
+
 .util {
   background: rgba(255,255,255,.08);
   backdrop-filter: blur(10px);
@@ -239,12 +270,13 @@ body {
   font-size: .78rem;
   transition: transform .25s ease, box-shadow .25s ease;
 }
+
 .util:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 10px 28px rgba(0,0,0,.35);
 }
 
-/* DIGITAL INVITA DORADO PREMIUM */
+/* BRAND */
 .brand {
   display: block;
   margin-top: 6px;
@@ -255,6 +287,7 @@ body {
   -webkit-text-fill-color: transparent;
   animation: glow 3s ease-in-out infinite alternate;
 }
+
 @keyframes glow {
   from { filter: drop-shadow(0 0 6px rgba(255,215,160,.3)); }
   to { filter: drop-shadow(0 0 16px rgba(255,215,160,.9)); }
@@ -264,7 +297,37 @@ body {
   margin-top: 34px;
 }
 
+/* BOTÓN SUBIR APPLE */
+#toTopBtn {
+  position: fixed;
+  bottom: 22px;
+  right: 18px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.18);
+  backdrop-filter: blur(12px);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,.35);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px) scale(.9);
+  transition: all .35s ease;
+  z-index: 9999;
+}
+
+#toTopBtn.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
 #audio { display:none; }
+
 </style>
 </head>
 
@@ -290,120 +353,50 @@ body {
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Mi historia</h2>
-  <p>Hoy celebro no solo mis 15 años, sino cada sonrisa, cada aprendizaje y cada sueño que me ha traído hasta aquí.</p>
-  <div class="photo"><img src="https://placehold.co/800x600"></div>
-  <p>Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones.</p>
+<h2>Mi historia</h2>
+<p>Hoy celebro no solo mis 15 años, sino cada sonrisa...</p>
+<div class="photo"><img src="https://placehold.co/800x600"></div>
+<p>Aquí termina un capítulo…</p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Mis papás</h2>
-  <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">
-    María González<br>&<br>Carlos Montes
-  </p>
+<h2>Faltan pocos días para este gran día</h2>
+<div id="countdown"></div>
 </section>
 
-<div class="sep"></div>
-
-<section class="section">
-  <h2>Mis padrinos</h2>
-  <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">
-    Laura Pérez<br>&<br>José Hernández
-  </p>
-</section>
-
-<div class="sep"></div>
-
-<section class="section">
-  <h2>Mesa de regalos</h2>
-  <p>Liverpool – Evento #123456</p>
-  <p>Transferencia: 1234 5678 9012</p>
-</section>
-
-<div class="sep"></div>
-
-<section class="section">
-  <h2>Faltan…</h2>
-  <div id="countdown"></div>
-</section>
-
-<div class="sep"></div>
-
-<section class="section">
-  <h2>Ceremonia</h2>
-  <p>18:00 hrs</p>
-  <p>Parroquia Ejemplo</p>
-  <div class="map">
-    <iframe src="https://maps.google.com/maps?q=CDMX&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="200" style="border:0;"></iframe>
-  </div>
-  <a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
-</section>
-
-<div class="sep"></div>
-
-<section class="section">
-  <h2>Recepción</h2>
-  <p>20:00 hrs</p>
-  <p>Salón Ejemplo</p>
-  <div class="map">
-    <iframe src="https://maps.google.com/maps?q=CDMX&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="200" style="border:0;"></iframe>
-  </div>
-  <a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
-</section>
-
-<div class="sep"></div>
-
-<section class="section">
-  <h2>Código de vestimenta</h2>
-  <p>Divinas y guapos</p>
-</section>
-
-<div class="sep"></div>
-
-<section class="section">
-  <h2>Galería</h2>
-  <div class="gallery">
-    <img src="https://placehold.co/400x700">
-    <img src="https://placehold.co/400x700">
-    <img class="big" src="https://placehold.co/800x400">
-    <img class="big" src="https://placehold.co/800x700">
-    <img src="https://placehold.co/400x700">
-    <img src="https://placehold.co/400x700">
-  </div>
-</section>
-
-<div class="sep"></div>
-
-<section class="section">
-  <h2>¡Estás invitado!</h2>
-  <a class="btn" href="https://wa.me/5210000000000" target="_blank">Confirmar asistencia</a>
-</section>
-
-<div class="sep"></div>
-
-<section class="section" style="font-size:.9rem;opacity:.7">
-
-  <div class="utilities">
-    <a class="util" href="#" onclick="addToCalendar()">📅 Agregar al calendario</a>
-    <a class="util" href="#countdown">⏱️ Ver cuenta regresiva</a>
-  </div>
-
-  <p class="footer-love" style="margin:24px 0 12px;">Invitación creada con amor</p>
-  <strong class="brand">DIGITAL INVITA</strong>
-
-  <p style="margin-top:18px;font-size:.75rem;opacity:.8;">
-    ¿No cuentas con invitación aún?
-    <a href="#" style="color:#fff;text-decoration:underline;">Consigue la tuya aquí</a>
-  </p>
-</section>
-
-<div id="lightbox" onclick="this.style.display='none'">
-  <img id="lightbox-img">
-</div>
+<button id="toTopBtn">↑</button>
 
 <script>
+
+// SIEMPRE ARRIBA
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+};
+
+window.addEventListener('load', () => {
+  window.scrollTo({ top: 0, behavior: 'instant' });
+});
+
+// BOTÓN SUBIR
+const toTopBtn = document.getElementById('toTopBtn');
+
+window.addEventListener('scroll', () => {
+  const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+
+  if (scrollPercent > 60) {
+    toTopBtn.classList.add('show');
+  } else {
+    toTopBtn.classList.remove('show');
+  }
+});
+
+toTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ANIMACIÓN NOMBRE
 const btn = document.getElementById('openBtn');
 const overlay = document.getElementById('overlay');
 const audio = document.getElementById('audio');
@@ -413,32 +406,15 @@ btn.addEventListener('click', () => {
   overlay.style.display = 'none';
   document.body.style.overflow = 'auto';
   nombre.classList.add('show');
-
-  if(audio){
-    audio.currentTime = 6;
-    audio.volume = 0;
-    audio.play().catch(()=>{});
-    let vol = 0;
-    const fade = setInterval(() => {
-      vol += 0.05;
-      audio.volume = Math.min(vol, 1);
-      if (vol >= 1) clearInterval(fade);
-    }, 200);
-  }
 });
 
-const sections = document.querySelectorAll('.section');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('show');
-  });
-},{ threshold: 0.05 });
-sections.forEach(sec => observer.observe(sec));
-
+// COUNTDOWN
 const targetDate = new Date('2026-08-15T18:00:00').getTime();
+
 setInterval(() => {
   const now = new Date().getTime();
   const diff = targetDate - now;
+
   const d = Math.max(0, Math.floor(diff / (1000*60*60*24)));
   const h = Math.max(0, Math.floor((diff % (1000*60*60*24)) / (1000*60*60)));
   const m = Math.max(0, Math.floor((diff % (1000*60*60)) / (1000*60)));
@@ -452,61 +428,7 @@ setInterval(() => {
   `;
 }, 1000);
 
-/* PARTÍCULAS */
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let w, h;
-function resize(){ w = canvas.width = innerWidth; h = canvas.height = innerHeight; }
-resize(); window.addEventListener('resize', resize);
-
-const particles = Array.from({length: 28}, () => ({
-  x: Math.random()*w,
-  y: Math.random()*h,
-  vx: (Math.random()-.5)*0.6,
-  vy: Math.random()*1.4 + .3,
-  len: Math.random()*18 + 8,
-  speed: Math.random()*1.2 + .4,
-  alpha: Math.random()*.6 + .2
-}));
-
-function animate(){
-  ctx.fillStyle = 'rgba(75,29,107,0.15)';
-  ctx.fillRect(0,0,w,h);
-  particles.forEach(p=>{
-    ctx.strokeStyle = `rgba(255,215,130,${p.alpha})`;
-    ctx.lineWidth = 1.2;
-    ctx.beginPath();
-    ctx.moveTo(p.x, p.y);
-    ctx.lineTo(p.x - p.vx* p.len, p.y - p.vy* p.len);
-    ctx.stroke();
-
-    p.x += p.vx * p.speed;
-    p.y += p.vy * p.speed;
-    if(p.y > h + 20 || p.x < -20 || p.x > w + 20){
-      p.y = -10; p.x = Math.random()*w;
-    }
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-
-document.querySelectorAll('.gallery img').forEach(img => {
-  img.addEventListener('click', () => {
-    document.getElementById('lightbox-img').src = img.src;
-    document.getElementById('lightbox').style.display = 'flex';
-  });
-});
-
-function addToCalendar(){
-  const title = encodeURIComponent('XV Años Sofía Montes');
-  const details = encodeURIComponent('Celebración de XV años');
-  const location = encodeURIComponent('Parroquia Ejemplo / Salón Ejemplo');
-  const dates = '20260815T180000/20260815T230000';
-  const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${dates}`;
-  window.open(url, '_blank');
-}
 </script>
 
-  
 </body>
 </html>
