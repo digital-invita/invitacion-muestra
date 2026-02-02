@@ -16,9 +16,6 @@
   --text-light: #f4f1f7;
 }
 
-/* =========================
-  BASE MOBILE FIRST
-========================= */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -27,64 +24,46 @@ body {
   background-attachment: fixed;
   color: var(--text-light);
   overflow: hidden;
-  font-size: 20px; /* ⬆️ texto grande real para móvil */
-  line-height: 1.8;
+  font-size: 19px;
+  line-height: 1.7;
 }
 
-/* =========================
-  PARTÍCULAS DE FONDO (SUTILES)
-========================= */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,.06), transparent 40%),
-    radial-gradient(circle at 80% 60%, rgba(255,255,255,.05), transparent 45%),
-    radial-gradient(circle at 50% 90%, rgba(255,255,255,.04), transparent 50%);
-  animation: floatBg 16s linear infinite;
-  z-index: 0;
-}
-@keyframes floatBg {
-  50% { transform: translateY(-20px); }
-}
-
-/* =========================
-  OVERLAY
-========================= */
+/* OVERLAY */
 #overlay {
   position: fixed;
   inset: 0;
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
   background: rgba(0,0,0,0.55);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  animation: pulse 2s infinite;
 }
 #overlay h2 {
-  font-size: 1.6rem;
-  margin-bottom: 12px;
+  font-size: 2.4rem;
+  margin-bottom: 20px;
   text-align: center;
   padding: 0 20px;
-  max-width: 320px;
 }
 #openBtn {
-  padding: 12px 26px;
+  padding: 18px 38px;
   border-radius: 999px;
   border: none;
-  font-size: 1rem;
+  font-size: 1.2rem;
   cursor: pointer;
   background: var(--gold);
   color: #2b1b0f;
   font-weight: 600;
+  box-shadow: 0 10px 30px rgba(212,175,55,.5);
+  animation: glow 2s infinite alternate;
 }
 
-/* =========================
-  HERO
-========================= */
+@keyframes pulse { 0%{opacity:.9} 100%{opacity:1} }
+@keyframes glow { from{box-shadow:0 0 10px #d4af37} to{box-shadow:0 0 25px #fff1a8} }
+
+/* HERO */
 .hero {
   position: relative;
   width: 100%;
@@ -99,83 +78,98 @@ body::before {
 }
 .hero-content {
   position: absolute;
-  bottom: 18%; /* ⬆️ subido un poco */
+  bottom: 10%;
   width: 100%;
   text-align: center;
   padding: 0 20px;
 }
 .mis15 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.9rem;
+  font-size: 2rem;
   letter-spacing: 2px;
   margin-bottom: 6px;
 }
 .nombre {
   font-family: 'Pacifico', cursive;
-  font-size: 3.6rem;
+  font-size: 3.8rem;
   background: var(--gold);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: drawText 2s ease forwards;
 }
 
-/* =========================
-  SECCIONES
-========================= */
+@keyframes drawText {
+  from { letter-spacing: 12px; opacity: 0; }
+  to { letter-spacing: 2px; opacity: 1; }
+}
+
+/* SECCIONES */
 .section {
-  position: relative;
-  z-index: 1;
-  padding: 34px 22px 26px;
+  padding: 34px 22px 22px;
   text-align: center;
   opacity: 0;
-  transform: translateY(40px);
-  transition: 1s ease;
+  transform: translateY(40px) scale(.98);
+  transition: all 1s ease;
 }
 .section.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 .section h2 {
   font-size: 2rem;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .section p {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
 }
 
 .sep {
   height: 2px;
-  width: 110px;
+  width: 120px;
   margin: 18px auto;
   background: var(--gold);
   border-radius: 2px;
 }
 
-/* =========================
-  FOTOS
-========================= */
-.photo img,
-.gallery img {
+/* FOTOS */
+.photo {
   width: 100%;
-  border-radius: 16px;
+  border-radius: 18px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+.photo img {
+  width: 100%;
+  display: block;
+  transition: transform .4s ease;
   cursor: pointer;
 }
+.photo img:hover { transform: scale(1.05); }
 
-/* =========================
-  GALERÍA
-========================= */
+/* GALERÍA */
 .gallery {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
-.gallery .big { grid-column: span 2; }
+.gallery .big {
+  grid-column: span 2;
+}
+.gallery img {
+  width: 100%;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform .5s ease, box-shadow .5s ease;
+}
+.gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+}
 
-/* =========================
-  BOTONES
-========================= */
+/* BOTONES */
 .btn {
   display: inline-block;
-  margin-top: 12px;
+  margin-top: 16px;
   padding: 16px 30px;
   border-radius: 999px;
   background: var(--gold);
@@ -185,27 +179,29 @@ body::before {
   font-size: 1.2rem;
 }
 
-/* =========================
-  FOOTER UTILIDADES
-========================= */
-.footer-util {
-  font-size: .9rem;
-  opacity: .7;
+/* CUENTA REGRESIVA */
+#countdown {
+  font-size: 2rem;
+  letter-spacing: 2px;
+  margin: 10px 0;
 }
+
+/* AUDIO */
+#audio { display:none; }
 </style>
 </head>
 
 <body>
 
 <div id="overlay">
-  <h2>Estás a punto de descubrir una noche inolvidable</h2>
+  <h2>Estás por abrir la invitación ✨</h2>
   <button id="openBtn">Abrir invitación</button>
 </div>
 
 <audio id="audio" src="cancio.mp3.mp3"></audio>
 
 <section class="hero">
-  <img src="https://placehold.co/900x1600">
+  <img src="https://placehold.co/900x1600" alt="Foto principal">
   <div class="hero-content">
     <div class="mis15">Mis 15 años</div>
     <div class="nombre">Sofía Montes</div>
@@ -216,36 +212,101 @@ body::before {
 
 <section class="section">
   <h2>Mi historia</h2>
-  <p>Hoy celebro no solo mis 15 años, sino cada sonrisa y cada sueño que me ha traído hasta aquí.</p>
+  <p>Hoy celebro no solo mis 15 años, sino cada sonrisa, cada aprendizaje y cada sueño que me ha traído hasta aquí.</p>
   <div class="photo"><img src="https://placehold.co/800x600"></div>
-  <p>Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones.</p>
+  <p>Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones ✨</p>
+</section>
+
+<div class="sep"></div>
+
+<section class="section">
+  <h2>Mis papás</h2>
+  <p>Gracias por ser mi raíz y mi fuerza cada día ✨</p>
+  <p style="font-family:'Pacifico',cursive;font-size:2rem;">María González & Carlos Montes</p>
+</section>
+
+<div class="sep"></div>
+
+<section class="section">
+  <h2>Mis padrinos</h2>
+  <p>Por acompañarme en cada paso de este momento tan especial 💛</p>
+  <p style="font-family:'Pacifico',cursive;font-size:2rem;">Laura Pérez & José Hernández</p>
+</section>
+
+<div class="sep"></div>
+
+<section class="section">
+  <h2>🎁 Mesa de regalos</h2>
+  <p>Liverpool – Evento #123456</p>
+  <p>Transferencia: <span style="text-decoration:none;color:inherit;">1234 5678 9012</span></p>
+</section>
+
+<div class="sep"></div>
+
+<section class="section">
+  <h2>Faltan…</h2>
+  <div id="countdown"></div>
+  <p>Me encantaría que seas parte de este momento tan especial 💜</p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
   <h2>📍 Ceremonia</h2>
-  <p>18:00 hrs</p>
+  <p>🕰 18:00 hrs</p>
   <p>Parroquia Ejemplo</p>
-
-  <!-- MAPA (CAMBIA LA UBICACIÓN AQUÍ) -->
-  <iframe 
-    src="https://www.google.com/maps?q=Parroquia%20Ejemplo&output=embed"
-    width="100%" 
-    height="220" 
-    style="border:0;border-radius:14px;" 
-    loading="lazy">
-  </iframe>
-
   <a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
 </section>
 
 <div class="sep"></div>
 
-<section class="section footer-util">
+<section class="section">
+  <h2>🎉 Recepción</h2>
+  <p>20:00 hrs</p>
+  <p>Salón Ejemplo</p>
+  <a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
+</section>
+
+<div class="sep"></div>
+
+<section class="section">
+  <h2>👗🤵 Código de vestimenta</h2>
+  <p>✨ Divinas y guapos ✨</p>
+</section>
+
+<div class="sep"></div>
+
+<section class="section">
+  <h2>Galería</h2>
+  <div class="gallery">
+    <img src="https://placehold.co/400x700">
+    <img src="https://placehold.co/400x700">
+    <img class="big" src="https://placehold.co/800x400">
+    <img class="big" src="https://placehold.co/800x700">
+    <img src="https://placehold.co/400x700">
+    <img src="https://placehold.co/400x700">
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<section class="section">
+  <h2>¡Estás invitado!</h2>
+  <a class="btn" href="https://wa.me/5210000000000?text=Hola%20quiero%20confirmar%20mi%20asistencia%20a%20los%2015%20de%20Sofía%20Montes%20✨" target="_blank">
+    Confirmar asistencia
+  </a>
+  <p>Te esperamos con cariño para compartir este momento inolvidable 💜</p>
+</section>
+
+<div class="sep"></div>
+
+<section class="section">
   <p>Invitación creada con amor</p>
   <strong>Digital Invita</strong>
-  <p>¿No cuentas con invitación aún? <a href="#" style="color:#fff;text-decoration:underline;">Consigue la tuya aquí</a></p>
+  <p style="opacity:.7;">
+    ¿No cuentas con invitación aún?
+    <a href="#" style="color:#fff;text-decoration:underline;">Consigue la tuya aquí</a>
+  </p>
 </section>
 
 <script>
@@ -267,10 +328,28 @@ btn.addEventListener('click', () => {
   }, 200);
 });
 
+const sections = document.querySelectorAll('.section');
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => e.isIntersecting && e.target.classList.add('show'));
-},{ threshold: .1 });
-document.querySelectorAll('.section').forEach(s => observer.observe(s));
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('show');
+  });
+},{ threshold: 0.05 });
+
+sections.forEach(sec => observer.observe(sec));
+
+const targetDate = new Date('2026-08-15T18:00:00').getTime();
+setInterval(() => {
+  const now = new Date().getTime();
+  const diff = targetDate - now;
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+  document.getElementById('countdown').innerText = `${d} días ${h} hrs ${m} min`;
+}, 1000);
+
+document.querySelectorAll('img').forEach(img => {
+  img.addEventListener('click', () => window.open(img.src, '_blank'));
+});
 </script>
 
 </body>
