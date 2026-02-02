@@ -6,7 +6,7 @@
 
 <title>Invitación XV Sofía</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -27,6 +27,7 @@ body {
   overflow-y: auto;
   font-size: 20px;
   line-height: 1.75;
+  text-align: center;
 }
 
 /* PARTICULAS FONDO */
@@ -57,7 +58,6 @@ body::before {
 #overlay h2 {
   font-size: 1.9rem;
   margin-bottom: 16px;
-  text-align: center;
   max-width: 320px;
   font-family: 'Playfair Display', serif;
 }
@@ -94,9 +94,8 @@ body::before {
 }
 .hero-content {
   position: absolute;
-  bottom: 16%;
+  bottom: 18%;
   width: 100%;
-  text-align: center;
   padding: 0 20px;
   z-index: 2;
 }
@@ -107,9 +106,8 @@ body::before {
   margin-bottom: 4px;
 }
 .nombre {
-  font-family: 'Pacifico', cursive;
-  font-size: 3.9rem;
-  font-weight: 400;
+  font-family: 'Great Vibes', cursive;
+  font-size: 4.4rem;
   background: var(--gold);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -120,7 +118,6 @@ body::before {
   position: relative;
   z-index: 2;
   padding: 30px 22px 18px;
-  text-align: center;
   opacity: 0;
   transform: translateY(30px) scale(.98);
   transition: all 1s ease;
@@ -186,14 +183,28 @@ body::before {
   font-size: 1.15rem;
 }
 
-/* CUENTA REGRESIVA */
+/* CUENTA REGRESIVA IPHONE STYLE */
 #countdown {
-  font-size: 2.4rem;
-  letter-spacing: 2px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+.time-box {
+  min-width: 70px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,.12);
+}
+.time-box strong {
+  display: block;
+  font-size: 1.8rem;
   font-weight: 600;
-  background: var(--gold);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+}
+.time-box span {
+  font-size: .75rem;
+  opacity: .8;
 }
 
 /* FOOTER UTILIDADES */
@@ -239,7 +250,7 @@ body::before {
 <section class="section">
   <h2>Mis papás</h2>
   <p>Gracias por ser mi raíz y mi fuerza cada día</p>
-  <p style="font-family:'Pacifico',cursive;font-size:2rem;">María González & Carlos Montes</p>
+  <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">María González & Carlos Montes</p>
 </section>
 
 <div class="sep"></div>
@@ -247,7 +258,7 @@ body::before {
 <section class="section">
   <h2>Mis padrinos</h2>
   <p>Por acompañarme en cada paso de este momento tan especial</p>
-  <p style="font-family:'Pacifico',cursive;font-size:2rem;">Laura Pérez & José Hernández</p>
+  <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">Laura Pérez & José Hernández</p>
 </section>
 
 <div class="sep"></div>
@@ -360,7 +371,11 @@ setInterval(() => {
   const d = Math.floor(diff / (1000*60*60*24));
   const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
   const m = Math.floor((diff % (1000*60*60)) / (1000*60));
-  document.getElementById('countdown').innerText = `${d} días ${h} hrs ${m} min`;
+  document.getElementById('countdown').innerHTML = `
+    <div class="time-box"><strong>${d}</strong><span>DÍAS</span></div>
+    <div class="time-box"><strong>${h}</strong><span>HRS</span></div>
+    <div class="time-box"><strong>${m}</strong><span>MIN</span></div>
+  `;
 }, 1000);
 
 document.querySelectorAll('img').forEach(img => {
