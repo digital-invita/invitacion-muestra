@@ -18,28 +18,32 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Playfair Display', serif;
   background: var(--bg-image), var(--bg-color);
   background-size: cover;
-  background-attachment: scroll;
+  background-attachment: fixed;
   color: var(--text-light);
-  overflow-x: hidden;
-  overflow-y: auto;
-  font-size: 20px;
-  line-height: 1.75;
+  overflow: hidden;
+  font-size: 19px;
+  line-height: 1.7;
   text-align: center;
 }
 
-/* PARTICULAS FONDO */
+/* PARTÍCULAS DE FONDO */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: .15;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,215,130,.08), transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(255,215,130,.06), transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(255,215,130,.05), transparent 50%);
+  animation: floatBg 20s linear infinite;
   pointer-events: none;
   z-index: 0;
+}
+@keyframes floatBg {
+  50% { transform: translateY(-30px); }
 }
 
 /* OVERLAY */
@@ -47,19 +51,17 @@ body::before {
   position: fixed;
   inset: 0;
   backdrop-filter: blur(18px);
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.55);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  padding: 20px;
 }
 #overlay h2 {
-  font-size: 1.9rem;
-  margin-bottom: 16px;
-  max-width: 320px;
-  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  margin-bottom: 14px;
+  max-width: 280px;
 }
 #openBtn {
   padding: 14px 28px;
@@ -70,14 +72,14 @@ body::before {
   background: var(--gold);
   color: #2b1b0f;
   font-weight: 600;
-  box-shadow: 0 10px 25px rgba(212,175,55,.45);
+  box-shadow: 0 10px 30px rgba(212,175,55,.5);
 }
 
 /* HERO */
 .hero {
   position: relative;
   width: 100%;
-  min-height: 100svh;
+  height: 100vh;
   aspect-ratio: 9/16;
   overflow: hidden;
 }
@@ -86,28 +88,21 @@ body::before {
   height: 100%;
   object-fit: cover;
 }
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,.55), transparent 60%);
-}
 .hero-content {
   position: absolute;
-  bottom: 18%;
+  bottom: 16%;
   width: 100%;
+  text-align: center;
   padding: 0 20px;
-  z-index: 2;
 }
 .mis15 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
+  font-size: 2rem;
   letter-spacing: 2px;
   margin-bottom: 4px;
 }
 .nombre {
   font-family: 'Great Vibes', cursive;
-  font-size: 4.4rem;
+  font-size: 3.6rem;
   background: var(--gold);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -115,44 +110,24 @@ body::before {
 
 /* SECCIONES */
 .section {
-  position: relative;
-  z-index: 2;
-  padding: 30px 22px 18px;
+  padding: 34px 22px 22px;
   opacity: 0;
-  transform: translateY(30px) scale(.98);
+  transform: translateY(40px) scale(.98);
   transition: all 1s ease;
 }
 .section.show {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: none;
 }
-.section h2 {
-  font-size: 2.1rem;
-  margin-bottom: 10px;
-}
-.section p {
-  font-size: 1.25rem;
-}
+.section h2 { font-size: 2rem; margin-bottom: 12px; }
+.section p { font-size: 1.25rem; }
 
 .sep {
   height: 2px;
-  width: 110px;
+  width: 120px;
   margin: 18px auto;
   background: var(--gold);
   border-radius: 2px;
-}
-
-/* FOTOS */
-.photo {
-  width: 100%;
-  border-radius: 18px;
-  overflow: hidden;
-  margin: 14px 0;
-}
-.photo img {
-  width: 100%;
-  display: block;
-  cursor: pointer;
 }
 
 /* GALERÍA */
@@ -161,9 +136,7 @@ body::before {
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
-.gallery .big {
-  grid-column: span 2;
-}
+.gallery .big { grid-column: span 2; }
 .gallery img {
   width: 100%;
   border-radius: 16px;
@@ -180,41 +153,34 @@ body::before {
   color: #2b1b0f;
   text-decoration: none;
   font-weight: 600;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
 }
 
-/* CUENTA REGRESIVA IPHONE STYLE */
+/* CUENTA REGRESIVA ESTILO IPHONE */
 #countdown {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 16px 0;
+  margin-top: 10px;
 }
-.time-box {
-  min-width: 70px;
+.count-box {
+  background: rgba(255,255,255,.08);
+  border-radius: 16px;
   padding: 10px 12px;
-  border-radius: 14px;
-  backdrop-filter: blur(12px);
-  background: rgba(255,255,255,.12);
+  min-width: 70px;
 }
-.time-box strong {
+.count-box strong {
+  font-size: 1.6rem;
   display: block;
-  font-size: 1.8rem;
-  font-weight: 600;
-}
-.time-box span {
-  font-size: .75rem;
-  opacity: .8;
 }
 
-/* FOOTER UTILIDADES */
-.footer-util {
-  font-size: .85rem;
-  opacity: .75;
-  margin-top: 6px;
+/* MAPA */
+.map {
+  margin: 14px 0;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
-/* AUDIO */
 #audio { display:none; }
 </style>
 </head>
@@ -222,14 +188,14 @@ body::before {
 <body>
 
 <div id="overlay">
-  <h2>Estás a punto de descubrir un momento especial</h2>
-  <button id="openBtn">Entrar a la invitación</button>
+  <h2>Descubre un momento creado para ti</h2>
+  <button id="openBtn">Abrir invitación</button>
 </div>
 
 <audio id="audio" src="cancio.mp3.mp3"></audio>
 
 <section class="hero">
-  <img src="https://placehold.co/900x1600" alt="Foto principal">
+  <img src="https://placehold.co/900x1600">
   <div class="hero-content">
     <div class="mis15">Mis 15 años</div>
     <div class="nombre">Sofía Montes</div>
@@ -266,7 +232,7 @@ body::before {
 <section class="section">
   <h2>Mesa de regalos</h2>
   <p>Liverpool – Evento #123456</p>
-  <p>Transferencia: <span style="text-decoration:none;color:inherit;">1234 5678 9012</span></p>
+  <p>Transferencia: 1234 5678 9012</p>
 </section>
 
 <div class="sep"></div>
@@ -274,7 +240,6 @@ body::before {
 <section class="section">
   <h2>Faltan…</h2>
   <div id="countdown"></div>
-  <p>Me encantaría que seas parte de este momento tan especial</p>
 </section>
 
 <div class="sep"></div>
@@ -283,6 +248,9 @@ body::before {
   <h2>Ceremonia</h2>
   <p>18:00 hrs</p>
   <p>Parroquia Ejemplo</p>
+  <div class="map">
+    <iframe src="https://maps.google.com/maps?q=CDMX&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="200" style="border:0;"></iframe>
+  </div>
   <a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
 </section>
 
@@ -292,6 +260,9 @@ body::before {
   <h2>Recepción</h2>
   <p>20:00 hrs</p>
   <p>Salón Ejemplo</p>
+  <div class="map">
+    <iframe src="https://maps.google.com/maps?q=CDMX&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="200" style="border:0;"></iframe>
+  </div>
   <a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
 </section>
 
@@ -319,19 +290,16 @@ body::before {
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Confirmación</h2>
-  <a class="btn" href="https://wa.me/5210000000000?text=Hola%20quiero%20confirmar%20mi%20asistencia%20a%20los%2015%20de%20Sofía%20Montes" target="_blank">
-    Confirmar asistencia
-  </a>
-  <p>Te esperamos con cariño para compartir este momento inolvidable</p>
+  <h2>¡Estás invitado!</h2>
+  <a class="btn" href="https://wa.me/5210000000000" target="_blank">Confirmar asistencia</a>
 </section>
 
 <div class="sep"></div>
 
-<section class="section">
-  <p class="footer-util">Invitación creada con amor</p>
-  <strong class="footer-util">Digital Invita</strong>
-  <p class="footer-util">
+<section class="section" style="font-size:.9rem;opacity:.7">
+  <p>Invitación creada con amor</p>
+  <strong>Digital Invita</strong>
+  <p>
     ¿No cuentas con invitación aún?
     <a href="#" style="color:#fff;text-decoration:underline;">Consigue la tuya aquí</a>
   </p>
@@ -344,6 +312,7 @@ const audio = document.getElementById('audio');
 
 btn.addEventListener('click', () => {
   overlay.style.display = 'none';
+  document.body.style.overflow = 'auto';
   audio.currentTime = 6;
   audio.volume = 0;
   audio.play().catch(()=>{});
@@ -360,8 +329,7 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) entry.target.classList.add('show');
   });
-},{ threshold: 0.1 });
-
+},{ threshold: 0.05 });
 sections.forEach(sec => observer.observe(sec));
 
 const targetDate = new Date('2026-08-15T18:00:00').getTime();
@@ -371,10 +339,13 @@ setInterval(() => {
   const d = Math.floor(diff / (1000*60*60*24));
   const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
   const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+  const s = Math.floor((diff % (1000*60)) / 1000);
+
   document.getElementById('countdown').innerHTML = `
-    <div class="time-box"><strong>${d}</strong><span>DÍAS</span></div>
-    <div class="time-box"><strong>${h}</strong><span>HRS</span></div>
-    <div class="time-box"><strong>${m}</strong><span>MIN</span></div>
+    <div class="count-box"><strong>${d}</strong>Días</div>
+    <div class="count-box"><strong>${h}</strong>Horas</div>
+    <div class="count-box"><strong>${m}</strong>Minutos</div>
+    <div class="count-box"><strong>${s}</strong>Segundos</div>
   `;
 }, 1000);
 
