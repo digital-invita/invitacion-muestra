@@ -12,7 +12,7 @@
 :root {
   --bg-color: #4b1d6b;
   --bg-image: none;
-  --gold: linear-gradient(135deg, #d4af37, #fff1a8, #c9a43c);
+  --gold: linear-gradient(135deg, #f6d365, #fda085, #d4af37, #fff1a8);
   --text-light: #f4f1f7;
 }
 
@@ -42,27 +42,28 @@ body {
   position: fixed;
   inset: 0;
   backdrop-filter: blur(18px);
-  background: rgba(0,0,0,0.55);
+  background: rgba(0,0,0,0.65);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  gap: 14px;
 }
-#overlay h2 {
-  font-size: 2rem;
-  margin-bottom: 14px;
+#overlay .intro-text {
+  font-size: 1.6rem;
   max-width: 280px;
 }
 #openBtn {
-  padding: 14px 28px;
+  padding: 14px 30px;
   border-radius: 999px;
   border: none;
-  font-size: 1.05rem;
+  font-size: 1rem;
   cursor: pointer;
   background: var(--gold);
   color: #2b1b0f;
   font-weight: 600;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
   box-shadow: 0 10px 30px rgba(212,175,55,.5);
 }
 
@@ -100,12 +101,14 @@ body {
   -webkit-text-fill-color: transparent;
   text-align: center;
   opacity: 0;
-  transform: translateY(10px) scale(.96);
-  animation: drawName 2.4s ease forwards;
+  transform: translateY(20px) scale(.9);
+}
+.nombre.show {
+  animation: drawName 2.2s ease forwards;
 }
 @keyframes drawName {
   0% { filter: drop-shadow(0 0 0 rgba(255,215,160,0)); opacity: 0; }
-  100% { filter: drop-shadow(0 8px 20px rgba(255,215,160,.7)); opacity: 1; transform: none; }
+  100% { filter: drop-shadow(0 10px 24px rgba(255,215,160,.9)); opacity: 1; transform: none; }
 }
 
 /* SECCIONES */
@@ -125,11 +128,12 @@ body {
 .section p { font-size: 1.25rem; }
 
 .sep {
-  height: 2px;
-  width: 120px;
-  margin: 22px auto;
-  background: linear-gradient(90deg, transparent, #d4af37, #fff1a8, #d4af37, transparent);
-  border-radius: 2px;
+  height: 3px;
+  width: 160px;
+  margin: 26px auto;
+  background: linear-gradient(90deg, transparent, #f6d365, #fff1a8, #d4af37, #f6d365, transparent);
+  border-radius: 6px;
+  box-shadow: 0 0 18px rgba(255,215,160,.7);
 }
 
 /* FOTO HISTORIA */
@@ -151,11 +155,34 @@ body {
   width: 100%;
   border-radius: 16px;
   cursor: pointer;
-  transition: transform .6s ease, box-shadow .6s ease;
+  transition: transform .5s ease, box-shadow .5s ease;
 }
 .gallery img:hover {
-  transform: scale(1.06);
+  transform: scale(1.05);
   box-shadow: 0 18px 40px rgba(0,0,0,.5);
+}
+
+/* POPUP GALERIA */
+#lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(18px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+#lightbox img {
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.7);
+  animation: zoomIn .4s ease;
+}
+@keyframes zoomIn {
+  from { transform: scale(.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 /* BOTONES */
@@ -176,14 +203,14 @@ body {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-top: 10px;
+  margin: 12px 22px 0;
   flex-wrap: nowrap;
 }
 .count-box {
   background: rgba(255,255,255,.08);
   border-radius: 14px;
   padding: 8px 10px;
-  min-width: 70px;
+  min-width: 68px;
 }
 .count-box strong {
   font-size: 1.4rem;
@@ -202,8 +229,8 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  max-width: 320px;
-  margin: 16px auto 0;
+  max-width: 300px;
+  margin: 16px auto 6px;
 }
 .util {
   background: rgba(255,255,255,.08);
@@ -212,7 +239,7 @@ body {
   padding: 10px 10px;
   text-decoration: none;
   color: #fff;
-  font-size: .8rem;
+  font-size: .78rem;
   transition: transform .25s ease, box-shadow .25s ease;
 }
 .util:hover {
@@ -221,7 +248,9 @@ body {
 }
 
 .brand {
-  font-size: 1.1rem;
+  display: block;
+  margin-top: 6px;
+  font-size: .9rem;
   letter-spacing: 2px;
   background: var(--gold);
   -webkit-background-clip: text;
@@ -242,7 +271,7 @@ body {
 <canvas id="particles"></canvas>
 
 <div id="overlay">
-  <h2>Descubre un momento creado para ti</h2>
+  <div class="intro-text">Porque eres parte de este momento</div>
   <button id="openBtn">Abrir invitación</button>
 </div>
 
@@ -252,7 +281,7 @@ body {
   <img src="https://placehold.co/900x1600">
   <div class="hero-content">
     <div class="mis15">Mis 15 años</div>
-    <div class="nombre">Sofía Montes</div>
+    <div class="nombre" id="nombre">Sofía Montes</div>
   </div>
 </section>
 
@@ -269,16 +298,18 @@ body {
 
 <section class="section">
   <h2>Mis papás</h2>
-  <p>Gracias por ser mi raíz y mi fuerza cada día</p>
-  <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">María González & Carlos Montes</p>
+  <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">
+    María González<br>&<br>Carlos Montes
+  </p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
   <h2>Mis padrinos</h2>
-  <p>Por acompañarme en cada paso de este momento tan especial</p>
-  <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">Laura Pérez & José Hernández</p>
+  <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">
+    Laura Pérez<br>&<br>José Hernández
+  </p>
 </section>
 
 <div class="sep"></div>
@@ -351,28 +382,36 @@ body {
 <div class="sep"></div>
 
 <section class="section" style="font-size:.9rem;opacity:.7">
-  <p>Invitación creada con amor</p>
-  <strong class="brand">DIGITAL INVITA</strong>
 
   <div class="utilities">
     <a class="util" href="#" onclick="addToCalendar()">📅 Agregar al calendario</a>
     <a class="util" href="#countdown">⏱️ Ver cuenta regresiva</a>
   </div>
 
-  <p style="margin-top:26px;font-size:.75rem;opacity:.8;">
+  <p style="margin:8px 0 2px;">Invitación creada con amor</p>
+  <strong class="brand">DIGITAL INVITA</strong>
+
+  <p style="margin-top:18px;font-size:.75rem;opacity:.8;">
     ¿No cuentas con invitación aún?
     <a href="#" style="color:#fff;text-decoration:underline;">Consigue la tuya aquí</a>
   </p>
 </section>
 
+<div id="lightbox" onclick="this.style.display='none'">
+  <img id="lightbox-img">
+</div>
+
 <script>
 const btn = document.getElementById('openBtn');
 const overlay = document.getElementById('overlay');
 const audio = document.getElementById('audio');
+const nombre = document.getElementById('nombre');
 
 btn.addEventListener('click', () => {
   overlay.style.display = 'none';
   document.body.style.overflow = 'auto';
+  nombre.classList.add('show');
+
   if(audio){
     audio.currentTime = 6;
     audio.volume = 0;
@@ -411,7 +450,7 @@ setInterval(() => {
   `;
 }, 1000);
 
-/* PARTÍCULAS CON TRAZO */
+/* PARTÍCULAS */
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let w, h;
@@ -449,8 +488,11 @@ function animate(){
 }
 animate();
 
-document.querySelectorAll('img').forEach(img => {
-  img.addEventListener('click', () => window.open(img.src, '_blank'));
+document.querySelectorAll('.gallery img').forEach(img => {
+  img.addEventListener('click', () => {
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox').style.display = 'flex';
+  });
 });
 
 function addToCalendar(){
