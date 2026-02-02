@@ -6,196 +6,237 @@
 
 <title>Invitación XV Sofía</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
-<!-- =========================
-  CONFIGURACIÓN RÁPIDA (CAMBIA AQUÍ)
-========================= -->
 <style>
 :root {
-  --bg-color: #4b1d6b; /* Fondo morado general */
-  --bg-image: none;   /* Ejemplo: url('https://tusitio.com/fondo.jpg') */
+  --bg-color: #4b1d6b;
+  --bg-image: none;
   --gold: linear-gradient(135deg, #d4af37, #fff1a8, #c9a43c);
   --text-light: #f4f1f7;
-  --glass: rgba(0,0,0,.28);
 }
 
-*{box-sizing:border-box}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  background:
-    radial-gradient(1200px 800px at 10% -10%, rgba(255,255,255,.06), transparent 40%),
-    radial-gradient(900px 700px at 110% 10%, rgba(255,255,255,.05), transparent 45%),
-    var(--bg-image),
-    linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.15)),
-    var(--bg-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-image), var(--bg-color);
   background-size: cover;
   background-attachment: fixed;
   color: var(--text-light);
-  overflow: hidden; /* bloqueado hasta abrir */
-  font-size: 20px;  /* 🔥 MOBILE-FIRST: texto base grande */
-  line-height: 1.75;
+  overflow: hidden;
+  font-size: 20px;
+  line-height: 1.8;
 }
 
 /* =========================
-  OVERLAY ABRIR INVITACIÓN
+  PARTÍCULAS DE FONDO
 ========================= */
-#overlay{
-  position:fixed; inset:0; z-index:9999;
-  backdrop-filter: blur(18px) saturate(120%);
-  background: rgba(0,0,0,.55);
-  display:flex; flex-direction:column; justify-content:center; align-items:center;
+.particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 60px 60px, 120px 120px;
+  animation: moveParticles 40s linear infinite;
 }
-#overlay .card{
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.25));
-  border: 1px solid rgba(255,255,255,.18);
-  border-radius: 22px;
-  padding: 28px 22px 26px;
-  text-align:center;
-  box-shadow: 0 30px 80px rgba(0,0,0,.45);
-  animation: float 3s ease-in-out infinite;
+@keyframes moveParticles {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 300px 600px, 600px 300px; }
 }
-#overlay h2{
-  font-size: clamp(1.6rem, 5vw, 2.2rem);
-  margin: 0 0 12px;
+
+/* =========================
+  OVERLAY
+========================= */
+#overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(16px);
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
-#openBtn{
-  margin-top:10px;
-  padding: 16px 34px;
+#overlay h2 {
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+  text-align: center;
+  font-weight: 500;
+  max-width: 260px;
+}
+#openBtn {
+  padding: 12px 26px;
   border-radius: 999px;
   border: none;
-  font-size: 1.15rem;
+  font-size: 1rem;
   cursor: pointer;
   background: var(--gold);
   color: #2b1b0f;
-  font-weight: 700;
-  box-shadow: 0 10px 30px rgba(212,175,55,.5);
-  animation: glow 1.8s infinite alternate;
-  transition: transform .12s ease;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(212,175,55,.45);
 }
-#openBtn:active{ transform: scale(.97); }
-
-@keyframes glow{ from{ box-shadow:0 0 10px rgba(212,175,55,.7) } to{ box-shadow:0 0 28px rgba(255,241,168,.9) } }
-@keyframes float{ 50%{ transform: translateY(-6px) } }
 
 /* =========================
-  HERO PRINCIPAL (9:16 forzado)
+  HERO
 ========================= */
-.hero{
-  position:relative; width:100%; height:100vh; aspect-ratio:9/16; overflow:hidden;
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  aspect-ratio: 9/16;
+  overflow: hidden;
+  z-index: 1;
 }
-.hero img{
-  width:100%; height:100%; object-fit:cover; transform: scale(1.06); /* fuerza 9:16 */
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-.hero::after{
-  content:""; position:absolute; inset:0;
-  background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.55));
+.hero-content {
+  position: absolute;
+  bottom: 18%; /* 🔥 subido un poco */
+  width: 100%;
+  text-align: center;
+  padding: 0 20px;
 }
-.hero-content{
-  position:absolute; inset:auto 0 12% 0; text-align:center; padding:0 18px; z-index:2;
+.mis15 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  letter-spacing: 3px;
+  margin-bottom: 6px;
 }
-.mis15{
-  font-family:'Playfair Display', serif;
-  font-size: clamp(1.6rem, 6vw, 2rem);
-  letter-spacing: 2px; margin-bottom: 8px;
-}
-.nombre{
-  font-family:'Pacifico', cursive;
-  font-size: clamp(2.6rem, 10vw, 3.6rem);
-  line-height:1.1;
+.nombre {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.4rem;
+  font-weight: 400;
   background: var(--gold);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  animation: drawText 1.6s ease forwards;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-@keyframes drawText{ from{ letter-spacing: 10px; opacity: 0 } to{ letter-spacing: 2px; opacity: 1 } }
 
 /* =========================
-  SECCIONES (compactas + animación Keynote)
+  SECCIONES
 ========================= */
-.section{
-  padding: 28px 20px 22px; text-align:center;
-  opacity:0; transform: translateY(28px) scale(.985); filter: blur(2px);
-  transition: opacity .8s ease, transform .8s ease, filter .8s ease;
+.section {
+  padding: 36px 22px 26px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(40px) scale(.98);
+  transition: all 1s ease;
+  position: relative;
+  z-index: 1;
 }
-.section.show{ opacity:1; transform:none; filter:none; }
-.section h2{
-  font-size: clamp(1.5rem, 5.5vw, 1.9rem);
-  margin: 0 0 8px;
+.section.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
-.section p{ font-size: 1.15rem; }
+.section h2 {
+  font-size: 1.9rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.section p {
+  font-size: 1.2rem;
+}
 
-.sep{
-  height:2px; width:120px; margin: 14px auto 6px;
-  background: var(--gold); border-radius:2px; opacity:.9;
+.sep {
+  height: 2px;
+  width: 120px;
+  margin: 18px auto;
+  background: var(--gold);
+  border-radius: 2px;
 }
 
 /* =========================
   FOTOS
 ========================= */
-.photo{ width:100%; border-radius:18px; overflow:hidden; margin: 12px 0; }
-.photo img{ width:100%; display:block; transition: transform .35s ease; cursor:pointer; }
-.photo img:active{ transform: scale(1.04); }
+.photo {
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  margin: 14px 0;
+}
+.photo img {
+  width: 100%;
+  display: block;
+  transition: transform .4s ease;
+  cursor: pointer;
+}
 
 /* =========================
-  GALERÍA (COLUMNAS)
+  GALERÍA
 ========================= */
-.gallery{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.gallery .big{ grid-column: span 2; }
-.gallery img{
-  width:100%; border-radius:16px; cursor:pointer;
-  transition: transform .35s ease, box-shadow .35s ease;
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
-.gallery img:active{ transform: scale(1.04); box-shadow: 0 10px 30px rgba(0,0,0,.45); }
+.gallery .big {
+  grid-column: span 2;
+}
+.gallery img {
+  width: 100%;
+  border-radius: 16px;
+  cursor: pointer;
+}
 
 /* =========================
   BOTONES
 ========================= */
-.btn{
-  display:inline-block; margin-top: 10px; padding: 14px 26px;
-  border-radius: 999px; background: var(--gold); color:#2b1b0f;
-  text-decoration:none; font-weight:800; font-size:1.1rem;
-  box-shadow: 0 10px 30px rgba(212,175,55,.45);
+.btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #2b1b0f;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
-.btn:active{ transform: scale(.97); }
 
 /* =========================
-  CUENTA REGRESIVA
+  FOOTER PEQUEÑO
 ========================= */
-#countdown{ font-size: clamp(1.5rem, 6vw, 1.9rem); letter-spacing: 1px; }
+.footer-util {
+  font-size: .75rem;
+  opacity: .65;
+  margin-top: 10px;
+}
 
 /* =========================
-  MAPAS (iframe responsive)
+  MAPA
 ========================= */
-.map{
-  width:100%; height: 260px; border:0; border-radius:16px; margin: 10px 0 6px;
+.map {
+  width: 100%;
+  height: 220px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 12px 0;
 }
 
 /* =========================
   AUDIO
 ========================= */
-#audio{ display:none; }
+#audio { display:none; }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-  OVERLAY ABRIR
-========================= -->
+<div class="particles"></div>
+
 <div id="overlay">
-  <div class="card">
-    <h2>Estás por abrir la invitación ✨</h2>
-    <button id="openBtn">Abrir invitación</button>
-  </div>
+  <h2>Descubre una invitación creada para ti</h2>
+  <button id="openBtn">Ver invitación</button>
 </div>
 
-<!-- CAMBIA AQUÍ: MÚSICA -->
-<audio id="audio" src="cancio.mp3.mp3" preload="auto"></audio>
+<audio id="audio" src="cancio.mp3.mp3"></audio>
 
-<!-- =========================
-  HERO (CAMBIA AQUÍ: FOTO PRINCIPAL)
-========================= -->
 <section class="hero">
   <img src="https://placehold.co/900x1600" alt="Foto principal">
   <div class="hero-content">
@@ -206,9 +247,6 @@ body {
 
 <div class="sep"></div>
 
-<!-- =========================
-  MI HISTORIA
-========================= -->
 <section class="section">
   <h2>Mi historia</h2>
   <p>
@@ -217,194 +255,91 @@ body {
     este capítulo tan especial de mi vida.
   </p>
   <div class="photo">
-    <img src="https://placehold.co/800x600" alt="Foto historia">
+    <img src="https://placehold.co/800x600">
   </div>
-  <p>Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones ✨</p>
+  <p>
+    Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones.
+  </p>
 </section>
 
 <div class="sep"></div>
 
-<!-- =========================
-  PAPÁS
-========================= -->
 <section class="section">
   <h2>Mis papás</h2>
-  <p>Gracias por ser mi raíz y mi fuerza cada día ✨</p>
-  <p style="font-family:'Pacifico',cursive;font-size:1.8rem;">
+  <p>Gracias por ser mi raíz y mi fuerza cada día</p>
+  <p style="font-family:'Great Vibes',cursive;font-size:1.9rem;">
     María González & Carlos Montes
   </p>
 </section>
 
 <div class="sep"></div>
 
-<!-- =========================
-  PADRINOS
-========================= -->
 <section class="section">
   <h2>Mis padrinos</h2>
-  <p>Por acompañarme en cada paso de este momento tan especial 💛</p>
-  <p style="font-family:'Pacifico',cursive;font-size:1.8rem;">
+  <p>Por acompañarme en cada paso de este momento tan especial</p>
+  <p style="font-family:'Great Vibes',cursive;font-size:1.9rem;">
     Laura Pérez & José Hernández
   </p>
 </section>
 
 <div class="sep"></div>
 
-<!-- =========================
-  MESA DE REGALOS
-========================= -->
 <section class="section">
-  <h2>🎁 Mesa de regalos</h2>
+  <h2>Mesa de regalos</h2>
   <p>Liverpool – Evento #123456</p>
   <p>Transferencia: <span style="text-decoration:none;color:inherit;">1234 5678 9012</span></p>
 </section>
 
 <div class="sep"></div>
 
-<!-- =========================
-  CUENTA REGRESIVA
-========================= -->
 <section class="section">
-  <h2>Faltan…</h2>
-  <div id="countdown"></div>
-  <p>Me encantaría que seas parte de este momento tan especial 💜</p>
-</section>
-
-<div class="sep"></div>
-
-<!-- =========================
-  CEREMONIA (CAMBIA AQUÍ: MAPA)
-========================= -->
-<section class="section">
-  <h2>📍 Ceremonia</h2>
-  <p>🕰 18:00 hrs</p>
+  <h2>Ceremonia</h2>
+  <p>18:00 hrs</p>
   <p>Parroquia Ejemplo</p>
-  <iframe class="map" src="https://www.google.com/maps?q=Zocalo%20CDMX&output=embed" loading="lazy"></iframe>
-  <a class="btn" href="https://maps.google.com" target="_blank" rel="noopener">Cómo llegar</a>
-</section>
-
-<div class="sep"></div>
-
-<!-- =========================
-  RECEPCIÓN (CAMBIA AQUÍ: MAPA OPCIONAL)
-========================= -->
-<section class="section">
-  <h2>🎉 Recepción</h2>
-  <p>20:00 hrs</p>
-  <p>Salón Ejemplo</p>
-  <iframe class="map" src="https://www.google.com/maps?q=Palacio%20de%20Bellas%20Artes%20CDMX&output=embed" loading="lazy"></iframe>
-  <a class="btn" href="https://maps.google.com" target="_blank" rel="noopener">Cómo llegar</a>
-</section>
-
-<div class="sep"></div>
-
-<!-- =========================
-  VESTIMENTA
-========================= -->
-<section class="section">
-  <h2>👗🤵 Código de vestimenta</h2>
-  <p>✨ Divinas y guapos ✨</p>
-</section>
-
-<div class="sep"></div>
-
-<!-- =========================
-  GALERÍA
-========================= -->
-<section class="section">
-  <h2>Galería</h2>
-  <div class="gallery">
-    <img src="https://placehold.co/400x700">
-    <img src="https://placehold.co/400x700">
-    <img class="big" src="https://placehold.co/800x400">
-    <img class="big" src="https://placehold.co/800x700">
-    <img src="https://placehold.co/400x700">
-    <img src="https://placehold.co/400x700">
+  <div class="map">
+    <iframe src="https://maps.google.com/maps?q=parroquia%20ejemplo&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" frameborder="0"></iframe>
   </div>
+  <a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
 </section>
 
 <div class="sep"></div>
 
-<!-- =========================
-  CONFIRMACIÓN (CAMBIA AQUÍ: WHATSAPP)
-========================= -->
-<section class="section">
-  <h2>¡Estás invitado!</h2>
-  <a class="btn" href="https://wa.me/5210000000000?text=Hola%20quiero%20confirmar%20mi%20asistencia%20a%20los%2015%20de%20Sofía%20Montes%20✨" target="_blank" rel="noopener">
-    Confirmar asistencia
-  </a>
-  <p>Te esperamos con cariño para compartir este momento inolvidable 💜</p>
-</section>
-
-<div class="sep"></div>
-
-<!-- =========================
-  FOOTER
-========================= -->
 <section class="section">
   <p>Invitación creada con amor</p>
   <strong>Digital Invita</strong>
-  <p style="opacity:.75;">
-    ¿No cuentas con invitación aún?
-    <a href="#" style="color:#fff;text-decoration:underline;">Consigue la tuya aquí</a>
-  </p>
+  <div class="footer-util">
+    ¿No cuentas con invitación aún?  
+    <a href="#" style="color:#fff;text-decoration:underline;">Solicita la tuya</a>
+  </div>
 </section>
 
 <script>
-/* =========================
-  ABRIR + AUDIO (desde segundo 6 con fundido)
-========================= */
 const btn = document.getElementById('openBtn');
 const overlay = document.getElementById('overlay');
 const audio = document.getElementById('audio');
 
 btn.addEventListener('click', () => {
-  overlay.style.opacity = '0';
-  setTimeout(()=> overlay.remove(), 500);
+  overlay.style.display = 'none';
   document.body.style.overflow = 'auto';
-
   audio.currentTime = 6;
   audio.volume = 0;
   audio.play().catch(()=>{});
   let vol = 0;
   const fade = setInterval(() => {
-    vol += 0.06;
-    audio.volume = Math.min(vol, 0.9);
-    if (vol >= 0.9) clearInterval(fade);
-  }, 160);
+    vol += 0.05;
+    audio.volume = Math.min(vol, 1);
+    if (vol >= 1) clearInterval(fade);
+  }, 200);
 });
 
-/* =========================
-  ANIMACIONES AL SCROLL (Keynote feel)
-========================= */
 const sections = document.querySelectorAll('.section');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) entry.target.classList.add('show');
   });
-},{ threshold: 0.12 }); /* aparece un poco antes */
+},{ threshold: 0.1 });
 
 sections.forEach(sec => observer.observe(sec));
-
-/* =========================
-  CUENTA REGRESIVA
-========================= */
-const targetDate = new Date('2026-08-15T18:00:00').getTime();
-setInterval(() => {
-  const now = Date.now();
-  const diff = Math.max(0, targetDate - now);
-  const d = Math.floor(diff / (1000*60*60*24));
-  const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-  const m = Math.floor((diff % (1000*60*60)) / (1000*60));
-  document.getElementById('countdown').innerText = `${d} días ${h} hrs ${m} min`;
-}, 1000);
-
-/* =========================
-  ABRIR IMÁGENES
-========================= */
-document.querySelectorAll('img').forEach(img => {
-  img.addEventListener('click', () => window.open(img.src, '_blank'));
-});
 </script>
 
 </body>
