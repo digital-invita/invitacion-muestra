@@ -21,53 +21,63 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg-image), var(--bg-color);
   background-size: cover;
-  background-attachment: fixed;
+  background-attachment: scroll;
   color: var(--text-light);
-  overflow: hidden;
-  font-size: 19px;
-  line-height: 1.7;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-size: 20px;
+  line-height: 1.75;
+}
+
+/* PARTICULAS FONDO */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: .15;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* OVERLAY */
 #overlay {
   position: fixed;
   inset: 0;
-  backdrop-filter: blur(20px);
-  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(18px);
+  background: rgba(0,0,0,0.6);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  animation: pulse 2s infinite;
+  padding: 20px;
 }
 #overlay h2 {
-  font-size: 2.4rem;
-  margin-bottom: 20px;
+  font-size: 1.9rem;
+  margin-bottom: 16px;
   text-align: center;
-  padding: 0 20px;
+  max-width: 320px;
+  font-family: 'Playfair Display', serif;
 }
 #openBtn {
-  padding: 18px 38px;
+  padding: 14px 28px;
   border-radius: 999px;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   cursor: pointer;
   background: var(--gold);
   color: #2b1b0f;
   font-weight: 600;
-  box-shadow: 0 10px 30px rgba(212,175,55,.5);
-  animation: glow 2s infinite alternate;
+  box-shadow: 0 10px 25px rgba(212,175,55,.45);
 }
-
-@keyframes pulse { 0%{opacity:.9} 100%{opacity:1} }
-@keyframes glow { from{box-shadow:0 0 10px #d4af37} to{box-shadow:0 0 25px #fff1a8} }
 
 /* HERO */
 .hero {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100svh;
   aspect-ratio: 9/16;
   overflow: hidden;
 }
@@ -76,39 +86,43 @@ body {
   height: 100%;
   object-fit: cover;
 }
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.55), transparent 60%);
+}
 .hero-content {
   position: absolute;
-  bottom: 10%;
+  bottom: 16%;
   width: 100%;
   text-align: center;
   padding: 0 20px;
+  z-index: 2;
 }
 .mis15 {
   font-family: 'Playfair Display', serif;
-  font-size: 2rem;
+  font-size: 2.2rem;
   letter-spacing: 2px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 .nombre {
   font-family: 'Pacifico', cursive;
-  font-size: 3.8rem;
+  font-size: 3.9rem;
+  font-weight: 400;
   background: var(--gold);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: drawText 2s ease forwards;
-}
-
-@keyframes drawText {
-  from { letter-spacing: 12px; opacity: 0; }
-  to { letter-spacing: 2px; opacity: 1; }
 }
 
 /* SECCIONES */
 .section {
-  padding: 34px 22px 22px;
+  position: relative;
+  z-index: 2;
+  padding: 30px 22px 18px;
   text-align: center;
   opacity: 0;
-  transform: translateY(40px) scale(.98);
+  transform: translateY(30px) scale(.98);
   transition: all 1s ease;
 }
 .section.show {
@@ -116,8 +130,8 @@ body {
   transform: translateY(0) scale(1);
 }
 .section h2 {
-  font-size: 2rem;
-  margin-bottom: 12px;
+  font-size: 2.1rem;
+  margin-bottom: 10px;
 }
 .section p {
   font-size: 1.25rem;
@@ -125,7 +139,7 @@ body {
 
 .sep {
   height: 2px;
-  width: 120px;
+  width: 110px;
   margin: 18px auto;
   background: var(--gold);
   border-radius: 2px;
@@ -136,15 +150,13 @@ body {
   width: 100%;
   border-radius: 18px;
   overflow: hidden;
-  margin: 16px 0;
+  margin: 14px 0;
 }
 .photo img {
   width: 100%;
   display: block;
-  transition: transform .4s ease;
   cursor: pointer;
 }
-.photo img:hover { transform: scale(1.05); }
 
 /* GALERÍA */
 .gallery {
@@ -159,11 +171,6 @@ body {
   width: 100%;
   border-radius: 16px;
   cursor: pointer;
-  transition: transform .5s ease, box-shadow .5s ease;
-}
-.gallery img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 30px rgba(0,0,0,.4);
 }
 
 /* BOTONES */
@@ -176,14 +183,24 @@ body {
   color: #2b1b0f;
   text-decoration: none;
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
 }
 
 /* CUENTA REGRESIVA */
 #countdown {
-  font-size: 2rem;
+  font-size: 2.4rem;
   letter-spacing: 2px;
-  margin: 10px 0;
+  font-weight: 600;
+  background: var(--gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* FOOTER UTILIDADES */
+.footer-util {
+  font-size: .85rem;
+  opacity: .75;
+  margin-top: 6px;
 }
 
 /* AUDIO */
@@ -194,8 +211,8 @@ body {
 <body>
 
 <div id="overlay">
-  <h2>Estás por abrir la invitación ✨</h2>
-  <button id="openBtn">Abrir invitación</button>
+  <h2>Estás a punto de descubrir un momento especial</h2>
+  <button id="openBtn">Entrar a la invitación</button>
 </div>
 
 <audio id="audio" src="cancio.mp3.mp3"></audio>
@@ -214,14 +231,14 @@ body {
   <h2>Mi historia</h2>
   <p>Hoy celebro no solo mis 15 años, sino cada sonrisa, cada aprendizaje y cada sueño que me ha traído hasta aquí.</p>
   <div class="photo"><img src="https://placehold.co/800x600"></div>
-  <p>Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones ✨</p>
+  <p>Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones.</p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
   <h2>Mis papás</h2>
-  <p>Gracias por ser mi raíz y mi fuerza cada día ✨</p>
+  <p>Gracias por ser mi raíz y mi fuerza cada día</p>
   <p style="font-family:'Pacifico',cursive;font-size:2rem;">María González & Carlos Montes</p>
 </section>
 
@@ -229,14 +246,14 @@ body {
 
 <section class="section">
   <h2>Mis padrinos</h2>
-  <p>Por acompañarme en cada paso de este momento tan especial 💛</p>
+  <p>Por acompañarme en cada paso de este momento tan especial</p>
   <p style="font-family:'Pacifico',cursive;font-size:2rem;">Laura Pérez & José Hernández</p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>🎁 Mesa de regalos</h2>
+  <h2>Mesa de regalos</h2>
   <p>Liverpool – Evento #123456</p>
   <p>Transferencia: <span style="text-decoration:none;color:inherit;">1234 5678 9012</span></p>
 </section>
@@ -246,14 +263,14 @@ body {
 <section class="section">
   <h2>Faltan…</h2>
   <div id="countdown"></div>
-  <p>Me encantaría que seas parte de este momento tan especial 💜</p>
+  <p>Me encantaría que seas parte de este momento tan especial</p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>📍 Ceremonia</h2>
-  <p>🕰 18:00 hrs</p>
+  <h2>Ceremonia</h2>
+  <p>18:00 hrs</p>
   <p>Parroquia Ejemplo</p>
   <a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
 </section>
@@ -261,7 +278,7 @@ body {
 <div class="sep"></div>
 
 <section class="section">
-  <h2>🎉 Recepción</h2>
+  <h2>Recepción</h2>
   <p>20:00 hrs</p>
   <p>Salón Ejemplo</p>
   <a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
@@ -270,8 +287,8 @@ body {
 <div class="sep"></div>
 
 <section class="section">
-  <h2>👗🤵 Código de vestimenta</h2>
-  <p>✨ Divinas y guapos ✨</p>
+  <h2>Código de vestimenta</h2>
+  <p>Divinas y guapos</p>
 </section>
 
 <div class="sep"></div>
@@ -291,19 +308,19 @@ body {
 <div class="sep"></div>
 
 <section class="section">
-  <h2>¡Estás invitado!</h2>
-  <a class="btn" href="https://wa.me/5210000000000?text=Hola%20quiero%20confirmar%20mi%20asistencia%20a%20los%2015%20de%20Sofía%20Montes%20✨" target="_blank">
+  <h2>Confirmación</h2>
+  <a class="btn" href="https://wa.me/5210000000000?text=Hola%20quiero%20confirmar%20mi%20asistencia%20a%20los%2015%20de%20Sofía%20Montes" target="_blank">
     Confirmar asistencia
   </a>
-  <p>Te esperamos con cariño para compartir este momento inolvidable 💜</p>
+  <p>Te esperamos con cariño para compartir este momento inolvidable</p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <p>Invitación creada con amor</p>
-  <strong>Digital Invita</strong>
-  <p style="opacity:.7;">
+  <p class="footer-util">Invitación creada con amor</p>
+  <strong class="footer-util">Digital Invita</strong>
+  <p class="footer-util">
     ¿No cuentas con invitación aún?
     <a href="#" style="color:#fff;text-decoration:underline;">Consigue la tuya aquí</a>
   </p>
@@ -316,7 +333,6 @@ const audio = document.getElementById('audio');
 
 btn.addEventListener('click', () => {
   overlay.style.display = 'none';
-  document.body.style.overflow = 'auto';
   audio.currentTime = 6;
   audio.volume = 0;
   audio.play().catch(()=>{});
@@ -333,7 +349,7 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) entry.target.classList.add('show');
   });
-},{ threshold: 0.05 });
+},{ threshold: 0.1 });
 
 sections.forEach(sec => observer.observe(sec));
 
