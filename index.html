@@ -597,6 +597,8 @@ btn.addEventListener('click', () => {
   overlay.style.display = 'none';
   document.body.style.overflow = 'auto';
   nombre.classList.add('show');
+  startParticleText(); // 👈 inicia efecto al abrir invitación
+
 
   if(audio){
     audio.currentTime = 6;
@@ -653,8 +655,10 @@ window.addEventListener('resize', resize);
 
 // CONFIG
 const PARTICLE_COUNT = 160;
-const FORM_INTERVAL = 8000;
-const FORM_DURATION = 3500;
+const FIRST_DELAY = 7000;    // 7 segundos antes de aparecer la primera vez
+const FORM_INTERVAL = 18000; // 18 segundos entre apariciones
+const FORM_DURATION = 6000; // 6 segundos visible formado
+
 
 let forming = false;
 let textPoints = [];
@@ -712,6 +716,22 @@ function generateTextPoints(text){
 // FORMAR TEXTO
 function formText(){
   textPoints = generateTextPoints(particleText);
+// ===== INICIAR EFECTO DESPUÉS DE ABRIR =====
+
+function startParticleText(){
+
+  // Primera aparición
+  setTimeout(() => {
+    formText();
+
+    // Repeticiones automáticas
+    setInterval(() => {
+      formText();
+    }, FORM_INTERVAL);
+
+  }, FIRST_DELAY);
+
+}
 
   particles.forEach((p,i)=>{
     const point = textPoints[i % textPoints.length];
@@ -731,7 +751,18 @@ function formText(){
 }
 
 // CICLO
-setInterval(formText, FORM_INTERVAL);
+// ===== CONTROL DE TIEMPOS =====
+
+// Primer retraso (antes de mostrar la palabra por primera vez)
+setTimeout(() => {
+  formText();
+
+  // Repeticiones posteriores
+  setInterval(() => {
+    formText();
+  }, FORM_INTERVAL);
+
+}, FIRST_DELAY);
 
 // ANIMAR
 function animate(){
