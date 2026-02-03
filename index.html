@@ -697,7 +697,8 @@ function generateTextPoints(text){
   temp.width = w;
   temp.height = h;
 
-const fontSize = Math.min(h * 0.22, w * 0.35);
+const fontSize = Math.min(h * 0.28, w * 0.6);
+
 
 
   tctx.clearRect(0,0,w,h);
@@ -711,8 +712,8 @@ const fontSize = Math.min(h * 0.22, w * 0.35);
   const data = tctx.getImageData(0,0,w,h).data;
   const points = [];
 
-  for(let y=0;y<h;y+=2){
-    for(let x=0;x<w;x+=2){
+  for(let y=0;y<h;y+=5){
+    for(let x=0;x<w;x+=5){
       const i = (y*w + x) * 4;
       if(data[i+3] > 20){
         points.push({x,y});
@@ -732,7 +733,7 @@ function formText(){
     particles.push(createParticle());
   }
 
-  const FORM_RATIO = 0.55; 
+  const FORM_RATIO = 0.75; 
 
   const activeCount = Math.floor(particles.length * FORM_RATIO);
 
