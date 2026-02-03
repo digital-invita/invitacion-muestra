@@ -692,61 +692,61 @@ function formText() {
 }
 
 function animate() {
-   ctx.clearRect(0, 0, w, h); // 👈 limpia el canvas sin pintar fondo
+   ctx.clearRect(0, 0, w, h); // limpia el canvas sin pintar fondo
 
+   for (let i = particles.length - 1; i >= 0; i--) {
+       let p = particles[i];
 
-for (let i = particles.length - 1; i >= 0; i--) {
-    let p = particles[i];
+       // Movimiento hacia texto si forming está activo
+       if (forming && p.tx !== null) {
+           // Solo algunas partículas van al texto
+           if (Math.random() < 0.7) {
+               p.x += (p.tx - p.x) * 0.12;
+               p.y += (p.ty - p.y) * 0.12;
+           } else { // otras siguen libres
+               p.x += p.vx;
+               p.y += p.vy;
+           }
+           p.alpha = Math.min(p.alpha + 0.08, 1);
+       } else { // partículas libres siempre
+           p.x += p.vx;
+           p.y += p.vy;
+           if (p.fadingOut) {
+               p.alpha -= 0.015;
+               if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+           } else {
+               p.alpha = p.isExtra ? Math.max(p.alpha - 0.01, 0) : p.baseAlpha;
+           }
+       }
 
-    if (forming && p.tx !== null) {
-        // Solo algunas partículas van al texto, otras siguen libres
-        if (Math.random() < 0.7) { // 70% van al texto
-            p.x += (p.tx - p.x) * 0.12;
-            p.y += (p.ty - p.y) * 0.12;
-        } else { // 30% siguen libres
-            p.x += p.vx;
-            p.y += p.vy;
-        }
-        p.alpha = Math.min(p.alpha + 0.08, 1);
-        if (p.tx !== null && Math.hypot(p.tx - p.x, p.ty - p.y) < 5) {
-            ctx.shadowBlur = 15;
-            ctx.shadowColor = "#fff1a8";
-        }
-    } else {
-        p.x += p.vx;
-        p.y += p.vy;
-        ctx.shadowBlur = 0;
-        if (p.fadingOut) {
-            p.alpha -= 0.015;
-            if (p.alpha <= 0) { particles.splice(i, 1); continue; }
-        } else {
-            p.alpha = p.isExtra ? Math.max(p.alpha - 0.01, 0) : p.baseAlpha;
-        }
-        if (p.x < 0 || p.x > w) p.vx *= -1;
-        if (p.y < 0 || p.y > h) p.vy *= -1;
-    }
+       // Rebote con bordes
+       if (p.x < 0 || p.x > w) p.vx *= -1;
+       if (p.y < 0 || p.y > h) p.vy *= -1;
 
-    // === NUEVO: dibujar colita ===
-    ctx.strokeStyle = `rgba(255,215,160,${p.alpha * 0.3})`;
-    ctx.lineWidth = p.size * 1.2;
-    ctx.beginPath();
-    ctx.moveTo(p.x - p.vx * 2, p.y - p.vy * 2);
-    ctx.lineTo(p.x, p.y);
-    ctx.stroke();
+       // --- Colita siempre presente para algunas partículas ---
+       if (p.trail) {
+           ctx.strokeStyle = `rgba(255,215,160,${p.alpha * 0.3})`;
+           ctx.lineWidth = p.size * 1.2;
+           ctx.beginPath();
+           ctx.moveTo(p.prevX, p.prevY);
+           ctx.lineTo(p.x, p.y);
+           ctx.stroke();
+       }
 
-    ctx.fillStyle = `rgba(255, 215, 160, ${p.alpha})`;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fill();
+       // Cuerpo de la partícula
+       ctx.fillStyle = `rgba(255, 215, 160, ${p.alpha})`;
+       ctx.beginPath();
+       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+       ctx.fill();
 
+       // Guardar posición previa para la colita
+       p.prevX = p.x;
+       p.prevY = p.y;
+   }
 
-    // --- ACTUALIZAR PREVX, PREVY ---
-    p.prevX = p.x;
-    p.prevY = p.y;
+   requestAnimationFrame(animate);
 }
 
-    requestAnimationFrame(animate);
-}
 
 // INTERFAZ Y BOTÓN TO TOP (Punto 4)
 window.addEventListener('DOMContentLoaded', () => {
