@@ -34,7 +34,7 @@ body {
 #particles {
   position: fixed; /* Esto lo deja pegado al fondo aunque subas o bajes */
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
 }
 
@@ -687,8 +687,8 @@ function formText() {
 }
 
 function animate() {
-    ctx.fillStyle = 'rgba(75, 29, 107, 0.25)'; 
-    ctx.fillRect(0, 0, w, h);
+   ctx.clearRect(0, 0, w, h); // 👈 limpia el canvas sin pintar fondo
+
 
     for (let i = particles.length - 1; i >= 0; i--) {
         let p = particles[i];
