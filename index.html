@@ -688,7 +688,7 @@ for(let i=0;i<BASE_PARTICLES;i++){
 }
 
 
-// GENERAR TEXTO
+// GENERAR TEXTO (SOLO CONTORNO, LOOK PREMIUM)
 function generateTextPoints(text){
 
   const temp = document.createElement("canvas");
@@ -697,9 +697,7 @@ function generateTextPoints(text){
   temp.width = w;
   temp.height = h;
 
-const fontSize = Math.min(h * 0.28, w * 0.6);
-
-
+  const fontSize = Math.min(h * 0.28, w * 0.6);
 
   tctx.clearRect(0,0,w,h);
   tctx.fillStyle = "#fff";
@@ -707,16 +705,32 @@ const fontSize = Math.min(h * 0.28, w * 0.6);
   tctx.textBaseline = "middle";
   tctx.font = `600 ${fontSize}px "Playfair Display"`;
 
- tctx.fillText(text, w/2, h * 0.45);
+  tctx.fillText(text, w/2, h * 0.45);
 
   const data = tctx.getImageData(0,0,w,h).data;
   const points = [];
 
-  for(let y=0;y<h;y+=5){
-    for(let x=0;x<w;x+=5){
-      const i = (y*w + x) * 4;
-      if(data[i+3] > 20){
-        points.push({x,y});
+  // 👉 Detectar solo el borde del texto (outline)
+  for(let y = 1; y < h - 1; y += 5){
+    for(let x = 1; x < w - 1; x += 5){
+      const i = (y * w + x) * 4;
+
+      if(data[i + 3] > 20){
+
+        const iL = (y * w + (x - 1)) * 4;
+        const iR = (y * w + (x + 1)) * 4;
+        const iT = ((y - 1) * w + x) * 4;
+        const iB = ((y + 1) * w + x) * 4;
+
+        // Si algún vecino es transparente, es borde
+        if(
+          data[iL + 3] < 20 ||
+          data[iR + 3] < 20 ||
+          data[iT + 3] < 20 ||
+          data[iB + 3] < 20
+        ){
+          points.push({ x, y });
+        }
       }
     }
   }
@@ -724,9 +738,6 @@ const fontSize = Math.min(h * 0.28, w * 0.6);
   return points;
 }
 
-function formText(){
-
-  textPoints = generateTextPoints(particleText);
 
   // 👉 Aparecen más partículas solo cuando se forma el texto
   while(particles.length < TEXT_PARTICLES){
