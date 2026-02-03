@@ -581,6 +581,9 @@ html, body {
 <button id="toTopBtn">↑</button>
 
 <script>
+  // ===== TEXTO QUE FORMARÁN LAS PARTÍCULAS =====
+let particleText = "MIS XV"; // <-- aquí cambias el texto cuando quieras
+
 window.addEventListener('DOMContentLoaded', () => {
 
 const btn = document.getElementById('openBtn');
@@ -635,43 +638,134 @@ setInterval(() => {
   `;
 }, 1000);
 
-/* PARTÍCULAS */
+/* ===== PARTÍCULAS CON TEXTO ===== */
+
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
+
 let w, h;
-function resize(){ w = canvas.width = innerWidth; h = canvas.height = innerHeight; }
-resize(); window.addEventListener('resize', resize);
+function resize(){
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
 
-const particles = Array.from({length: 28}, () => ({
-  x: Math.random()*w,
-  y: Math.random()*h,
-  vx: (Math.random()-.5)*0.6,
-  vy: Math.random()*1.4 + .3,
-  len: Math.random()*18 + 8,
-  speed: Math.random()*1.2 + .4,
-  alpha: Math.random()*.6 + .2
-}));
+// CONFIG
+const PARTICLE_COUNT = 160;
+const FORM_INTERVAL = 8000;
+const FORM_DURATION = 3500;
 
+let forming = false;
+let textPoints = [];
+
+// CREAR PARTICULAS
+const particles = [];
+
+for(let i=0;i<PARTICLE_COUNT;i++){
+  particles.push({
+    x: Math.random()*w,
+    y: Math.random()*h,
+    tx: null,
+    ty: null,
+    vx: (Math.random()-.5)*0.6,
+    vy: (Math.random()-.5)*0.6,
+    size: Math.random()*1.4 + .8,
+    alpha: Math.random()*.6 + .3
+  });
+}
+
+// GENERAR TEXTO
+function generateTextPoints(text){
+
+  const temp = document.createElement("canvas");
+  const tctx = temp.getContext("2d");
+
+  temp.width = w;
+  temp.height = h;
+
+  const fontSize = Math.min(w*0.18, 160);
+
+  tctx.clearRect(0,0,w,h);
+  tctx.fillStyle = "#fff";
+  tctx.textAlign = "center";
+  tctx.textBaseline = "middle";
+  tctx.font = `bold ${fontSize}px Playfair Display`;
+
+  tctx.fillText(text, w/2, h/2);
+
+  const data = tctx.getImageData(0,0,w,h).data;
+  const points = [];
+
+  for(let y=0;y<h;y+=6){
+    for(let x=0;x<w;x+=6){
+      const i = (y*w + x) * 4;
+      if(data[i+3] > 150){
+        points.push({x,y});
+      }
+    }
+  }
+
+  return points;
+}
+
+// FORMAR TEXTO
+function formText(){
+  textPoints = generateTextPoints(particleText);
+
+  particles.forEach((p,i)=>{
+    const point = textPoints[i % textPoints.length];
+    p.tx = point.x;
+    p.ty = point.y;
+  });
+
+  forming = true;
+
+  setTimeout(()=>{
+    forming = false;
+    particles.forEach(p=>{
+      p.tx = null;
+      p.ty = null;
+    });
+  }, FORM_DURATION);
+}
+
+// CICLO
+setInterval(formText, FORM_INTERVAL);
+
+// ANIMAR
 function animate(){
+
   ctx.fillStyle = 'rgba(75,29,107,0.15)';
   ctx.fillRect(0,0,w,h);
-  particles.forEach(p=>{
-    ctx.strokeStyle = `rgba(255,215,130,${p.alpha})`;
-    ctx.lineWidth = 1.2;
-    ctx.beginPath();
-    ctx.moveTo(p.x, p.y);
-    ctx.lineTo(p.x - p.vx* p.len, p.y - p.vy* p.len);
-    ctx.stroke();
 
-    p.x += p.vx * p.speed;
-    p.y += p.vy * p.speed;
-    if(p.y > h + 20 || p.x < -20 || p.x > w + 20){
-      p.y = -10; p.x = Math.random()*w;
+  particles.forEach(p=>{
+
+    if(forming && p.tx !== null){
+      p.x += (p.tx - p.x) * 0.05;
+      p.y += (p.ty - p.y) * 0.05;
+    } else {
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if(p.x < 0) p.x = w;
+      if(p.x > w) p.x = 0;
+      if(p.y < 0) p.y = h;
+      if(p.y > h) p.y = 0;
     }
+
+    ctx.beginPath();
+    ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fill();
+
   });
+
   requestAnimationFrame(animate);
 }
+
 animate();
+
 
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
