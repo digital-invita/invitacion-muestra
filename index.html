@@ -580,19 +580,16 @@ html, body {
 <!-- BOTÓN SUBIR ARRIBA -->
 <button id="toTopBtn">↑</button>
 
-<script>
-  // ===== TEXTO QUE FORMARÁN LAS PARTÍCULAS =====
-  let particleText = "MIS\nXV"; // <-- aquí cambias el texto cuando quieras
+// ===== TEXTO QUE FORMARÁN LAS PARTÍCULAS =====
+  let particleText = "MIS\nXV"; 
 
   window.addEventListener('DOMContentLoaded', () => {
-
     const btn = document.getElementById('openBtn');
     const overlay = document.getElementById('overlay');
     const audio = document.getElementById('audio');
     const nombre = document.getElementById('nombre');
 
     btn.addEventListener('click', () => {
-
       overlay.style.opacity = '0';
       overlay.style.pointerEvents = 'none';
       setTimeout(() => overlay.style.display = 'none', 400);
@@ -620,9 +617,7 @@ html, body {
     entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('show');
     });
-  }, {
-    threshold: 0.05
-  });
+  }, { threshold: 0.05 });
   sections.forEach(sec => observer.observe(sec));
 
   const targetDate = new Date('2026-08-15T18:00:00').getTime();
@@ -635,18 +630,16 @@ html, body {
     const s = Math.max(0, Math.floor((diff % (1000 * 60)) / 1000));
 
     document.getElementById('countdown').innerHTML = `
-    <div class="count-box"><strong>${d}</strong>Días</div>
-    <div class="count-box"><strong>${h}</strong>Horas</div>
-    <div class="count-box"><strong>${m}</strong>Minutos</div>
-    <div class="count-box"><strong>${s}</strong>Segundos</div>
-  `;
+      <div class="count-box"><strong>${d}</strong>Días</div>
+      <div class="count-box"><strong>${h}</strong>Horas</div>
+      <div class="count-box"><strong>${m}</strong>Minutos</div>
+      <div class="count-box"><strong>${s}</strong>Segundos</div>
+    `;
   }, 1000);
 
-  /* ===== PARTÍCULAS CON TEXTO ===== */
-
+  /* ===== SISTEMA DE PARTÍCULAS CORREGIDO ===== */
   const canvas = document.getElementById('particles');
-  const ctx = canvas.getContext('2d');
-
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
   let w, h;
 
   function resize() {
@@ -656,269 +649,181 @@ html, body {
   resize();
   window.addEventListener('resize', resize);
 
-  // CONFIG
-  const BASE_PARTICLES = 150; // normales flotando
-  const TEXT_PARTICLES = 320; // solo cuando se forma el texto
-
-  const FIRST_DELAY = 8000; // 8s después de abrir invitación
-  const FORM_INTERVAL = 25000; // 25s entre formaciones
-  const FORM_DURATION = 4500; // 4.5s visible el texto
+  const BASE_PARTICLES = 120; 
+  const FIRST_DELAY = 6000; 
+  const FORM_INTERVAL = 20000; 
+  const FORM_DURATION = 4000; 
 
   let forming = false;
-  let textPoints = [];
+  let particles = [];
 
-  // CREAR PARTICULAS
-  const particles = [];
-
-  function createParticle() {
+  function createParticle(isExtra = false) {
     return {
       x: Math.random() * w,
       y: Math.random() * h,
-      tx: null,
-      ty: null,
-      vx: (Math.random() - .5) * 1.1,
-      vy: (Math.random() - .5) * 1.1,
-      size: Math.random() * 0.7 + 0.5,
-      alpha: Math.random() * .6 + .3, // <--- AQUÍ FALTABA LA COMA
-      fade: 1
+      tx: null, ty: null,
+      vx: (Math.random() - .5) * 0.8,
+      vy: (Math.random() - .5) * 0.8,
+      size: Math.random() * 0.8 + 0.5,
+      alpha: Math.random() * .5 + .2,
+      fade: 1,
+      isExtra: isExtra
     };
   }
 
-  // Iniciales (solo 150)
   for (let i = 0; i < BASE_PARTICLES; i++) {
-    particles.push(createParticle());
+    particles.push(createParticle(false));
   }
 
-  // GENERAR TEXTO (SOLO CONTORNO, LOOK PREMIUM)
   function generateTextPoints(text) {
     const temp = document.createElement("canvas");
     const tctx = temp.getContext("2d");
-
     temp.width = w;
     temp.height = h;
 
-    const fontSize = Math.min(h * 0.18, w * 0.5); // 👈 más pequeño para móvil
-
-    tctx.clearRect(0, 0, w, h);
+    const fontSize = Math.min(h * 0.15, w * 0.4); 
     tctx.fillStyle = "#fff";
     tctx.textAlign = "center";
     tctx.textBaseline = "middle";
     tctx.font = `700 ${fontSize}px "Playfair Display"`;
 
     const lines = text.split("\n");
-    const lineHeight = fontSize * 1.05;
+    const lineHeight = fontSize * 1.1;
+    const totalHeight = lines.length * lineHeight;
+    const startY = (h / 2) - (totalHeight / 4); // Centrado dinámico
 
     lines.forEach((line, i) => {
-      const offset = (i - (lines.length - 1) / 2) * lineHeight;
-      tctx.fillText(line, w / 2, h * 0.38 + offset); // 👈 más arriba
+      tctx.fillText(line, w / 2, startY + (i * lineHeight));
     });
 
     const data = tctx.getImageData(0, 0, w, h).data;
     const points = [];
+    const step = w < 500 ? 4 : 3; // Densidad según pantalla
 
-    for (let y = 0; y < h; y += 4) {
-      for (let x = 0; x < w; x += 4) {
-        const i = (y * w + x) * 4;
-        if (data[i + 3] > 120) {
-          points.push({
-            x,
-            y
-          });
+    for (let y = 0; y < h; y += step) {
+      for (let x = 0; x < w; x += step) {
+        if (data[(y * w + x) * 4 + 3] > 128) {
+          points.push({ x, y });
         }
       }
     }
-
     return points;
   }
 
   function formText() {
-    textPoints = generateTextPoints(particleText);
-
-    // Crear partículas suficientes SOLO para el texto
+    const textPoints = generateTextPoints(particleText);
+    
+    // Añadir partículas si faltan
     while (particles.length < textPoints.length) {
-      particles.push(createParticle());
-    }
-
-    const activeCount = Math.min(textPoints.length, particles.length - BASE_PARTICLES);
-
-    for (let i = 0; i < activeCount; i++) {
-      const p = particles[BASE_PARTICLES + i];
-      const point = textPoints[i];
-
-      p.tx = point.x;
-      p.ty = point.y;
-
-      const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 2 + 1;
-      p.outVX = Math.cos(angle) * speed;
-      p.outVY = Math.sin(angle) * speed;
+      particles.push(createParticle(true));
     }
 
     forming = true;
+    textPoints.forEach((pt, i) => {
+      if (particles[i]) {
+        particles[i].tx = pt.x;
+        particles[i].ty = pt.y;
+        particles[i].fade = 1;
+      }
+    });
 
+    // Desintegración
     setTimeout(() => {
       forming = false;
-
-      particles.forEach((p, i) => {
-        if (i >= BASE_PARTICLES && p.tx !== null) {
-          p.tx = null;
-          p.ty = null;
-          p.vx = p.outVX;
-          p.vy = p.outVY;
-          p.fade = 1;
+      particles.forEach(p => {
+        if (p.tx !== null) {
+          const angle = Math.random() * Math.PI * 2;
+          const force = Math.random() * 3 + 1;
+          p.vx = Math.cos(angle) * force;
+          p.vy = Math.sin(angle) * force;
+          p.tx = null; p.ty = null;
         }
       });
 
-      const fadeInterval = setInterval(() => {
-        let done = true;
-
-        particles.forEach((p, i) => {
-          if (i >= BASE_PARTICLES) {
-            p.fade -= 0.08;
-            if (p.fade > 0) done = false;
+      // Efecto Fade Out para las partículas extra
+      const fadeEffect = setInterval(() => {
+        let anyVisible = false;
+        particles.forEach((p, idx) => {
+          if (p.isExtra) {
+            p.fade -= 0.02;
+            if (p.fade > 0) anyVisible = true;
           }
         });
-
-        if (done) {
-          clearInterval(fadeInterval);
-          particles.splice(BASE_PARTICLES);
+        if (!anyVisible) {
+          clearInterval(fadeEffect);
+          particles = particles.filter(p => !p.isExtra);
         }
-      }, 60);
+      }, 30);
 
     }, FORM_DURATION);
   }
 
-  // ===== CONTROL DE CICLO =====
-
-  let particleStarted = false;
-  let particleLoop = null;
-
   function startParticleText() {
-
-    if (particleStarted) return; // evita doble inicio
-    particleStarted = true;
-
-    // Primera vez
     setTimeout(() => {
-
       formText();
-
-      // Loop limpio
-      particleLoop = setInterval(() => {
-        formText();
-      }, FORM_INTERVAL);
-
+      setInterval(formText, FORM_INTERVAL);
     }, FIRST_DELAY);
-
   }
 
-  // ANIMAR
   function animate() {
-
     ctx.clearRect(0, 0, w, h);
-
     particles.forEach(p => {
-
       if (forming && p.tx !== null) {
-        p.x += (p.tx - p.x) * 0.08;
-        p.y += (p.ty - p.y) * 0.08;
+        p.x += (p.tx - p.x) * 0.07;
+        p.y += (p.ty - p.y) * 0.07;
       } else {
         p.x += p.vx;
         p.y += p.vy;
-
-        if (p.x < 0) p.x = w;
-        if (p.x > w) p.x = 0;
-        if (p.y < 0) p.y = h;
-        if (p.y > h) p.y = 0;
+        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
       }
 
+      const finalAlpha = forming && p.tx !== null ? 1 : p.alpha * p.fade;
+      ctx.fillStyle = `rgba(255, 215, 160, ${finalAlpha})`;
       if (forming && p.tx !== null) {
-        ctx.shadowBlur = 6;
-        ctx.shadowColor = "rgba(255,215,160,0.8)";
-        ctx.fillStyle = "rgba(255,215,160,1)";
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = "#ffd7a0";
       } else {
         ctx.shadowBlur = 0;
-        ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
       }
-
+      
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fill();
-
     });
-
     requestAnimationFrame(animate);
   }
-
   animate();
 
-
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const closeLightbox = document.getElementById('closeLightbox');
-
+  // Galería y Lightbox (Tus funciones originales se mantienen igual)
   document.querySelectorAll('.gallery img').forEach(img => {
     img.addEventListener('click', () => {
-
-      lightboxImg.src = img.src;
-      lightbox.style.display = 'flex';
-
-      // Bloquear scroll
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox').style.display = 'flex';
       document.body.style.overflow = 'hidden';
     });
   });
 
-  // Cerrar con tache
-  closeLightbox.addEventListener('click', () => {
-    lightbox.style.display = 'none';
+  const closeL = () => {
+    document.getElementById('lightbox').style.display = 'none';
     document.body.style.overflow = 'auto';
-  });
-
-  // Cerrar tocando fondo oscuro
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-      lightbox.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
+  };
+  document.getElementById('closeLightbox').addEventListener('click', closeL);
+  document.getElementById('lightbox').addEventListener('click', (e) => {
+    if (e.target.id === 'lightbox') closeL();
   });
 
   function addToCalendar() {
-    const title = encodeURIComponent('XV Años Sofía Montes');
-    const details = encodeURIComponent('Celebración de XV años');
-    const location = encodeURIComponent('Parroquia Ejemplo / Salón Ejemplo');
-    const dates = '20260815T180000/20260815T230000';
-    const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${dates}`;
+    const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('XV Sofía')}&dates=20260815T180000/20260815T230000`;
     window.open(url, '_blank');
   }
-  // ===== FORZAR SIEMPRE ARRIBA =====
-  history.scrollRestoration = "manual";
 
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 50);
-  });
-
-  // ===== BOTÓN VOLVER ARRIBA =====
   const toTopBtn = document.getElementById('toTopBtn');
-
   window.addEventListener('scroll', () => {
-    const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-
-    if (scrollPercent > 60) {
-      toTopBtn.classList.add('show');
-    } else {
-      toTopBtn.classList.remove('show');
-    }
+    if (window.scrollY > 400) toTopBtn.classList.add('show');
+    else toTopBtn.classList.remove('show');
   });
-
-  toTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
-</script>
+  toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
   
 </body>
