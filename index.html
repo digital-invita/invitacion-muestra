@@ -32,7 +32,7 @@ body {
 
 /* CANVAS PARTÍCULAS */
 #particles {
-  position: fixed;
+  position: fixed; /* Esto lo deja pegado al fondo aunque subas o bajes */
   inset: 0;
   z-index: 0;
   pointer-events: none;
@@ -580,100 +580,48 @@ html, body {
 <!-- BOTÓN SUBIR ARRIBA -->
 <button id="toTopBtn">↑</button>
 
-  <script>
-// ===== TEXTO QUE FORMARÁN LAS PARTÍCULAS =====
-  let particleText = "MIS\nXV"; 
+ <script>
+// 1. FORZAR INICIO ARRIBA
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('openBtn');
-    const overlay = document.getElementById('overlay');
-    const audio = document.getElementById('audio');
-    const nombre = document.getElementById('nombre');
-
-    btn.addEventListener('click', () => {
-      overlay.style.opacity = '0';
-      overlay.style.pointerEvents = 'none';
-      setTimeout(() => overlay.style.display = 'none', 400);
-
-      document.body.style.overflow = 'auto';
-      nombre.classList.add('show');
-      startParticleText();
-
-      if (audio) {
-        audio.currentTime = 6;
-        audio.volume = 0;
-        audio.play().catch(() => {});
-        let vol = 0;
-        const fade = setInterval(() => {
-          vol += 0.05;
-          audio.volume = Math.min(vol, 1);
-          if (vol >= 1) clearInterval(fade);
-        }, 200);
-      }
-    });
-  });
-
-  const sections = document.querySelectorAll('.section');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('show');
-    });
-  }, { threshold: 0.05 });
-  sections.forEach(sec => observer.observe(sec));
-
-  const targetDate = new Date('2026-08-15T18:00:00').getTime();
-  setInterval(() => {
-    const now = new Date().getTime();
-    const diff = targetDate - now;
-    const d = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
-    const h = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-    const m = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
-    const s = Math.max(0, Math.floor((diff % (1000 * 60)) / 1000));
-
-    document.getElementById('countdown').innerHTML = `
-      <div class="count-box"><strong>${d}</strong>Días</div>
-      <div class="count-box"><strong>${h}</strong>Horas</div>
-      <div class="count-box"><strong>${m}</strong>Minutos</div>
-      <div class="count-box"><strong>${s}</strong>Segundos</div>
-    `;
-  }, 1000);
-
- /* ===== SISTEMA DE PARTÍCULAS COMPLETO Y REFINADO ===== */
+// 2. CONFIGURACIÓN DE PARTÍCULAS
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let w, h;
-
-function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
+let particles = [];
+let forming = false;
 
 const BASE_PARTICLES_COUNT = 130; 
 const FIRST_DELAY = 10000;
 const FORM_INTERVAL = 45000;
 const FORM_DURATION = 6000; 
 
-let particles = [];
-let forming = false;
+function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
 
 function createParticle(isExtra = false) {
-    // Les damos una velocidad inicial aleatoria para que siempre se muevan
     return {
         x: Math.random() * w,
         y: Math.random() * h,
         tx: null, ty: null,
-        vx: (Math.random() - 0.5) * 0.8, // Un poco más de velocidad inicial
-        vy: (Math.random() - 0.5) * 0.8,
+        vx: (Math.random() - 0.5) * 1.2,
+        vy: (Math.random() - 0.5) * 1.2,
         size: Math.random() * 0.8 + 0.4,
-        alpha: Math.random() * 0.4 + 0.2,
+        alpha: isExtra ? 0 : Math.random() * 0.4 + 0.2,
         baseAlpha: Math.random() * 0.4 + 0.2,
         isExtra: isExtra,
-        friction: 0.98 // Fricción más suave para que no se detengan
+        fadingOut: false
     };
 }
 
+// Inicializar partículas base
 for (let i = 0; i < BASE_PARTICLES_COUNT; i++) {
     particles.push(createParticle(false));
 }
@@ -682,13 +630,12 @@ function generateTextPoints(text) {
     const temp = document.createElement("canvas");
     const tctx = temp.getContext("2d");
     temp.width = w; temp.height = h;
-    const fontSize = Math.min(h * 0.12, w * 0.15); 
+    const fontSize = Math.min(h * 0.10, w * 0.14); 
     tctx.fillStyle = "#fff";
     tctx.textAlign = "center";
     tctx.textBaseline = "middle";
     tctx.font = `700 ${fontSize}px "Playfair Display", serif`;
     
-    // Si tu texto tiene varias líneas, las separamos
     const lines = text.split("\n");
     lines.forEach((line, i) => {
         tctx.fillText(line, w / 2, h / 2 + (i * fontSize * 1.1));
@@ -696,8 +643,8 @@ function generateTextPoints(text) {
 
     const data = tctx.getImageData(0, 0, w, h).data;
     const points = [];
-    for (let y = 0; y < h; y += 2) { // Paso de 2 para llenar bien
-        for (let x = 0; x < w; x += 2) {
+    for (let y = 0; y < h; y += 3) { // Salto de 3 para no saturar de puntos
+        for (let x = 0; x < w; x += 3) {
             if (data[(y * w + x) * 4 + 3] > 128) {
                 points.push({ x, y });
             }
@@ -707,9 +654,10 @@ function generateTextPoints(text) {
 }
 
 function formText() {
-    const textPoints = generateTextPoints("Sofía\nMis XV"); // Cambia aquí el nombre
+    const textPoints = generateTextPoints("Sofía\nMis XV"); 
     forming = true;
 
+    // Ajustar cantidad de partículas
     while (particles.length < textPoints.length) {
         particles.push(createParticle(true));
     }
@@ -719,6 +667,10 @@ function formText() {
         if (i < shuffledPoints.length) {
             p.tx = shuffledPoints[i].x;
             p.ty = shuffledPoints[i].y;
+            p.fadingOut = false;
+            if (p.isExtra) p.alpha = 0; 
+        } else {
+            p.tx = null; p.ty = null;
         }
     });
 
@@ -727,64 +679,50 @@ function formText() {
         particles.forEach(p => {
             if (p.tx !== null) {
                 const angle = Math.random() * Math.PI * 2;
-                const force = Math.random() * 1.2 + 0.3; 
+                const force = Math.random() * 2 + 0.5; 
                 p.vx = Math.cos(angle) * force;
                 p.vy = Math.sin(angle) * force;
                 p.tx = null; p.ty = null;
             }
+            if (p.isExtra) p.fadingOut = true;
         });
-
-        // Limpieza de extras
-        setTimeout(() => {
-            const cleanup = setInterval(() => {
-                let extraFound = false;
-                for(let i = particles.length - 1; i >= 0; i--){
-                    if(particles[i].isExtra){
-                        particles[i].alpha -= 0.02;
-                        extraFound = true;
-                        if(particles[i].alpha <= 0) particles.splice(i, 1);
-                    }
-                }
-                if(!extraFound) clearInterval(cleanup);
-            }, 50);
-        }, 2000);
     }, FORM_DURATION);
 }
 
 function animate() {
-    // Estela sutil
-    ctx.fillStyle = 'rgba(75, 29, 107, 0.15)'; 
+    // FONDO: El truco para que la estela no ensucie el fondo es limpiar 
+    // con un alpha muy bajo sobre el color sólido
+    ctx.fillStyle = 'rgba(75, 29, 107, 0.2)'; 
     ctx.fillRect(0, 0, w, h);
 
-    particles.forEach(p => {
+    for (let i = particles.length - 1; i >= 0; i--) {
+        let p = particles[i];
+
         if (forming && p.tx !== null) {
-            // Cuando forman el texto
             p.x += (p.tx - p.x) * 0.07;
             p.y += (p.ty - p.y) * 0.07;
-
+            p.alpha = Math.min(p.alpha + 0.05, 1);
+            
             const dist = Math.hypot(p.tx - p.x, p.ty - p.y);
-            if (dist < 10) {
+            if (dist < 5) {
                 ctx.shadowBlur = 10;
                 ctx.shadowColor = "#ffd7a0";
-                p.alpha = 1;
             }
         } else {
-            // MOVIMIENTO LIBRE (Aquí evitamos que se queden quietas)
             p.x += p.vx;
             p.y += p.vy;
-
-            // Si la fricción las frena demasiado, les damos un pequeño impulso
-            if (Math.abs(p.vx) < 0.2) p.vx += (Math.random() - 0.5) * 0.05;
-            if (Math.abs(p.vy) < 0.2) p.vy += (Math.random() - 0.5) * 0.05;
-            
-            // Aplicar fricción suave solo si van muy rápido (después de la explosión)
-            if (Math.abs(p.vx) > 1) p.vx *= p.friction;
-            if (Math.abs(p.vy) > 1) p.vy *= p.friction;
-
-            p.alpha = p.isExtra ? p.alpha : p.baseAlpha;
             ctx.shadowBlur = 0;
 
-            // Rebote en los bordes
+            if (p.fadingOut) {
+                p.alpha -= 0.01;
+                if (p.alpha <= 0) {
+                    particles.splice(i, 1);
+                    continue;
+                }
+            } else {
+                p.alpha = p.isExtra ? p.alpha : p.baseAlpha;
+            }
+
             if (p.x < 0 || p.x > w) p.vx *= -1;
             if (p.y < 0 || p.y > h) p.vy *= -1;
         }
@@ -793,50 +731,109 @@ function animate() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.shadowBlur = 0; 
-    });
+        ctx.shadowBlur = 0;
+    }
     requestAnimationFrame(animate);
 }
 
-function startParticleText() {
-    setTimeout(() => {
-        formText();
-        setInterval(formText, FORM_INTERVAL);
-    }, FIRST_DELAY);
-}
+// 3. EVENTOS Y LÓGICA DE INTERFAZ
+window.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('openBtn');
+    const overlay = document.getElementById('overlay');
+    const audio = document.getElementById('audio');
+    const nombre = document.getElementById('nombre');
 
-animate();
-// Llama a startParticleText() cuando el usuario abra la invitación
-  // Galería y Lightbox (Tus funciones originales se mantienen igual)
-  document.querySelectorAll('.gallery img').forEach(img => {
-    img.addEventListener('click', () => {
-      document.getElementById('lightbox-img').src = img.src;
-      document.getElementById('lightbox').style.display = 'flex';
-      document.body.style.overflow = 'hidden';
+    btn.addEventListener('click', () => {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        setTimeout(() => overlay.style.display = 'none', 400);
+
+        document.body.style.overflow = 'auto';
+        nombre.classList.add('show');
+        
+        // Iniciar ciclo de texto
+        setTimeout(() => {
+            formText();
+            setInterval(formText, FORM_INTERVAL);
+        }, FIRST_DELAY);
+
+        if (audio) {
+            audio.currentTime = 6;
+            audio.volume = 0;
+            audio.play().catch(() => {});
+            let vol = 0;
+            const fade = setInterval(() => {
+                vol += 0.05;
+                audio.volume = Math.min(vol, 1);
+                if (vol >= 1) clearInterval(fade);
+            }, 200);
+        }
     });
-  });
+});
 
-  const closeL = () => {
+// Intersection Observer (Aparición de secciones)
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
+
+// Cuenta Regresiva
+const targetDate = new Date('2026-08-15T18:00:00').getTime();
+setInterval(() => {
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+    const d = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
+    const h = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+    const m = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
+    const s = Math.max(0, Math.floor((diff % (1000 * 60)) / 1000));
+
+    const cd = document.getElementById('countdown');
+    if(cd) {
+        cd.innerHTML = `
+            <div class="count-box"><strong>${d}</strong>Días</div>
+            <div class="count-box"><strong>${h}</strong>Horas</div>
+            <div class="count-box"><strong>${m}</strong>Minutos</div>
+            <div class="count-box"><strong>${s}</strong>Segundos</div>
+        `;
+    }
+}, 1000);
+
+// Galería y Lightbox
+document.querySelectorAll('.gallery img').forEach(img => {
+    img.addEventListener('click', () => {
+        document.getElementById('lightbox-img').src = img.src;
+        document.getElementById('lightbox').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+const closeL = () => {
     document.getElementById('lightbox').style.display = 'none';
     document.body.style.overflow = 'auto';
-  };
-  document.getElementById('closeLightbox').addEventListener('click', closeL);
-  document.getElementById('lightbox').addEventListener('click', (e) => {
+};
+document.getElementById('closeLightbox').addEventListener('click', closeL);
+document.getElementById('lightbox').addEventListener('click', (e) => {
     if (e.target.id === 'lightbox') closeL();
-  });
+});
 
-  function addToCalendar() {
-    const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('XV Sofía')}&dates=20260815T180000/20260815T230000`;
-    window.open(url, '_blank');
-  }
-
-  const toTopBtn = document.getElementById('toTopBtn');
-  window.addEventListener('scroll', () => {
+// Botón Volver Arriba
+const toTopBtn = document.getElementById('toTopBtn');
+window.addEventListener('scroll', () => {
     if (window.scrollY > 400) toTopBtn.classList.add('show');
     else toTopBtn.classList.remove('show');
-  });
-  toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-  </script>
+});
+toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+function addToCalendar() {
+    const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('XV Sofía')}&dates=20260815T180000/20260815T230000`;
+    window.open(url, '_blank');
+}
+
+// Iniciar animación
+animate();
+</script>
   
 </body>
 </html>
