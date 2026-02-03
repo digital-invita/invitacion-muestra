@@ -265,6 +265,59 @@ body {
 }
 
 #audio { display:none; }
+  /* ===== BOTÓN VOLVER ARRIBA ESTILO APPLE ===== */
+#toTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 18px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.18);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,.4);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px) scale(.9);
+  transition: all .3s ease;
+  z-index: 9999;
+}
+
+#toTopBtn.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+#toTopBtn:hover {
+  transform: scale(1.08);
+}
+
+/* ===== CENTRAR HERO TEXTO ===== */
+.hero-content {
+  bottom: 50%;
+  transform: translateY(50%);
+}
+
+/* ===== COUNTDOWN RESPONSIVE ===== */
+#countdown {
+  gap: 8px;
+}
+
+.count-box {
+  padding: 6px 8px;
+  min-width: 58px;
+}
+
+.count-box strong {
+  font-size: 1.1rem;
+}
+
 </style>
 </head>
 
@@ -325,7 +378,7 @@ body {
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Faltan…</h2>
+  <h2>Faltan pocos días para este gran día</h2>
   <div id="countdown"></div>
 </section>
 
@@ -402,6 +455,8 @@ body {
 <div id="lightbox" onclick="this.style.display='none'">
   <img id="lightbox-img">
 </div>
+<!-- BOTÓN SUBIR ARRIBA -->
+<button id="toTopBtn">↑</button>
 
 <script>
 const btn = document.getElementById('openBtn');
@@ -505,6 +560,35 @@ function addToCalendar(){
   const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${dates}`;
   window.open(url, '_blank');
 }
+  // ===== FORZAR INICIO ARRIBA =====
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+};
+
+window.addEventListener('load', () => {
+  window.scrollTo({ top: 0, behavior: 'instant' });
+});
+
+// ===== BOTÓN VOLVER ARRIBA =====
+const toTopBtn = document.getElementById('toTopBtn');
+
+window.addEventListener('scroll', () => {
+  const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+
+  if (scrollPercent > 60) {
+    toTopBtn.classList.add('show');
+  } else {
+    toTopBtn.classList.remove('show');
+  }
+});
+
+toTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
 </script>
 
   
