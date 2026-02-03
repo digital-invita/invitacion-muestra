@@ -698,7 +698,8 @@ function generateTextPoints(text){
   temp.width = w;
   temp.height = h;
 
-  const fontSize = Math.min(h * 0.28, w * 0.6);
+  const fontSize = Math.min(h * 0.24, w * 0.55);
+
 
   tctx.clearRect(0,0,w,h);
   tctx.fillStyle = "#fff";
@@ -706,14 +707,14 @@ function generateTextPoints(text){
   tctx.textBaseline = "middle";
   tctx.font = `600 ${fontSize}px "Playfair Display"`;
 
-  tctx.fillText(text, w/2, h * 0.45);
+  tctx.fillText(text, w/2, h * 0.42);
 
   const data = tctx.getImageData(0,0,w,h).data;
   const points = [];
 
   // 👉 Detectar solo el borde del texto (outline)
-  for(let y = 1; y < h - 1; y += 5){
-    for(let x = 1; x < w - 1; x += 5){
+  for(let y = 1; y < h - 1; y += 4){
+    for(let x = 1; x < w - 1; x += 4){
       const i = (y * w + x) * 4;
 
       if(data[i + 3] > 20){
