@@ -346,7 +346,7 @@ body {
 
 .hero-content {
   position: absolute;
-  bottom: 25%;   /* ENTRE MÁS GRANDE, MÁS SUBE */
+  bottom: 20%;   /* ENTRE MÁS GRANDE, MÁS SUBE */
   left: 0;
   right: 0;
   width: 100%;
@@ -368,6 +368,40 @@ body {
 
 .count-box strong {
   font-size: 2.4rem;
+}
+/* ===== LIGHTBOX POPUP GALERÍA ===== */
+
+#lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  backdrop-filter: blur(8px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: fadeIn .3s ease;
+}
+
+#lightbox img {
+  max-width: 95%;
+  max-height: 90vh;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.7);
+  animation: zoomIn .35s ease;
+}
+
+/* Animaciones */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 
@@ -641,9 +675,13 @@ toTopBtn.addEventListener('click', () => {
     behavior: 'smooth'
   });
 });
+html, body {
+  overscroll-behavior: none;
+}
 
 </script>
 
   
 </body>
+</html>
 </html>
