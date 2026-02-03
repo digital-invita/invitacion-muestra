@@ -215,6 +215,39 @@ body {
   font-size: 1.4rem;
   display: block;
 }
+/* AJUSTE RESPONSIVE CUENTA REGRESIVA */
+.count-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.count-box strong {
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+
+#countdown div {
+  font-size: .7rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 420px) {
+  .count-box {
+    min-width: 60px;
+    padding: 6px 8px;
+  }
+
+  .count-box strong {
+    font-size: 1.05rem;
+  }
+
+  #countdown div {
+    font-size: .65rem;
+  }
+}
 
 /* MAPA */
 .map {
