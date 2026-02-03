@@ -654,7 +654,7 @@ resize();
 window.addEventListener('resize', resize);
 
 // CONFIG
-const PARTICLE_COUNT = 900; // más partículas = letras más definidas
+const PARTICLE_COUNT = 420; // elegante y fluido
 const FIRST_DELAY = 8000;     // 8s después de abrir invitación
 const FORM_INTERVAL = 25000; // 25s entre formaciones
 const FORM_DURATION = 4500;  // 4.5s visible el texto
@@ -675,7 +675,7 @@ for(let i=0;i<PARTICLE_COUNT;i++){
     ty: null,
     vx: (Math.random()-.5)*1.1,
     vy: (Math.random()-.5)*1.1,
-    size: Math.random()*1.4 + .8,
+    size: Math.random()*0.7 + 0.5,
     alpha: Math.random()*.6 + .3
   });
 }
@@ -689,9 +689,7 @@ function generateTextPoints(text){
   temp.width = w;
   temp.height = h;
 
-const fontSize = Math.min(h * 0.28, 280);
-
-
+const fontSize = Math.min(h * 0.22, w * 0.35);
 
 
   tctx.clearRect(0,0,w,h);
@@ -700,7 +698,7 @@ const fontSize = Math.min(h * 0.28, 280);
   tctx.textBaseline = "middle";
   tctx.font = `600 ${fontSize}px "Playfair Display"`;
 
-  tctx.fillText(text, w/2, h/2);
+ tctx.fillText(text, w/2, h * 0.45);
 
   const data = tctx.getImageData(0,0,w,h).data;
   const points = [];
@@ -708,7 +706,7 @@ const fontSize = Math.min(h * 0.28, 280);
   for(let y=0;y<h;y+=2){
     for(let x=0;x<w;x+=2){
       const i = (y*w + x) * 4;
-      if(data[i+3] > 150){
+      if(data[i+3] > 20){
         points.push({x,y});
       }
     }
@@ -721,7 +719,7 @@ function formText(){
 
   textPoints = generateTextPoints(particleText);
 
-const FORM_RATIO = 0.65; // 65% forman texto, 35% siguen libres
+const FORM_RATIO = 0.5; // 5% forman texto, 95% siguen libres
 
 const activeCount = Math.floor(particles.length * FORM_RATIO);
 
@@ -795,7 +793,7 @@ function animate(){
    ctx.beginPath();
 
 if(forming && p.tx !== null){
-  ctx.shadowBlur = 5;
+  ctx.shadowBlur = 2;
   ctx.shadowColor = "rgba(255,215,160,0.8)";
 }else{
   ctx.shadowBlur = 0;
@@ -807,7 +805,8 @@ if(forming && p.tx !== null){
   ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
 }
 
-const r = (forming && p.tx !== null) ? p.size + 0.3 : p.size;
+const r = p.size; // mismo tamaño siempre (más elegante)
+
 ctx.arc(p.x, p.y, r, 0, Math.PI*2);
 ctx.fill();
 
