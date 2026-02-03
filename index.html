@@ -347,7 +347,7 @@ body {
 .hero-content {
   position: absolute;
   bottom: 20%;   /* ENTRE MÁS GRANDE, MÁS SUBE */
-  left: 0;
+  left: 2px;
   right: 0;
   width: 100%;
   text-align: center;
@@ -409,6 +409,35 @@ html, body {
 html, body {
   scroll-behavior: auto !important;
 }
+  /* ===== BOTÓN CERRAR LIGHTBOX ESTILO APPLE ===== */
+
+#closeLightbox {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,.4);
+  transition: transform .25s ease, background .25s ease;
+  z-index: 10001;
+}
+
+#closeLightbox:hover {
+  transform: scale(1.1);
+  background: rgba(255,255,255,.3);
+}
+
 </style>
 </head>
 
@@ -543,9 +572,11 @@ html, body {
   </p>
 </section>
 
-<div id="lightbox" onclick="this.style.display='none'">
+<div id="lightbox">
+  <button id="closeLightbox">✕</button>
   <img id="lightbox-img">
 </div>
+
 <!-- BOTÓN SUBIR ARRIBA -->
 <button id="toTopBtn">↑</button>
 
@@ -642,11 +673,33 @@ function animate(){
 }
 animate();
 
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const closeLightbox = document.getElementById('closeLightbox');
+
 document.querySelectorAll('.gallery img').forEach(img => {
   img.addEventListener('click', () => {
-    document.getElementById('lightbox-img').src = img.src;
-    document.getElementById('lightbox').style.display = 'flex';
+
+    lightboxImg.src = img.src;
+    lightbox.style.display = 'flex';
+
+    // Bloquear scroll
+    document.body.style.overflow = 'hidden';
   });
+});
+
+// Cerrar con tache
+closeLightbox.addEventListener('click', () => {
+  lightbox.style.display = 'none';
+  document.body.style.overflow = 'auto';
+});
+
+// Cerrar tocando fondo oscuro
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) {
+    lightbox.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
 });
 
 function addToCalendar(){
