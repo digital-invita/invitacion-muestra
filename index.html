@@ -690,49 +690,30 @@ for(let i=0;i<BASE_PARTICLES;i++){
 
 // GENERAR TEXTO (SOLO CONTORNO, LOOK PREMIUM)
 function generateTextPoints(text){
-  
-
   const temp = document.createElement("canvas");
   const tctx = temp.getContext("2d");
 
   temp.width = w;
   temp.height = h;
 
-  const fontSize = Math.min(h * 0.24, w * 0.55);
-
+  const fontSize = Math.min(h * 0.26, w * 0.7);
 
   tctx.clearRect(0,0,w,h);
   tctx.fillStyle = "#fff";
   tctx.textAlign = "center";
   tctx.textBaseline = "middle";
-  tctx.font = `600 ${fontSize}px "Playfair Display"`;
+  tctx.font = `700 ${fontSize}px "Playfair Display"`;
 
   tctx.fillText(text, w/2, h * 0.42);
 
   const data = tctx.getImageData(0,0,w,h).data;
   const points = [];
 
-  // 👉 Detectar solo el borde del texto (outline)
-  for(let y = 1; y < h - 1; y += 4){
-    for(let x = 1; x < w - 1; x += 4){
+  for(let y = 0; y < h; y += 4){
+    for(let x = 0; x < w; x += 4){
       const i = (y * w + x) * 4;
-
-      if(data[i + 3] > 20){
-
-        const iL = (y * w + (x - 1)) * 4;
-        const iR = (y * w + (x + 1)) * 4;
-        const iT = ((y - 1) * w + x) * 4;
-        const iB = ((y + 1) * w + x) * 4;
-
-        // Si algún vecino es transparente, es borde
-        if(
-          data[iL + 3] < 20 ||
-          data[iR + 3] < 20 ||
-          data[iT + 3] < 20 ||
-          data[iB + 3] < 20
-        ){
-          points.push({ x, y });
-        }
+      if(data[i + 3] > 120){
+        points.push({ x, y });
       }
     }
   }
@@ -740,25 +721,25 @@ function generateTextPoints(text){
   return points;
 }
 
+
 function formText(){
 
   textPoints = generateTextPoints(particleText);
 
-  // 👉 Aparecen más partículas solo cuando se forma el texto
-  while(particles.length < TEXT_PARTICLES){
-    particles.push(createParticle());
-  }
+ // 👉 Aparecen más partículas solo cuando se forma el texto
+while(particles.length < textPoints.length){
+  particles.push(createParticle());
+}
 
-  const FORM_RATIO = 0.75; 
-  const activeCount = Math.floor(particles.length * FORM_RATIO);
+const activeCount = textPoints.length;
 
-  for(let i=0;i<activeCount;i++){
-    const p = particles[i];
-    const point = textPoints[i % textPoints.length];
+for(let i=0;i<activeCount;i++){
+  const p = particles[i];
+  const point = textPoints[i];
 
-    p.tx = point.x;
-    p.ty = point.y;
-  }
+  p.tx = point.x;
+  p.ty = point.y;
+}
 
   forming = true;
 
