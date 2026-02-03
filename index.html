@@ -738,7 +738,6 @@ for (let i = particles.length - 1; i >= 0; i--) {
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
     ctx.fill();
-}
 
 
     // --- ACTUALIZAR PREVX, PREVY ---
@@ -765,9 +764,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.section').forEach(sec => sec.classList.add('show'));
 
     // Iniciar partículas
-    setTimeout(formText, 2000); 
-   // Iniciar partículas
-setTimeout(formText, 2000); 
+    setTimeout(formText, 2000);  
 
 // Primera aparición del texto a los 10 segundos
 setTimeout(() => {
