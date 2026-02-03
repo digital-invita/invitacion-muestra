@@ -582,7 +582,7 @@ html, body {
 
 <script>
   // ===== TEXTO QUE FORMARÁN LAS PARTÍCULAS =====
-let particleText = "MIS XV"; // <-- aquí cambias el texto cuando quieras
+let particleText = "MIS\nXV"; // <-- aquí cambias el texto cuando quieras
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -696,7 +696,7 @@ function generateTextPoints(text){
   temp.width = w;
   temp.height = h;
 
-  const fontSize = Math.min(h * 0.26, w * 0.7);
+  const fontSize = Math.min(h * 0.18, w * 0.5); // 👈 más pequeño para móvil
 
   tctx.clearRect(0,0,w,h);
   tctx.fillStyle = "#fff";
@@ -704,7 +704,13 @@ function generateTextPoints(text){
   tctx.textBaseline = "middle";
   tctx.font = `700 ${fontSize}px "Playfair Display"`;
 
-  tctx.fillText(text, w/2, h * 0.42);
+  const lines = text.split("\n");
+  const lineHeight = fontSize * 1.05;
+
+  lines.forEach((line, i) => {
+    const offset = (i - (lines.length - 1) / 2) * lineHeight;
+    tctx.fillText(line, w / 2, h * 0.38 + offset); // 👈 más arriba
+  });
 
   const data = tctx.getImageData(0,0,w,h).data;
   const points = [];
@@ -722,40 +728,49 @@ function generateTextPoints(text){
 }
 
 
-function formText(){
 
+function formText(){
   textPoints = generateTextPoints(particleText);
 
- // 👉 Aparecen más partículas solo cuando se forma el texto
-while(particles.length < textPoints.length){
-  particles.push(createParticle());
-}
+  // Crear partículas suficientes SOLO para el texto
+  while(particles.length < textPoints.length){
+    particles.push(createParticle());
+  }
 
-const activeCount = textPoints.length;
+  const activeCount = textPoints.length;
 
-for(let i=0;i<activeCount;i++){
-  const p = particles[i];
-  const point = textPoints[i];
+  for(let i=0;i<activeCount;i++){
+    const p = particles[i];
+    const point = textPoints[i];
 
-  p.tx = point.x;
-  p.ty = point.y;
-}
+    p.tx = point.x;
+    p.ty = point.y;
+    p.outVX = (Math.random() - 0.5) * 4; // velocidad de salida
+    p.outVY = (Math.random() - 0.5) * 4;
+  }
 
   forming = true;
 
   setTimeout(()=>{
     forming = false;
 
-    particles.forEach(p=>{
-      p.tx = null;
-      p.ty = null;
+    particles.forEach((p, i)=>{
+      if(i < activeCount){
+        p.tx = null;
+        p.ty = null;
+        p.vx = p.outVX;
+        p.vy = p.outVY;
+      }
     });
 
-    // 👉 Regresa a las partículas normales
-    particles.splice(BASE_PARTICLES);
+    // Desintegración elegante (regresa a base)
+    setTimeout(()=>{
+      particles.splice(BASE_PARTICLES);
+    }, 1200);
 
   }, FORM_DURATION);
 }
+
 
 
 // ===== CONTROL DE CICLO =====
@@ -786,14 +801,14 @@ function startParticleText(){
 // ANIMAR
 function animate(){
 
-  ctx.fillStyle = 'rgba(75,29,107,0.15)';
-  ctx.fillRect(0,0,w,h);
+  ctx.clearRect(0,0,w,h);
+
 
   particles.forEach(p=>{
 
     if(forming && p.tx !== null){
-      p.x += (p.tx - p.x) * 0.06;
-      p.y += (p.ty - p.y) * 0.06;
+      p.x += (p.tx - p.x) * 0.08;
+      p.y += (p.ty - p.y) * 0.08;
     } else {
       p.x += p.vx;
       p.y += p.vy;
@@ -810,6 +825,10 @@ if(forming && p.tx !== null){
   ctx.shadowBlur = 2;
   ctx.shadowColor = "rgba(255,215,160,0.8)";
 }else{
+if(forming && p.tx !== null){
+  ctx.shadowBlur = 6;
+  ctx.shadowColor = "rgba(255,215,160,0.8)";
+} else {
   ctx.shadowBlur = 0;
 }
 
@@ -819,16 +838,9 @@ if(forming && p.tx !== null){
   ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
 }
 
-const r = p.size; // mismo tamaño siempre (más elegante)
-
-ctx.arc(p.x, p.y, r, 0, Math.PI*2);
+ctx.beginPath();
+ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
 ctx.fill();
-
-
-  });
-
-  requestAnimationFrame(animate);
-}
 
 animate();
 
