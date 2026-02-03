@@ -10,432 +10,432 @@
 
 <style>
 :root {
-  --bg-color: #4b1d6b;
-  --bg-image: none;
-  --gold-text: linear-gradient(135deg, #f6d365, #fda085, #d4af37, #fff1a8);
-  --gold-btn: linear-gradient(135deg, #fff1a8 0%, #f6d365 25%, #d4af37 50%, #f6d365 75%, #fff1a8 100%);
-  --text-light: #f4f1f7;
+--bg-color: #4b1d6b;
+--bg-image: none;
+--gold-text: linear-gradient(135deg, #f6d365, #fda085, #d4af37, #fff1a8);
+--gold-btn: linear-gradient(135deg, #fff1a8 0%, #f6d365 25%, #d4af37 50%, #f6d365 75%, #fff1a8 100%);
+--text-light: #f4f1f7;
 }
 
 body {
-  margin: 0;
-  font-family: 'Playfair Display', serif;
-  background: var(--bg-image), var(--bg-color);
-  background-size: cover;
-  background-attachment: fixed;
-  color: var(--text-light);
-  overflow: hidden;
-  font-size: 19px;
-  line-height: 1.7;
-  text-align: center;
+margin: 0;
+font-family: 'Playfair Display', serif;
+background: var(--bg-image), var(--bg-color);
+background-size: cover;
+background-attachment: fixed;
+color: var(--text-light);
+overflow: hidden;
+font-size: 19px;
+line-height: 1.7;
+text-align: center;
 }
 
 /* CANVAS PARTÍCULAS */
 #particles {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+position: fixed;
+inset: 0;
+z-index: 0;
+pointer-events: none;
 }
 
 /* OVERLAY */
 #overlay {
-  position: fixed;
-  inset: 0;
-  backdrop-filter: blur(18px);
-  background: rgba(0,0,0,0.65);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  gap: 14px;
+position: fixed;
+inset: 0;
+backdrop-filter: blur(18px);
+background: rgba(0,0,0,0.65);
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+z-index: 9999;
+gap: 14px;
 }
 #overlay .intro-text {
-  font-size: 1.6rem;
-  max-width: 280px;
+font-size: 1.6rem;
+max-width: 280px;
 }
 #openBtn {
-  padding: 14px 30px;
-  border-radius: 999px;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  background: var(--gold-btn);
-  color: #2b1b0f;
-  font-weight: 700;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-  box-shadow: inset 0 1px 1px rgba(255,255,255,.6), 0 10px 30px rgba(212,175,55,.6);
-  transition: transform .3s ease, box-shadow .3s ease;
+padding: 14px 30px;
+border-radius: 999px;
+border: none;
+font-size: 1rem;
+cursor: pointer;
+background: var(--gold-btn);
+color: #2b1b0f;
+font-weight: 700;
+font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+box-shadow: inset 0 1px 1px rgba(255,255,255,.6), 0 10px 30px rgba(212,175,55,.6);
+transition: transform .3s ease, box-shadow .3s ease;
 }
 #openBtn:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 18px 40px rgba(212,175,55,.8);
+transform: translateY(-2px) scale(1.03);
+box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 18px 40px rgba(212,175,55,.8);
 }
 
 /* HERO */
 .hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  aspect-ratio: 9/16;
-  overflow: hidden;
-  z-index: 1;
+position: relative;
+width: 100%;
+height: 100vh;
+aspect-ratio: 9/16;
+overflow: hidden;
+z-index: 1;
 }
 .hero img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+width: 100%;
+height: 100%;
+object-fit: cover;
 }
 .hero-content {
-  position: absolute;
-  bottom: 20%;
-  left: 0;
-  right: 0;
-  width: 100%;
-  text-align: center;
-  padding: 0 20px;
+position: absolute;
+bottom: 20%;
+left: 0;
+right: 0;
+width: 100%;
+text-align: center;
+padding: 0 20px;
 }
 
 
 .mis15 {
-  font-size: 2rem;
-  letter-spacing: 2px;
-  margin-bottom: 4px;
+font-size: 2rem;
+letter-spacing: 2px;
+margin-bottom: 4px;
 }
 .nombre {
-  font-family: 'Great Vibes', cursive;
-  font-size: 3.8rem;
-  background: var(--gold-btn);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(20px) scale(.9);
-  display: inline-block;
+font-family: 'Great Vibes', cursive;
+font-size: 3.8rem;
+background: var(--gold-btn);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+text-align: center;
+opacity: 0;
+transform: translateY(20px) scale(.9);
+display: inline-block;
 }
 .nombre.show {
-  animation: drawName 2.2s ease forwards;
+animation: drawName 2.2s ease forwards;
 }
 @keyframes drawName {
-  0% { filter: drop-shadow(0 0 0 rgba(255,215,160,0)); opacity: 0; }
-  100% { filter: drop-shadow(0 10px 24px rgba(255,215,160,.9)); opacity: 1; transform: none; }
+0% { filter: drop-shadow(0 0 0 rgba(255,215,160,0)); opacity: 0; }
+100% { filter: drop-shadow(0 10px 24px rgba(255,215,160,.9)); opacity: 1; transform: none; }
 }
 
 /* SECCIONES */
 .section {
-  position: relative;
-  z-index: 1;
-  padding: 34px 22px 22px;
-  opacity: 0;
-  transform: translateY(40px) scale(.98);
-  transition: all 1s ease;
+position: relative;
+z-index: 1;
+padding: 34px 22px 22px;
+opacity: 0;
+transform: translateY(40px) scale(.98);
+transition: all 1s ease;
 }
 .section.show {
-  opacity: 1;
-  transform: none;
+opacity: 1;
+transform: none;
 }
 .section h2 { font-size: 2rem; margin-bottom: 12px; }
 .section p { font-size: 1.25rem; }
 
 /* SEPARADORES CORREGIDOS */
 .sep {
-  height: 3px;
-  width: 160px;
-  margin: 36px auto;
-  background: linear-gradient(90deg, transparent, #f6d365, #fff1a8, #d4af37, #f6d365, transparent);
-  border-radius: 6px;
-  box-shadow: 0 0 18px rgba(255,215,160,.7);
-  position: relative;
-  z-index: 2;
-  opacity: 1 !important;
-  transform: none !important;
-  pointer-events: none;
+height: 3px;
+width: 160px;
+margin: 36px auto;
+background: linear-gradient(90deg, transparent, #f6d365, #fff1a8, #d4af37, #f6d365, transparent);
+border-radius: 6px;
+box-shadow: 0 0 18px rgba(255,215,160,.7);
+position: relative;
+z-index: 2;
+opacity: 1 !important;
+transform: none !important;
+pointer-events: none;
 }
 
 /* FOTO HISTORIA */
 .photo img {
-  width: 100%;
-  max-width: 360px;
-  border-radius: 18px;
-  margin: 12px auto;
+width: 100%;
+max-width: 360px;
+border-radius: 18px;
+margin: 12px auto;
 }
 
 /* GALERÍA */
 .gallery {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 10px;
 }
 .gallery .big { grid-column: span 2; }
 .gallery img {
-  width: 100%;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: transform .5s ease, box-shadow .5s ease;
+width: 100%;
+border-radius: 16px;
+cursor: pointer;
+transition: transform .5s ease, box-shadow .5s ease;
 }
 .gallery img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 18px 40px rgba(0,0,0,.5);
+transform: scale(1.05);
+box-shadow: 0 18px 40px rgba(0,0,0,.5);
 }
 
 /* BOTONES DORADO PREMIUM */
 .btn {
-  display: inline-block;
-  margin-top: 16px;
-  padding: 16px 30px;
-  border-radius: 999px;
-  background: var(--gold-btn);
-  color: #2b1b0f;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 1.1rem;
-  box-shadow: inset 0 1px 1px rgba(255,255,255,.6), 0 12px 32px rgba(212,175,55,.6);
-  transition: transform .3s ease, box-shadow .3s ease;
+display: inline-block;
+margin-top: 16px;
+padding: 16px 30px;
+border-radius: 999px;
+background: var(--gold-btn);
+color: #2b1b0f;
+text-decoration: none;
+font-weight: 700;
+font-size: 1.1rem;
+box-shadow: inset 0 1px 1px rgba(255,255,255,.6), 0 12px 32px rgba(212,175,55,.6);
+transition: transform .3s ease, box-shadow .3s ease;
 }
 .btn:hover {
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 18px 45px rgba(212,175,55,.85);
+transform: translateY(-2px) scale(1.04);
+box-shadow: inset 0 1px 1px rgba(255,255,255,.7), 0 18px 45px rgba(212,175,55,.85);
 }
 
 /* CUENTA REGRESIVA */
 #countdown {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 6px auto 0;
-  flex-wrap: nowrap;
-  max-width: 90%;
+display: flex;
+justify-content: center;
+gap: 10px;
+margin: 6px auto 0;
+flex-wrap: nowrap;
+max-width: 90%;
 }
 .count-box {
-  background: rgba(255,255,255,.08);
-  border-radius: 14px;
-  padding: 8px 10px;
-  min-width: 68px;
+background: rgba(255,255,255,.08);
+border-radius: 14px;
+padding: 8px 10px;
+min-width: 68px;
 }
 .count-box strong {
-  font-size: 1.9rem;
-  display: block;
-  line-height: 1.1;
-  font-weight: 700;
-  text-shadow: 0 0 12px rgba(255,215,160,.6);
+font-size: 1.9rem;
+display: block;
+line-height: 1.1;
+font-weight: 700;
+text-shadow: 0 0 12px rgba(255,215,160,.6);
 }
 
 
 /* AJUSTE RESPONSIVE CUENTA REGRESIVA */
 .count-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+text-align: center;
 }
 
 .count-box strong {
-  font-size: 2rem;
-  display: block;
-  line-height: 1.1;
-  font-weight: 700;
+font-size: 2rem;
+display: block;
+line-height: 1.1;
+font-weight: 700;
 }
 
 
 #countdown div {
-  font-size: .7rem;
-  white-space: nowrap;
+font-size: .7rem;
+white-space: nowrap;
 }
 
 @media (max-width: 420px) {
-  .count-box {
-    min-width: 60px;
-    padding: 6px 8px;
-  }
+.count-box {
+min-width: 60px;
+padding: 6px 8px;
+}
 
 .count-box strong {
-  font-size: 1.6rem;
+font-size: 1.6rem;
 }
 
 
-  #countdown div {
-    font-size: .65rem;
-  }
+#countdown div {
+font-size: .65rem;
+}
 }
 
 /* MAPA */
 .map {
-  margin: 14px 0;
-  border-radius: 16px;
-  overflow: hidden;
+margin: 14px 0;
+border-radius: 16px;
+overflow: hidden;
 }
 
 /* UTILIDADES */
 .utilities {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  max-width: 300px;
-  margin: 24px auto 6px;
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 10px;
+max-width: 300px;
+margin: 24px auto 6px;
 }
 .util {
-  background: rgba(255,255,255,.08);
-  backdrop-filter: blur(10px);
-  border-radius: 14px;
-  padding: 10px 10px;
-  text-decoration: none;
-  color: #fff;
-  font-size: .78rem;
-  transition: transform .25s ease, box-shadow .25s ease;
+background: rgba(255,255,255,.08);
+backdrop-filter: blur(10px);
+border-radius: 14px;
+padding: 10px 10px;
+text-decoration: none;
+color: #fff;
+font-size: .78rem;
+transition: transform .25s ease, box-shadow .25s ease;
 }
 .util:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 10px 28px rgba(0,0,0,.35);
+transform: translateY(-2px) scale(1.02);
+box-shadow: 0 10px 28px rgba(0,0,0,.35);
 }
 
 /* DIGITAL INVITA DORADO PREMIUM */
 .brand {
-  display: block;
-  margin-top: 6px;
-  font-size: .9rem;
-  letter-spacing: 2px;
-  background: var(--gold-btn);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: glow 3s ease-in-out infinite alternate;
+display: block;
+margin-top: 6px;
+font-size: .9rem;
+letter-spacing: 2px;
+background: var(--gold-btn);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+animation: glow 3s ease-in-out infinite alternate;
 }
 @keyframes glow {
-  from { filter: drop-shadow(0 0 6px rgba(255,215,160,.3)); }
-  to { filter: drop-shadow(0 0 16px rgba(255,215,160,.9)); }
+from { filter: drop-shadow(0 0 6px rgba(255,215,160,.3)); }
+to { filter: drop-shadow(0 0 16px rgba(255,215,160,.9)); }
 }
 
 .footer-love {
-  margin-top: 34px;
+margin-top: 34px;
 }
 
 #audio { display:none; }
-  /* ===== BOTÓN VOLVER ARRIBA ESTILO APPLE ===== */
+/* ===== BOTÓN VOLVER ARRIBA ESTILO APPLE ===== */
 #toTopBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 18px;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,.18);
-  backdrop-filter: blur(12px);
-  color: #fff;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 10px 25px rgba(0,0,0,.4);
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(20px) scale(.9);
-  transition: all .3s ease;
-  z-index: 9999;
+position: fixed;
+bottom: 20px;
+right: 18px;
+width: 46px;
+height: 46px;
+border-radius: 50%;
+border: none;
+background: rgba(255,255,255,.18);
+backdrop-filter: blur(12px);
+color: #fff;
+font-size: 20px;
+font-weight: bold;
+cursor: pointer;
+box-shadow: 0 10px 25px rgba(0,0,0,.4);
+opacity: 0;
+pointer-events: none;
+transform: translateY(20px) scale(.9);
+transition: all .3s ease;
+z-index: 9999;
 }
 
 #toTopBtn.show {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0) scale(1);
+opacity: 1;
+pointer-events: auto;
+transform: translateY(0) scale(1);
 }
 
 #toTopBtn:hover {
-  transform: scale(1.08);
+transform: scale(1.08);
 }
 
 .hero-content {
-  position: absolute;
-  bottom: 20%;   /* ENTRE MÁS GRANDE, MÁS SUBE */
-  left: 0;
-  right: 0;
-  width: 100%;
-  text-align: center;
-  padding: 0 20px;
+position: absolute;
+bottom: 20%;   /* ENTRE MÁS GRANDE, MÁS SUBE */
+left: 0;
+right: 0;
+width: 100%;
+text-align: center;
+padding: 0 20px;
 }
 
 
 
 /* ===== COUNTDOWN RESPONSIVE ===== */
 #countdown {
-  gap: 8px;
+gap: 8px;
 }
 
 .count-box {
-  padding: 6px 8px;
-  min-width: 58px;
+padding: 6px 8px;
+min-width: 58px;
 }
 
 .count-box strong {
-  font-size: 2.4rem;
+font-size: 2.4rem;
 }
 /* ===== LIGHTBOX POPUP GALERÍA ===== */
 
 #lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.85);
-  backdrop-filter: blur(8px);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000;
-  padding: 20px;
-  animation: fadeIn .3s ease;
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,.85);
+backdrop-filter: blur(8px);
+display: none;
+justify-content: center;
+align-items: center;
+z-index: 10000;
+padding: 20px;
+animation: fadeIn .3s ease;
 }
 
 #lightbox img {
-  max-width: 95%;
-  max-height: 90vh;
-  border-radius: 18px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.7);
-  animation: zoomIn .35s ease;
+max-width: 95%;
+max-height: 90vh;
+border-radius: 18px;
+box-shadow: 0 20px 60px rgba(0,0,0,.7);
+animation: zoomIn .35s ease;
 }
 
 /* Animaciones */
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+from { opacity: 0; }
+to { opacity: 1; }
 }
 
 @keyframes zoomIn {
-  from { transform: scale(.85); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+from { transform: scale(.85); opacity: 0; }
+to { transform: scale(1); opacity: 1; }
 }
 html, body {
-  overscroll-behavior: none;
+overscroll-behavior: none;
 }
 html, body {
-  scroll-behavior: auto !important;
+scroll-behavior: auto !important;
 }
-  /* ===== BOTÓN CERRAR LIGHTBOX ESTILO APPLE ===== */
+/* ===== BOTÓN CERRAR LIGHTBOX ESTILO APPLE ===== */
 
 #closeLightbox {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,.2);
-  backdrop-filter: blur(10px);
-  color: white;
-  font-size: 22px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,.4);
-  transition: transform .25s ease, background .25s ease;
-  z-index: 10001;
+position: absolute;
+top: 18px;
+right: 18px;
+width: 42px;
+height: 42px;
+border-radius: 50%;
+border: none;
+background: rgba(255,255,255,.2);
+backdrop-filter: blur(10px);
+color: white;
+font-size: 22px;
+font-weight: bold;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0 10px 25px rgba(0,0,0,.4);
+transition: transform .25s ease, background .25s ease;
+z-index: 10001;
 }
 
 #closeLightbox:hover {
-  transform: scale(1.1);
-  background: rgba(255,255,255,.3);
+transform: scale(1.1);
+background: rgba(255,255,255,.3);
 }
 
 </style>
@@ -446,504 +446,506 @@ html, body {
 <canvas id="particles"></canvas>
 
 <div id="overlay">
-  <div class="intro-text">Porque eres parte de este momento</div>
-  <button id="openBtn">Abrir invitación</button>
+<div class="intro-text">Porque eres parte de este momento</div>
+<button id="openBtn">Abrir invitación</button>
 </div>
 
 <audio id="audio" src="cancio.mp3.mp3"></audio>
 
 <section class="hero">
-  <img src="https://placehold.co/900x1600">
-  <div class="hero-content">
-    <div class="mis15">Mis 15 años</div>
-    <div class="nombre" id="nombre">Sofía Montes</div>
-  </div>
+<img src="https://placehold.co/900x1600">
+<div class="hero-content">
+<div class="mis15">Mis 15 años</div>
+<div class="nombre" id="nombre">Sofía Montes</div>
+</div>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Mi historia</h2>
-  <p>Hoy celebro no solo mis 15 años, sino cada sonrisa, cada aprendizaje y cada sueño que me ha traído hasta aquí.</p>
-  <div class="photo"><img src="https://placehold.co/800x600"></div>
-  <p>Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones.</p>
+<h2>Mi historia</h2>
+<p>Hoy celebro no solo mis 15 años, sino cada sonrisa, cada aprendizaje y cada sueño que me ha traído hasta aquí.</p>
+<div class="photo"><img src="https://placehold.co/800x600"></div>
+<p>Aquí termina un capítulo… y comienza uno nuevo lleno de ilusiones.</p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Mis papás</h2>
-  <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">
-    María González<br>&<br>Carlos Montes
-  </p>
+<h2>Mis papás</h2>
+<p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">
+María González<br>&<br>Carlos Montes
+</p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Mis padrinos</h2>
-  <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">
-    Laura Pérez<br>&<br>José Hernández
-  </p>
+<h2>Mis padrinos</h2>
+<p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">
+Laura Pérez<br>&<br>José Hernández
+</p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Mesa de regalos</h2>
-  <p>Liverpool – Evento #123456</p>
-  <p>Transferencia: 1234 5678 9012</p>
+<h2>Mesa de regalos</h2>
+<p>Liverpool – Evento #123456</p>
+<p>Transferencia: 1234 5678 9012</p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Faltan pocos días para este gran día</h2>
-  <div id="countdown"></div>
+<h2>Faltan pocos días para este gran día</h2>
+<div id="countdown"></div>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Ceremonia</h2>
-  <p>18:00 hrs</p>
-  <p>Parroquia Ejemplo</p>
-  <div class="map">
-    <iframe src="https://maps.google.com/maps?q=CDMX&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="200" style="border:0;"></iframe>
-  </div>
-  <a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
+<h2>Ceremonia</h2>
+<p>18:00 hrs</p>
+<p>Parroquia Ejemplo</p>
+<div class="map">
+<iframe src="https://maps.google.com/maps?q=CDMX&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="200" style="border:0;"></iframe>
+</div>
+<a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Recepción</h2>
-  <p>20:00 hrs</p>
-  <p>Salón Ejemplo</p>
-  <div class="map">
-    <iframe src="https://maps.google.com/maps?q=CDMX&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="200" style="border:0;"></iframe>
-  </div>
-  <a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
+<h2>Recepción</h2>
+<p>20:00 hrs</p>
+<p>Salón Ejemplo</p>
+<div class="map">
+<iframe src="https://maps.google.com/maps?q=CDMX&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="200" style="border:0;"></iframe>
+</div>
+<a class="btn" href="https://maps.google.com" target="_blank">Cómo llegar</a>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Código de vestimenta</h2>
-  <p>Divinas y guapos</p>
+<h2>Código de vestimenta</h2>
+<p>Divinas y guapos</p>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>Galería</h2>
-  <div class="gallery">
-    <img src="https://placehold.co/400x700">
-    <img src="https://placehold.co/400x700">
-    <img class="big" src="https://placehold.co/800x400">
-    <img class="big" src="https://placehold.co/800x700">
-    <img src="https://placehold.co/400x700">
-    <img src="https://placehold.co/400x700">
-  </div>
+<h2>Galería</h2>
+<div class="gallery">
+<img src="https://placehold.co/400x700">
+<img src="https://placehold.co/400x700">
+<img class="big" src="https://placehold.co/800x400">
+<img class="big" src="https://placehold.co/800x700">
+<img src="https://placehold.co/400x700">
+<img src="https://placehold.co/400x700">
+</div>
 </section>
 
 <div class="sep"></div>
 
 <section class="section">
-  <h2>¡Estás invitado!</h2>
-  <a class="btn" href="https://wa.me/5210000000000" target="_blank">Confirmar asistencia</a>
+<h2>¡Estás invitado!</h2>
+<a class="btn" href="https://wa.me/5210000000000" target="_blank">Confirmar asistencia</a>
 </section>
 
 <div class="sep"></div>
 
 <section class="section" style="font-size:.9rem;opacity:.7">
 
-  <div class="utilities">
-    <a class="util" href="#" onclick="addToCalendar()">📅 Agregar al calendario</a>
-    <a class="util" href="#countdown">⏱️ Ver cuenta regresiva</a>
-  </div>
+<div class="utilities">
+<a class="util" href="#" onclick="addToCalendar()">📅 Agregar al calendario</a>
+<a class="util" href="#countdown">⏱️ Ver cuenta regresiva</a>
+</div>
 
-  <p class="footer-love" style="margin:24px 0 12px;">Invitación creada con amor</p>
-  <strong class="brand">DIGITAL INVITA</strong>
+<p class="footer-love" style="margin:24px 0 12px;">Invitación creada con amor</p>
+<strong class="brand">DIGITAL INVITA</strong>
 
-  <p style="margin-top:18px;font-size:.75rem;opacity:.8;">
-    ¿No cuentas con invitación aún?
-    <a href="#" style="color:#fff;text-decoration:underline;">Consigue la tuya aquí</a>
-  </p>
+<p style="margin-top:18px;font-size:.75rem;opacity:.8;">
+¿No cuentas con invitación aún?
+<a href="#" style="color:#fff;text-decoration:underline;">Consigue la tuya aquí</a>
+</p>
 </section>
 
 <div id="lightbox">
-  <button id="closeLightbox">✕</button>
-  <img id="lightbox-img">
+<button id="closeLightbox">✕</button>
+<img id="lightbox-img">
 </div>
 
 <!-- BOTÓN SUBIR ARRIBA -->
 <button id="toTopBtn">↑</button>
 
-  <script>
+<script>
 // ===== TEXTO QUE FORMARÁN LAS PARTÍCULAS =====
-  let particleText = "MIS\nXV"; 
+let particleText = "MIS XV"; // <-- aquí cambias el texto cuando quieras
+let particleText = "MIS\nXV"; // <-- aquí cambias el texto cuando quieras
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('openBtn');
-    const overlay = document.getElementById('overlay');
-    const audio = document.getElementById('audio');
-    const nombre = document.getElementById('nombre');
+window.addEventListener('DOMContentLoaded', () => {
 
-    btn.addEventListener('click', () => {
-      overlay.style.opacity = '0';
-      overlay.style.pointerEvents = 'none';
-      setTimeout(() => overlay.style.display = 'none', 400);
+const btn = document.getElementById('openBtn');
+const overlay = document.getElementById('overlay');
+const audio = document.getElementById('audio');
+const nombre = document.getElementById('nombre');
 
-      document.body.style.overflow = 'auto';
-      nombre.classList.add('show');
-      startParticleText();
+btn.addEventListener('click', () => {
+window.scrollTo(0, 0);
 
-      if (audio) {
-        audio.currentTime = 6;
-        audio.volume = 0;
-        audio.play().catch(() => {});
-        let vol = 0;
-        const fade = setInterval(() => {
-          vol += 0.05;
-          audio.volume = Math.min(vol, 1);
-          if (vol >= 1) clearInterval(fade);
-        }, 200);
-      }
-    });
+overlay.style.display = 'none';
+document.body.style.overflow = 'auto';
+nombre.classList.add('show');
+startParticleText(); // 👈 inicia efecto al abrir invitación
+
+
+if(audio){
+audio.currentTime = 6;
+audio.volume = 0;
+audio.play().catch(()=>{});
+let vol = 0;
+const fade = setInterval(() => {
+vol += 0.05;
+audio.volume = Math.min(vol, 1);
+if (vol >= 1) clearInterval(fade);
+}, 200);
+}
+});
+
+});
+
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver(entries => {
+entries.forEach(entry => {
+if (entry.isIntersecting) entry.target.classList.add('show');
+});
+},{ threshold: 0.05 });
+sections.forEach(sec => observer.observe(sec));
+
+const targetDate = new Date('2026-08-15T18:00:00').getTime();
+setInterval(() => {
+const now = new Date().getTime();
+const diff = targetDate - now;
+const d = Math.max(0, Math.floor(diff / (1000*60*60*24)));
+const h = Math.max(0, Math.floor((diff % (1000*60*60*24)) / (1000*60*60)));
+const m = Math.max(0, Math.floor((diff % (1000*60*60)) / (1000*60)));
+const s = Math.max(0, Math.floor((diff % (1000*60)) / 1000));
+
+document.getElementById('countdown').innerHTML = `
+   <div class="count-box"><strong>${d}</strong>Días</div>
+   <div class="count-box"><strong>${h}</strong>Horas</div>
+   <div class="count-box"><strong>${m}</strong>Minutos</div>
+   <div class="count-box"><strong>${s}</strong>Segundos</div>
+ `;
+}, 1000);
+
+/* ===== PARTÍCULAS CON TEXTO ===== */
+
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+
+let w, h;
+function resize(){
+w = canvas.width = window.innerWidth;
+h = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// CONFIG
+const BASE_PARTICLES = 150;   // normales flotando
+const TEXT_PARTICLES = 320;  // solo cuando se forma el texto
+
+const FIRST_DELAY = 8000;     // 8s después de abrir invitación
+const FORM_INTERVAL = 25000; // 25s entre formaciones
+const FORM_DURATION = 4500;  // 4.5s visible el texto
+
+
+
+let forming = false;
+let textPoints = [];
+
+// CREAR PARTICULAS
+const particles = [];
+
+function createParticle(){
+return {
+x: Math.random()*w,
+y: Math.random()*h,
+tx: null,
+ty: null,
+vx: (Math.random()-.5)*1.1,
+vy: (Math.random()-.5)*1.1,
+size: Math.random()*0.7 + 0.5,
+alpha: Math.random()*.6 + .3
+};
+}
+
+// Iniciales (solo 150)
+for(let i=0;i<BASE_PARTICLES;i++){
+particles.push(createParticle());
+}
+
+
+// GENERAR TEXTO (SOLO CONTORNO, LOOK PREMIUM)
+function generateTextPoints(text){
+const temp = document.createElement("canvas");
+const tctx = temp.getContext("2d");
+
+temp.width = w;
+temp.height = h;
+
+  const fontSize = Math.min(h * 0.26, w * 0.7);
+  const fontSize = Math.min(h * 0.18, w * 0.5); // 👈 más pequeño para móvil
+
+tctx.clearRect(0,0,w,h);
+tctx.fillStyle = "#fff";
+tctx.textAlign = "center";
+tctx.textBaseline = "middle";
+tctx.font = `700 ${fontSize}px "Playfair Display"`;
+
+  tctx.fillText(text, w/2, h * 0.42);
+  const lines = text.split("\n");
+  const lineHeight = fontSize * 1.05;
+
+  lines.forEach((line, i) => {
+    const offset = (i - (lines.length - 1) / 2) * lineHeight;
+    tctx.fillText(line, w / 2, h * 0.38 + offset); // 👈 más arriba
   });
 
-  const sections = document.querySelectorAll('.section');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('show');
-    });
-  }, { threshold: 0.05 });
-  sections.forEach(sec => observer.observe(sec));
+const data = tctx.getImageData(0,0,w,h).data;
+const points = [];
 
-  const targetDate = new Date('2026-08-15T18:00:00').getTime();
-  setInterval(() => {
-    const now = new Date().getTime();
-    const diff = targetDate - now;
-    const d = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
-    const h = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-    const m = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
-    const s = Math.max(0, Math.floor((diff % (1000 * 60)) / 1000));
-
-    document.getElementById('countdown').innerHTML = `
-      <div class="count-box"><strong>${d}</strong>Días</div>
-      <div class="count-box"><strong>${h}</strong>Horas</div>
-      <div class="count-box"><strong>${m}</strong>Minutos</div>
-      <div class="count-box"><strong>${s}</strong>Segundos</div>
-    `;
-  }, 1000);
-
-  /* ===== SISTEMA DE PARTÍCULAS AVANZADO ===== */
-  const canvas = document.getElementById('particles');
-  const ctx = canvas.getContext('2d', { willReadFrequently: true });
-  let w, h;
-
-  function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  // CONFIGURACIÓN DE TIEMPOS
-  const BASE_PARTICLES = 150;     // Partículas que siempre flotan
-  const FIRST_DELAY = 10000;      // 10 segundos después de abrir
-  const FORM_INTERVAL = 45000;    // Se repite cada 45 segundos
-  const FORM_DURATION = 5000;     // El nombre se queda quieto 5s
-const BASE_PARTICLES_COUNT = 130; 
-const FIRST_DELAY = 10000;
-const FORM_INTERVAL = 45000;
-const FORM_DURATION = 6000; 
-
-  let forming = false;
-  let particles = [];
-let forming = false;
-
-  function createParticle(isExtra = false) {
-function createParticle(isExtra = false) {
-    return {
-      x: Math.random() * w,
-      y: Math.random() * h,
-      tx: null, ty: null,
-      vx: (Math.random() - .5) * 0.7,
-      vy: (Math.random() - .5) * 0.7,
-      size: Math.random() * 0.9 + 0.4,
-      alpha: Math.random() * .6 + .2,
-      fade: 1,
-      isExtra: isExtra
-        x: Math.random() * w,
-        y: Math.random() * h,
-        tx: null, ty: null,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        size: Math.random() * 0.8 + 0.4,
-        alpha: Math.random() * 0.4 + 0.2,
-        baseAlpha: Math.random() * 0.4 + 0.2,
-        isExtra: isExtra,
-        friction: 0.95
-    };
-  }
+for(let y = 0; y < h; y += 4){
+for(let x = 0; x < w; x += 4){
+const i = (y * w + x) * 4;
+if(data[i + 3] > 120){
+points.push({ x, y });
+}
+}
 }
 
-  // Inicialización
-  for (let i = 0; i < BASE_PARTICLES; i++) {
-for (let i = 0; i < BASE_PARTICLES_COUNT; i++) {
-    particles.push(createParticle(false));
-  }
+return points;
 }
 
-  function generateTextPoints(text) {
-function generateTextPoints(text) {
-    const temp = document.createElement("canvas");
-    const tctx = temp.getContext("2d");
-    temp.width = w;
-    temp.height = h;
 
-    const fontSize = Math.min(h * 0.14, w * 0.35); 
-    temp.width = w; temp.height = h;
-    const fontSize = Math.min(h * 0.12, w * 0.15); 
-    tctx.fillStyle = "#fff";
-    tctx.textAlign = "center";
-    tctx.textBaseline = "middle";
-    tctx.font = `700 ${fontSize}px "Playfair Display"`;
+function formText(){
 
-    tctx.font = `700 ${fontSize}px "Playfair Display", serif`;
-    
-    // Si tu texto tiene varias líneas, las separamos
-    const lines = text.split("\n");
-    const lineHeight = fontSize * 1.05;
-    const totalHeight = lines.length * lineHeight;
-    const startY = (h / 2) - (totalHeight / 4);
+function formText(){
+textPoints = generateTextPoints(particleText);
 
-    lines.forEach((line, i) => {
-      tctx.fillText(line, w / 2, startY + (i * lineHeight));
-        tctx.fillText(line, w / 2, h / 2 + (i * fontSize * 1.1));
-    });
+ // 👉 Aparecen más partículas solo cuando se forma el texto
+while(particles.length < textPoints.length){
+  particles.push(createParticle());
+}
+  // Crear partículas suficientes SOLO para el texto
+  while(particles.length < textPoints.length){
+    particles.push(createParticle());
+  }
 
-    const data = tctx.getImageData(0, 0, w, h).data;
-    const points = [];
-    const step = 2; // ESCANEO DENSO PARA LLENAR BIEN EL TEXTO
+const activeCount = textPoints.length;
+  const activeCount = textPoints.length;
 
-    for (let y = 0; y < h; y += step) {
-      for (let x = 0; x < w; x += step) {
-        if (data[(y * w + x) * 4 + 3] > 120) {
-          points.push({ x, y });
-    for (let y = 0; y < h; y += 2) { // Paso de 2 para llenar bien
-        for (let x = 0; x < w; x += 2) {
-            if (data[(y * w + x) * 4 + 3] > 128) {
-                points.push({ x, y });
-            }
-        }
+for(let i=0;i<activeCount;i++){
+  const p = particles[i];
+  const point = textPoints[i];
+  for(let i=0;i<activeCount;i++){
+    const p = particles[i];
+    const point = textPoints[i];
+
+  p.tx = point.x;
+  p.ty = point.y;
+}
+    p.tx = point.x;
+    p.ty = point.y;
+    p.outVX = (Math.random() - 0.5) * 4; // velocidad de salida
+    p.outVY = (Math.random() - 0.5) * 4;
+  }
+
+forming = true;
+
+setTimeout(()=>{
+forming = false;
+
+    particles.forEach(p=>{
+      p.tx = null;
+      p.ty = null;
+    particles.forEach((p, i)=>{
+      if(i < activeCount){
+        p.tx = null;
+        p.ty = null;
+        p.vx = p.outVX;
+        p.vy = p.outVY;
       }
-    }
-    return points;
-  }
+});
+
+    // 👉 Regresa a las partículas normales
+    particles.splice(BASE_PARTICLES);
+    // Desintegración elegante (regresa a base)
+    setTimeout(()=>{
+      particles.splice(BASE_PARTICLES);
+    }, 1200);
+
+}, FORM_DURATION);
 }
 
-  function formText() {
-    const textPoints = generateTextPoints(particleText);
-    
-    // Solo creamos partículas extra si faltan para cubrir los puntos del texto
-    while (particles.length < textPoints.length + BASE_PARTICLES) {
-      particles.push(createParticle(true));
-function formText() {
-    const textPoints = generateTextPoints("Sofía\nMis XV"); // Cambia aquí el nombre
-    forming = true;
 
-    while (particles.length < textPoints.length) {
-        particles.push(createParticle(true));
-    }
 
-    forming = true;
-    
-    // Mezclamos los puntos para que la formación sea orgánica
-    const shuffledPoints = textPoints.sort(() => Math.random() - 0.5);
+// ===== CONTROL DE CICLO =====
 
-    particles.forEach((p, i) => {
-      if (i < shuffledPoints.length) {
-        p.tx = shuffledPoints[i].x;
-        p.ty = shuffledPoints[i].y;
-        p.fade = 1;
-      } else {
-        // Estas partículas quedan libres (BASE_PARTICLES)
-        p.tx = null; p.ty = null;
-      }
-        if (i < shuffledPoints.length) {
-            p.tx = shuffledPoints[i].x;
-            p.ty = shuffledPoints[i].y;
-        }
-    });
+let particleStarted = false;
+let particleLoop = null;
 
-    setTimeout(() => {
-      forming = false;
-      particles.forEach(p => {
-        if (p.tx !== null) {
-          const angle = Math.random() * Math.PI * 2;
-          const force = Math.random() * 4 + 2; // Explosión más enérgica
-          p.vx = Math.cos(angle) * force;
-          p.vy = Math.sin(angle) * force;
-          p.tx = null; p.ty = null;
-        }
-      });
+function startParticleText(){
 
-      const fadeEffect = setInterval(() => {
-        let anyVisible = false;
-        forming = false;
-        particles.forEach(p => {
-          if (p.isExtra) {
-            p.fade -= 0.015; // Desvanecimiento suave
-            if (p.fade > 0) anyVisible = true;
-          }
-            if (p.tx !== null) {
-                const angle = Math.random() * Math.PI * 2;
-                const force = Math.random() * 1.2 + 0.3; 
-                p.vx = Math.cos(angle) * force;
-                p.vy = Math.sin(angle) * force;
-                p.tx = null; p.ty = null;
-            }
-        });
-        if (!anyVisible) {
-          clearInterval(fadeEffect);
-          particles = particles.filter(p => !p.isExtra);
-        }
-      }, 30);
-    }, FORM_DURATION);
-  }
+if(particleStarted) return; // evita doble inicio
+particleStarted = true;
 
-  function startParticleText() {
-    setTimeout(() => {
-      formText();
-      setInterval(formText, FORM_INTERVAL);
-    }, FIRST_DELAY);
-  }
-        // Limpieza de extras
-        setTimeout(() => {
-            const cleanup = setInterval(() => {
-                let extraFound = false;
-                for(let i = particles.length - 1; i >= 0; i--){
-                    if(particles[i].isExtra){
-                        particles[i].alpha -= 0.02;
-                        extraFound = true;
-                        if(particles[i].alpha <= 0) particles.splice(i, 1);
-                    }
-                }
-                if(!extraFound) clearInterval(cleanup);
-            }, 50);
-        }, 2000);
-    }, FORM_DURATION);
+// Primera vez
+setTimeout(() => {
+
+formText();
+
+// Loop limpio
+particleLoop = setInterval(() => {
+formText();
+}, FORM_INTERVAL);
+
+}, FIRST_DELAY);
+
 }
 
- 
-function animate() {
-    // Fondo con estela (rastro/colita)
-    ctx.fillStyle = 'rgba(75, 29, 107, 0.15)'; 
-    ctx.fillRect(0, 0, w, h);
 
-    particles.forEach(p => {
-      if (forming && p.tx !== null) {
-        // Movimiento hacia el texto
-        p.x += (p.tx - p.x) * 0.08;
-        p.y += (p.ty - p.y) * 0.08;
-      } else {
-        // Movimiento libre o explosión
-        p.x += p.vx;
-        p.y += p.vy;
-        
-        // Rebote o teletransporte en bordes
-        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
-        if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
-      }
+// ANIMAR
+function animate(){
 
-      const fAlpha = (p.tx !== null && forming) ? 1 : p.alpha * p.fade;
-      ctx.fillStyle = `rgba(255, 215, 160, ${fAlpha})`;
-      
-      if (forming && p.tx !== null) {
-        ctx.shadowBlur = 3;
-        ctx.shadowColor = "#ffd7a0";
-      } else {
-        ctx.shadowBlur = 0;
-      }
-        if (forming && p.tx !== null) {
-            p.x += (p.tx - p.x) * 0.07;
-            p.y += (p.ty - p.y) * 0.07;
+  ctx.fillStyle = 'rgba(75,29,107,0.15)';
+  ctx.fillRect(0,0,w,h);
+  ctx.clearRect(0,0,w,h);
 
-            const dist = Math.hypot(p.tx - p.x, p.ty - p.y);
-            if (dist < 10) {
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = "#ffd7a0";
-                p.alpha = 1;
-            }
-        } else {
-            p.vx *= p.friction;
-            p.vy *= p.friction;
-            p.x += p.vx;
-            p.y += p.vy;
-            p.alpha = p.isExtra ? p.alpha : p.baseAlpha;
-            ctx.shadowBlur = 0;
 
-            if (p.x < 0 || p.x > w) p.vx *= -1;
-            if (p.y < 0 || p.y > h) p.vy *= -1;
-        }
+particles.forEach(p=>{
 
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fill();
-        ctx.fillStyle = `rgba(255, 215, 160, ${p.alpha})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0; 
-    });
-    requestAnimationFrame(animate);
-  }
-  animate();
+if(forming && p.tx !== null){
+      p.x += (p.tx - p.x) * 0.06;
+      p.y += (p.ty - p.y) * 0.06;
+      p.x += (p.tx - p.x) * 0.08;
+      p.y += (p.ty - p.y) * 0.08;
+} else {
+p.x += p.vx;
+p.y += p.vy;
+
+if(p.x < 0) p.x = w;
+if(p.x > w) p.x = 0;
+if(p.y < 0) p.y = h;
+if(p.y > h) p.y = 0;
 }
 
-function startParticleText() {
-    setTimeout(() => {
-        formText();
-        setInterval(formText, FORM_INTERVAL);
-    }, FIRST_DELAY);
+ctx.beginPath();
+
+if(forming && p.tx !== null){
+ctx.shadowBlur = 2;
+ctx.shadowColor = "rgba(255,215,160,0.8)";
+}else{
+if(forming && p.tx !== null){
+  ctx.shadowBlur = 6;
+  ctx.shadowColor = "rgba(255,215,160,0.8)";
+} else {
+ctx.shadowBlur = 0;
+}
+
+if(forming && p.tx !== null){
+ctx.fillStyle = "rgba(255,215,160,1)";
+} else {
+ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
+}
+
+const r = p.size; // mismo tamaño siempre (más elegante)
+
+ctx.arc(p.x, p.y, r, 0, Math.PI*2);
+ctx.beginPath();
+ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+ctx.fill();
+
+
+  });
+
+  requestAnimationFrame(animate);
 }
 
 animate();
-// Llama a startParticleText() cuando el usuario abra la invitación
-  // Galería y Lightbox (Tus funciones originales se mantienen igual)
-  document.querySelectorAll('.gallery img').forEach(img => {
-    img.addEventListener('click', () => {
-      document.getElementById('lightbox-img').src = img.src;
-      document.getElementById('lightbox').style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    });
-  });
 
-  const closeL = () => {
-    document.getElementById('lightbox').style.display = 'none';
-    document.body.style.overflow = 'auto';
-  };
-  document.getElementById('closeLightbox').addEventListener('click', closeL);
-  document.getElementById('lightbox').addEventListener('click', (e) => {
-    if (e.target.id === 'lightbox') closeL();
-  });
 
-  function addToCalendar() {
-    const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('XV Sofía')}&dates=20260815T180000/20260815T230000`;
-    window.open(url, '_blank');
-  }
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const closeLightbox = document.getElementById('closeLightbox');
 
-  const toTopBtn = document.getElementById('toTopBtn');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) toTopBtn.classList.add('show');
-    else toTopBtn.classList.remove('show');
-  });
-  toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-  </script>
+document.querySelectorAll('.gallery img').forEach(img => {
+img.addEventListener('click', () => {
+
+lightboxImg.src = img.src;
+lightbox.style.display = 'flex';
+
+// Bloquear scroll
+document.body.style.overflow = 'hidden';
+});
+});
+
+// Cerrar con tache
+closeLightbox.addEventListener('click', () => {
+lightbox.style.display = 'none';
+document.body.style.overflow = 'auto';
+});
+
+// Cerrar tocando fondo oscuro
+lightbox.addEventListener('click', (e) => {
+if (e.target === lightbox) {
+lightbox.style.display = 'none';
+document.body.style.overflow = 'auto';
+}
+});
+
+function addToCalendar(){
+const title = encodeURIComponent('XV Años Sofía Montes');
+const details = encodeURIComponent('Celebración de XV años');
+const location = encodeURIComponent('Parroquia Ejemplo / Salón Ejemplo');
+const dates = '20260815T180000/20260815T230000';
+const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${dates}`;
+window.open(url, '_blank');
+}
+// ===== FORZAR SIEMPRE ARRIBA =====
+history.scrollRestoration = "manual";
+
+window.addEventListener('load', () => {
+setTimeout(() => {
+window.scrollTo(0, 0);
+}, 50);
+});
+
+// ===== BOTÓN VOLVER ARRIBA =====
+const toTopBtn = document.getElementById('toTopBtn');
+
+window.addEventListener('scroll', () => {
+const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+
+if (scrollPercent > 60) {
+toTopBtn.classList.add('show');
+} else {
+toTopBtn.classList.remove('show');
+}
+});
+
+toTopBtn.addEventListener('click', () => {
+window.scrollTo({
+top: 0,
+behavior: 'smooth'
+});
+});
+
+</script>
+
 
 </body>
 </html>
-
