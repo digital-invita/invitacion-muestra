@@ -690,6 +690,7 @@ for(let i=0;i<BASE_PARTICLES;i++){
 
 // GENERAR TEXTO (SOLO CONTORNO, LOOK PREMIUM)
 function generateTextPoints(text){
+  
 
   const temp = document.createElement("canvas");
   const tctx = temp.getContext("2d");
@@ -738,6 +739,9 @@ function generateTextPoints(text){
   return points;
 }
 
+function formText(){
+
+  textPoints = generateTextPoints(particleText);
 
   // 👉 Aparecen más partículas solo cuando se forma el texto
   while(particles.length < TEXT_PARTICLES){
@@ -745,7 +749,6 @@ function generateTextPoints(text){
   }
 
   const FORM_RATIO = 0.75; 
-
   const activeCount = Math.floor(particles.length * FORM_RATIO);
 
   for(let i=0;i<activeCount;i++){
@@ -770,6 +773,9 @@ function generateTextPoints(text){
     particles.splice(BASE_PARTICLES);
 
   }, FORM_DURATION);
+}
+
+
 
 }
 
