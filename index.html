@@ -689,7 +689,8 @@ function generateTextPoints(text){
   temp.width = w;
   temp.height = h;
 
-  const fontSize = Math.min(w*0.18, 160);
+ const fontSize = Math.min(w * 0.35, 260); // MÁS GRANDE
+
 
   tctx.clearRect(0,0,w,h);
   tctx.fillStyle = "#fff";
@@ -702,8 +703,8 @@ function generateTextPoints(text){
   const data = tctx.getImageData(0,0,w,h).data;
   const points = [];
 
-  for(let y=0;y<h;y+=4){
-    for(let x=0;x<w;x+=4){
+  for(let y=0;y<h;y+=2){
+    for(let x=0;x<w;x+=2){
       const i = (y*w + x) * 4;
       if(data[i+3] > 150){
         points.push({x,y});
@@ -798,7 +799,12 @@ if(forming && p.tx !== null){
   ctx.shadowBlur = 0;
 }
 
-ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
+if(forming && p.tx !== null){
+  ctx.fillStyle = "rgba(255,215,160,1)";
+} else {
+  ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
+}
+
 ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
 ctx.fill();
 
