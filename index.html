@@ -606,16 +606,21 @@ function createParticle(isExtra = false, x, y) {
     return {
         x: x || Math.random() * w,
         y: y || Math.random() * h,
-        tx: null, ty: null,
+        prevX: x || Math.random() * w, // posición previa para la cola
+        prevY: y || Math.random() * h, // posición previa para la cola
+        tx: null,
+        ty: null,
         vx: (Math.random() - 0.5) * 1.5,
         vy: (Math.random() - 0.5) * 1.5,
         size: Math.random() * 1.2 + 0.5,
         alpha: isExtra ? 0 : Math.random() * 0.5 + 0.2,
         baseAlpha: Math.random() * 0.5 + 0.2,
         isExtra: isExtra,
-        fadingOut: false
+        fadingOut: false,
+        trail: Math.random() < 0.35 // 35% de las partículas tendrán cola
     };
 }
+
 
 // Inicializar base
 for (let i = 0; i < BASE_PARTICLES_COUNT; i++) particles.push(createParticle());
@@ -690,36 +695,53 @@ function animate() {
    ctx.clearRect(0, 0, w, h); // 👈 limpia el canvas sin pintar fondo
 
 
-    for (let i = particles.length - 1; i >= 0; i--) {
-        let p = particles[i];
+for (let i = particles.length - 1; i >= 0; i--) {
+    let p = particles[i];
 
-        if (forming && p.tx !== null) {
-            p.x += (p.tx - p.x) * 0.12;
-            p.y += (p.ty - p.y) * 0.12;
-            p.alpha = Math.min(p.alpha + 0.08, 1);
-            if (Math.hypot(p.tx - p.x, p.ty - p.y) < 5) {
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = "#fff1a8";
-            }
-        } else {
-            p.x += p.vx;
-            p.y += p.vy;
-            ctx.shadowBlur = 0;
-            if (p.fadingOut) {
-                p.alpha -= 0.015;
-                if (p.alpha <= 0) { particles.splice(i, 1); continue; }
-            } else {
-                p.alpha = p.isExtra ? Math.max(p.alpha - 0.01, 0) : p.baseAlpha;
-            }
-            if (p.x < 0 || p.x > w) p.vx *= -1;
-            if (p.y < 0 || p.y > h) p.vy *= -1;
+    // Movimiento hacia texto
+    if (forming && p.tx !== null) {
+        p.x += (p.tx - p.x) * 0.12;
+        p.y += (p.ty - p.y) * 0.12;
+        p.alpha = Math.min(p.alpha + 0.08, 1);
+        if (Math.hypot(p.tx - p.x, p.ty - p.y) < 5) {
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = "#fff1a8";
         }
-
-        ctx.fillStyle = `rgba(255, 215, 160, ${p.alpha})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
+    } else { // Movimiento libre
+        p.x += p.vx;
+        p.y += p.vy;
+        ctx.shadowBlur = 0;
+        if (p.fadingOut) {
+            p.alpha -= 0.015;
+            if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+        } else {
+            p.alpha = p.isExtra ? Math.max(p.alpha - 0.01, 0) : p.baseAlpha;
+        }
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
     }
+
+    // --- DIBUJAR COLA ---
+    if (p.trail) {
+        ctx.strokeStyle = `rgba(255, 215, 160, ${p.alpha * 0.4})`;
+        ctx.lineWidth = p.size;
+        ctx.beginPath();
+        ctx.moveTo(p.prevX, p.prevY);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+    }
+
+    // --- DIBUJAR PARTÍCULA ---
+    ctx.fillStyle = `rgba(255, 215, 160, ${p.alpha})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+
+    // --- ACTUALIZAR PREVX, PREVY ---
+    p.prevX = p.x;
+    p.prevY = p.y;
+}
+
     requestAnimationFrame(animate);
 }
 
@@ -740,7 +762,20 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Iniciar partículas
     setTimeout(formText, 2000); 
-    setInterval(formText, FORM_INTERVAL);
+   // Iniciar partículas
+setTimeout(formText, 2000); 
+
+// Primera aparición del texto a los 10 segundos
+setTimeout(() => {
+    formText();
+
+    // Repetición aleatoria cada 45 a 60 segundos
+    setInterval(() => {
+        const randomDelay = 45000 + Math.random() * 15000; // 45s a 60s
+        setTimeout(formText, randomDelay);
+    }, 60000); 
+}, 10000);
+
 
     // Reproducir audio
     const audio = document.getElementById('audio');
