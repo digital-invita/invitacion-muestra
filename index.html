@@ -728,16 +728,25 @@ window.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('openBtn');
     const toTopBtn = document.getElementById('toTopBtn');
 
-    btn.addEventListener('click', () => {
-        document.getElementById('overlay').style.display = 'none';
-        document.body.style.overflow = 'auto';
-        document.getElementById('nombre').classList.add('show');
-        setTimeout(formText, 2000); 
-        setInterval(formText, FORM_INTERVAL);
-        // Audio logic...
-        const audio = document.getElementById('audio');
-        if(audio) { audio.play(); }
-    });
+ btn.addEventListener('click', () => {
+    document.getElementById('overlay').style.display = 'none';
+    document.body.style.overflow = 'auto';
+
+    // Mostrar nombre
+    document.getElementById('nombre').classList.add('show');
+
+    // Mostrar todas las secciones de la invitación
+    document.querySelectorAll('.section').forEach(sec => sec.classList.add('show'));
+
+    // Iniciar partículas
+    setTimeout(formText, 2000); 
+    setInterval(formText, FORM_INTERVAL);
+
+    // Reproducir audio
+    const audio = document.getElementById('audio');
+    if(audio) { audio.play(); }
+});
+
 
     window.addEventListener('scroll', () => {
         // Cálculo de porcentaje (Punto 4)
