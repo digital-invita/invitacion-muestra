@@ -654,7 +654,7 @@ resize();
 window.addEventListener('resize', resize);
 
 // CONFIG
-const PARTICLE_COUNT = 160;
+const PARTICLE_COUNT = 900; // más partículas = letras más definidas
 const FIRST_DELAY = 8000;     // 8s después de abrir invitación
 const FORM_INTERVAL = 25000; // 25s entre formaciones
 const FORM_DURATION = 4500;  // 4.5s visible el texto
@@ -689,7 +689,8 @@ function generateTextPoints(text){
   temp.width = w;
   temp.height = h;
 
- const fontSize = Math.min(w * 0.35, 260); // MÁS GRANDE
+const fontSize = Math.min(w * 0.55, 420); // TEXTO GRANDE Y LEGIBLE
+
 
 
   tctx.clearRect(0,0,w,h);
@@ -778,8 +779,8 @@ function animate(){
   particles.forEach(p=>{
 
     if(forming && p.tx !== null){
-      p.x += (p.tx - p.x) * 0.035;
-      p.y += (p.ty - p.y) * 0.035;
+      p.x += (p.tx - p.x) * 0.08;
+      p.y += (p.ty - p.y) * 0.08;
     } else {
       p.x += p.vx;
       p.y += p.vy;
@@ -805,7 +806,8 @@ if(forming && p.tx !== null){
   ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
 }
 
-ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+const r = (forming && p.tx !== null) ? p.size + 0.9 : p.size;
+ctx.arc(p.x, p.y, r, 0, Math.PI*2);
 ctx.fill();
 
 
