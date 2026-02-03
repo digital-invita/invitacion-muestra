@@ -702,8 +702,8 @@ function generateTextPoints(text){
   const data = tctx.getImageData(0,0,w,h).data;
   const points = [];
 
-  for(let y=0;y<h;y+=6){
-    for(let x=0;x<w;x+=6){
+  for(let y=0;y<h;y+=4){
+    for(let x=0;x<w;x+=4){
       const i = (y*w + x) * 4;
       if(data[i+3] > 150){
         points.push({x,y});
@@ -718,11 +718,17 @@ function formText(){
 
   textPoints = generateTextPoints(particleText);
 
-  particles.forEach((p,i)=>{
-    const point = textPoints[i % textPoints.length];
-    p.tx = point.x;
-    p.ty = point.y;
-  });
+const FORM_RATIO = 0.65; // 65% forman texto, 35% siguen libres
+
+const activeCount = Math.floor(particles.length * FORM_RATIO);
+
+for(let i=0;i<activeCount;i++){
+  const p = particles[i];
+  const point = textPoints[i % textPoints.length];
+
+  p.tx = point.x;
+  p.ty = point.y;
+}
 
   forming = true;
 
@@ -783,10 +789,19 @@ function animate(){
       if(p.y > h) p.y = 0;
     }
 
-    ctx.beginPath();
-    ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
-    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-    ctx.fill();
+   ctx.beginPath();
+
+if(forming && p.tx !== null){
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = "rgba(255,215,160,0.8)";
+}else{
+  ctx.shadowBlur = 0;
+}
+
+ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fill();
+
 
   });
 
