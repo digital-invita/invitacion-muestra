@@ -698,16 +698,21 @@ function animate() {
 for (let i = particles.length - 1; i >= 0; i--) {
     let p = particles[i];
 
-    // Movimiento hacia texto
     if (forming && p.tx !== null) {
-        p.x += (p.tx - p.x) * 0.12;
-        p.y += (p.ty - p.y) * 0.12;
+        // Solo algunas partículas van al texto, otras siguen libres
+        if (Math.random() < 0.7) { // 70% van al texto
+            p.x += (p.tx - p.x) * 0.12;
+            p.y += (p.ty - p.y) * 0.12;
+        } else { // 30% siguen libres
+            p.x += p.vx;
+            p.y += p.vy;
+        }
         p.alpha = Math.min(p.alpha + 0.08, 1);
-        if (Math.hypot(p.tx - p.x, p.ty - p.y) < 5) {
+        if (p.tx !== null && Math.hypot(p.tx - p.x, p.ty - p.y) < 5) {
             ctx.shadowBlur = 15;
             ctx.shadowColor = "#fff1a8";
         }
-    } else { // Movimiento libre
+    } else {
         p.x += p.vx;
         p.y += p.vy;
         ctx.shadowBlur = 0;
@@ -721,21 +726,20 @@ for (let i = particles.length - 1; i >= 0; i--) {
         if (p.y < 0 || p.y > h) p.vy *= -1;
     }
 
-    // --- DIBUJAR COLA ---
-    if (p.trail) {
-        ctx.strokeStyle = `rgba(255, 215, 160, ${p.alpha * 0.4})`;
-        ctx.lineWidth = p.size;
-        ctx.beginPath();
-        ctx.moveTo(p.prevX, p.prevY);
-        ctx.lineTo(p.x, p.y);
-        ctx.stroke();
-    }
+    // === NUEVO: dibujar colita ===
+    ctx.strokeStyle = `rgba(255,215,160,${p.alpha * 0.3})`;
+    ctx.lineWidth = p.size * 1.2;
+    ctx.beginPath();
+    ctx.moveTo(p.x - p.vx * 2, p.y - p.vy * 2);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
 
-    // --- DIBUJAR PARTÍCULA ---
     ctx.fillStyle = `rgba(255, 215, 160, ${p.alpha})`;
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
     ctx.fill();
+}
+
 
     // --- ACTUALIZAR PREVX, PREVY ---
     p.prevX = p.x;
