@@ -403,8 +403,12 @@ body {
   from { transform: scale(.85); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
-
-
+html, body {
+  overscroll-behavior: none;
+}
+html, body {
+  scroll-behavior: auto !important;
+}
 </style>
 </head>
 
@@ -546,12 +550,16 @@ body {
 <button id="toTopBtn">↑</button>
 
 <script>
+window.addEventListener('DOMContentLoaded', () => {
+
 const btn = document.getElementById('openBtn');
 const overlay = document.getElementById('overlay');
 const audio = document.getElementById('audio');
 const nombre = document.getElementById('nombre');
 
 btn.addEventListener('click', () => {
+  window.scrollTo(0, 0);
+
   overlay.style.display = 'none';
   document.body.style.overflow = 'auto';
   nombre.classList.add('show');
@@ -567,6 +575,8 @@ btn.addEventListener('click', () => {
       if (vol >= 1) clearInterval(fade);
     }, 200);
   }
+});
+
 });
 
 const sections = document.querySelectorAll('.section');
@@ -647,13 +657,13 @@ function addToCalendar(){
   const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${dates}`;
   window.open(url, '_blank');
 }
-  // ===== FORZAR INICIO ARRIBA =====
-window.onbeforeunload = function () {
-  window.scrollTo(0, 0);
-};
+// ===== FORZAR SIEMPRE ARRIBA =====
+history.scrollRestoration = "manual";
 
 window.addEventListener('load', () => {
-  window.scrollTo({ top: 0, behavior: 'instant' });
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 50);
 });
 
 // ===== BOTÓN VOLVER ARRIBA =====
@@ -675,13 +685,10 @@ toTopBtn.addEventListener('click', () => {
     behavior: 'smooth'
   });
 });
-html, body {
-  overscroll-behavior: none;
-}
 
 </script>
 
   
 </body>
 </html>
-</html>
+
