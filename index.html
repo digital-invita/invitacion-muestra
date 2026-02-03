@@ -654,7 +654,9 @@ resize();
 window.addEventListener('resize', resize);
 
 // CONFIG
-const PARTICLE_COUNT = 420; // elegante y fluido
+const BASE_PARTICLES = 150;   // normales flotando
+const TEXT_PARTICLES = 320;  // solo cuando se forma el texto
+
 const FIRST_DELAY = 8000;     // 8s después de abrir invitación
 const FORM_INTERVAL = 25000; // 25s entre formaciones
 const FORM_DURATION = 4500;  // 4.5s visible el texto
@@ -667,8 +669,8 @@ let textPoints = [];
 // CREAR PARTICULAS
 const particles = [];
 
-for(let i=0;i<PARTICLE_COUNT;i++){
-  particles.push({
+function createParticle(){
+  return {
     x: Math.random()*w,
     y: Math.random()*h,
     tx: null,
@@ -677,8 +679,14 @@ for(let i=0;i<PARTICLE_COUNT;i++){
     vy: (Math.random()-.5)*1.1,
     size: Math.random()*0.7 + 0.5,
     alpha: Math.random()*.6 + .3
-  });
+  };
 }
+
+// Iniciales (solo 150)
+for(let i=0;i<BASE_PARTICLES;i++){
+  particles.push(createParticle());
+}
+
 
 // GENERAR TEXTO
 function generateTextPoints(text){
@@ -719,17 +727,22 @@ function formText(){
 
   textPoints = generateTextPoints(particleText);
 
-const FORM_RATIO = 0.5; // 5% forman texto, 95% siguen libres
+  // 👉 Aparecen más partículas solo cuando se forma el texto
+  while(particles.length < TEXT_PARTICLES){
+    particles.push(createParticle());
+  }
 
-const activeCount = Math.floor(particles.length * FORM_RATIO);
+  const FORM_RATIO = 0.55; 
 
-for(let i=0;i<activeCount;i++){
-  const p = particles[i];
-  const point = textPoints[i % textPoints.length];
+  const activeCount = Math.floor(particles.length * FORM_RATIO);
 
-  p.tx = point.x;
-  p.ty = point.y;
-}
+  for(let i=0;i<activeCount;i++){
+    const p = particles[i];
+    const point = textPoints[i % textPoints.length];
+
+    p.tx = point.x;
+    p.ty = point.y;
+  }
 
   forming = true;
 
@@ -741,9 +754,13 @@ for(let i=0;i<activeCount;i++){
       p.ty = null;
     });
 
+    // 👉 Regresa a las partículas normales
+    particles.splice(BASE_PARTICLES);
+
   }, FORM_DURATION);
 
 }
+
 // ===== CONTROL DE CICLO =====
 
 let particleStarted = false;
