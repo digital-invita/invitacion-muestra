@@ -689,7 +689,8 @@ function generateTextPoints(text){
   temp.width = w;
   temp.height = h;
 
-const fontSize = Math.min(w * 0.55, 420); // TEXTO GRANDE Y LEGIBLE
+const fontSize = Math.min(h * 0.28, 280);
+
 
 
 
@@ -697,7 +698,7 @@ const fontSize = Math.min(w * 0.55, 420); // TEXTO GRANDE Y LEGIBLE
   tctx.fillStyle = "#fff";
   tctx.textAlign = "center";
   tctx.textBaseline = "middle";
-  tctx.font = `bold ${fontSize}px Playfair Display`;
+  tctx.font = `600 ${fontSize}px "Playfair Display"`;
 
   tctx.fillText(text, w/2, h/2);
 
@@ -779,8 +780,8 @@ function animate(){
   particles.forEach(p=>{
 
     if(forming && p.tx !== null){
-      p.x += (p.tx - p.x) * 0.08;
-      p.y += (p.ty - p.y) * 0.08;
+      p.x += (p.tx - p.x) * 0.06;
+      p.y += (p.ty - p.y) * 0.06;
     } else {
       p.x += p.vx;
       p.y += p.vy;
@@ -794,7 +795,7 @@ function animate(){
    ctx.beginPath();
 
 if(forming && p.tx !== null){
-  ctx.shadowBlur = 10;
+  ctx.shadowBlur = 5;
   ctx.shadowColor = "rgba(255,215,160,0.8)";
 }else{
   ctx.shadowBlur = 0;
@@ -806,7 +807,7 @@ if(forming && p.tx !== null){
   ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
 }
 
-const r = (forming && p.tx !== null) ? p.size + 0.9 : p.size;
+const r = (forming && p.tx !== null) ? p.size + 0.3 : p.size;
 ctx.arc(p.x, p.y, r, 0, Math.PI*2);
 ctx.fill();
 
