@@ -638,7 +638,7 @@ html, body {
     `;
   }, 1000);
 
-  /* ===== SISTEMA DE PARTÍCULAS CORREGIDO ===== */
+  /* ===== SISTEMA DE PARTÍCULAS AVANZADO ===== */
   const canvas = document.getElementById('particles');
   const ctx = canvas.getContext('2d', { willReadFrequently: true });
   let w, h;
@@ -650,10 +650,11 @@ html, body {
   resize();
   window.addEventListener('resize', resize);
 
-  const BASE_PARTICLES = 120; 
-  const FIRST_DELAY = 6000; 
-  const FORM_INTERVAL = 20000; 
-  const FORM_DURATION = 4000; 
+  // CONFIGURACIÓN DE TIEMPOS
+  const BASE_PARTICLES = 150;     // Partículas que siempre flotan
+  const FIRST_DELAY = 10000;      // 10 segundos después de abrir
+  const FORM_INTERVAL = 45000;    // Se repite cada 45 segundos
+  const FORM_DURATION = 5000;     // El nombre se queda quieto 5s
 
   let forming = false;
   let particles = [];
@@ -663,15 +664,16 @@ html, body {
       x: Math.random() * w,
       y: Math.random() * h,
       tx: null, ty: null,
-      vx: (Math.random() - .5) * 0.8,
-      vy: (Math.random() - .5) * 0.8,
-      size: Math.random() * 0.8 + 0.5,
-      alpha: Math.random() * .5 + .2,
+      vx: (Math.random() - .5) * 0.7,
+      vy: (Math.random() - .5) * 0.7,
+      size: Math.random() * 0.9 + 0.4,
+      alpha: Math.random() * .6 + .2,
       fade: 1,
       isExtra: isExtra
     };
   }
 
+  // Inicialización
   for (let i = 0; i < BASE_PARTICLES; i++) {
     particles.push(createParticle(false));
   }
@@ -682,16 +684,16 @@ html, body {
     temp.width = w;
     temp.height = h;
 
-    const fontSize = Math.min(h * 0.15, w * 0.4); 
+    const fontSize = Math.min(h * 0.14, w * 0.35); 
     tctx.fillStyle = "#fff";
     tctx.textAlign = "center";
     tctx.textBaseline = "middle";
     tctx.font = `700 ${fontSize}px "Playfair Display"`;
 
     const lines = text.split("\n");
-    const lineHeight = fontSize * 1.1;
+    const lineHeight = fontSize * 1.05;
     const totalHeight = lines.length * lineHeight;
-    const startY = (h / 2) - (totalHeight / 4); // Centrado dinámico
+    const startY = (h / 2) - (totalHeight / 4);
 
     lines.forEach((line, i) => {
       tctx.fillText(line, w / 2, startY + (i * lineHeight));
@@ -699,11 +701,11 @@ html, body {
 
     const data = tctx.getImageData(0, 0, w, h).data;
     const points = [];
-    const step = w < 500 ? 4 : 3; // Densidad según pantalla
+    const step = 2; // ESCANEO DENSO PARA LLENAR BIEN EL TEXTO
 
     for (let y = 0; y < h; y += step) {
       for (let x = 0; x < w; x += step) {
-        if (data[(y * w + x) * 4 + 3] > 128) {
+        if (data[(y * w + x) * 4 + 3] > 120) {
           points.push({ x, y });
         }
       }
@@ -714,39 +716,44 @@ html, body {
   function formText() {
     const textPoints = generateTextPoints(particleText);
     
-    // Añadir partículas si faltan
-    while (particles.length < textPoints.length) {
+    // Solo creamos partículas extra si faltan para cubrir los puntos del texto
+    while (particles.length < textPoints.length + BASE_PARTICLES) {
       particles.push(createParticle(true));
     }
 
     forming = true;
-    textPoints.forEach((pt, i) => {
-      if (particles[i]) {
-        particles[i].tx = pt.x;
-        particles[i].ty = pt.y;
-        particles[i].fade = 1;
+    
+    // Mezclamos los puntos para que la formación sea orgánica
+    const shuffledPoints = textPoints.sort(() => Math.random() - 0.5);
+
+    particles.forEach((p, i) => {
+      if (i < shuffledPoints.length) {
+        p.tx = shuffledPoints[i].x;
+        p.ty = shuffledPoints[i].y;
+        p.fade = 1;
+      } else {
+        // Estas partículas quedan libres (BASE_PARTICLES)
+        p.tx = null; p.ty = null;
       }
     });
 
-    // Desintegración
     setTimeout(() => {
       forming = false;
       particles.forEach(p => {
         if (p.tx !== null) {
           const angle = Math.random() * Math.PI * 2;
-          const force = Math.random() * 3 + 1;
+          const force = Math.random() * 4 + 2; // Explosión más enérgica
           p.vx = Math.cos(angle) * force;
           p.vy = Math.sin(angle) * force;
           p.tx = null; p.ty = null;
         }
       });
 
-      // Efecto Fade Out para las partículas extra
       const fadeEffect = setInterval(() => {
         let anyVisible = false;
-        particles.forEach((p, idx) => {
+        particles.forEach(p => {
           if (p.isExtra) {
-            p.fade -= 0.02;
+            p.fade -= 0.015; // Desvanecimiento suave
             if (p.fade > 0) anyVisible = true;
           }
         });
@@ -755,7 +762,6 @@ html, body {
           particles = particles.filter(p => !p.isExtra);
         }
       }, 30);
-
     }, FORM_DURATION);
   }
 
@@ -767,27 +773,36 @@ html, body {
   }
 
   function animate() {
-    ctx.clearRect(0, 0, w, h);
+    // EL TRUCO DEL RASTRO (COLITA): No borramos con clearRect
+    // Pintamos un rectángulo semi-transparente del color de fondo
+    ctx.fillStyle = 'rgba(75, 29, 107, 0.15)'; // Color --bg-color con opacidad
+    ctx.fillRect(0, 0, w, h);
+
     particles.forEach(p => {
       if (forming && p.tx !== null) {
-        p.x += (p.tx - p.x) * 0.07;
-        p.y += (p.ty - p.y) * 0.07;
+        // Movimiento hacia el texto
+        p.x += (p.tx - p.x) * 0.08;
+        p.y += (p.ty - p.y) * 0.08;
       } else {
+        // Movimiento libre o explosión
         p.x += p.vx;
         p.y += p.vy;
+        
+        // Rebote o teletransporte en bordes
         if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
         if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
       }
 
-      const finalAlpha = forming && p.tx !== null ? 1 : p.alpha * p.fade;
-      ctx.fillStyle = `rgba(255, 215, 160, ${finalAlpha})`;
+      const fAlpha = (p.tx !== null && forming) ? 1 : p.alpha * p.fade;
+      ctx.fillStyle = `rgba(255, 215, 160, ${fAlpha})`;
+      
       if (forming && p.tx !== null) {
-        ctx.shadowBlur = 4;
+        ctx.shadowBlur = 3;
         ctx.shadowColor = "#ffd7a0";
       } else {
         ctx.shadowBlur = 0;
       }
-      
+
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fill();
