@@ -655,9 +655,10 @@ window.addEventListener('resize', resize);
 
 // CONFIG
 const PARTICLE_COUNT = 160;
-const FIRST_DELAY = 7000;    // 7 segundos antes de aparecer la primera vez
-const FORM_INTERVAL = 18000; // 18 segundos entre apariciones
-const FORM_DURATION = 6000; // 6 segundos visible formado
+const FIRST_DELAY = 8000;     // 8s después de abrir invitación
+const FORM_INTERVAL = 25000; // 25s entre formaciones
+const FORM_DURATION = 4500;  // 4.5s visible el texto
+
 
 
 let forming = false;
@@ -672,8 +673,8 @@ for(let i=0;i<PARTICLE_COUNT;i++){
     y: Math.random()*h,
     tx: null,
     ty: null,
-    vx: (Math.random()-.5)*0.6,
-    vy: (Math.random()-.5)*0.6,
+    vx: (Math.random()-.5)*1.1,
+    vy: (Math.random()-.5)*1.1,
     size: Math.random()*1.4 + .8,
     alpha: Math.random()*.6 + .3
   });
