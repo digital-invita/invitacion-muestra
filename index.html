@@ -580,6 +580,7 @@ html, body {
 <!-- BOTÓN SUBIR ARRIBA -->
 <button id="toTopBtn">↑</button>
 
+  <script>
 // ===== TEXTO QUE FORMARÁN LAS PARTÍCULAS =====
   let particleText = "MIS\nXV"; 
 
@@ -824,7 +825,7 @@ html, body {
     else toTopBtn.classList.remove('show');
   });
   toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
+  </script>
   
 </body>
 </html>
