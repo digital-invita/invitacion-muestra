@@ -592,29 +592,25 @@ window.scrollTo(0, 0);
 // 2. CONFIGURACIÓN DE PARTÍCULAS
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
+
 let w, h;
 let particles = [];
 let forming = false;
-let w, h, particles = [], forming = false;
 
-const BASE_PARTICLES_COUNT = 130; 
-const FIRST_DELAY = 10000;
-const FORM_INTERVAL = 45000;
-const FORM_DURATION = 6000; 
-// --- CONFIGURACIÓN DINÁMICA ---
 const TEXTO_A_FORMAR = "Sofía\nMis XV"; 
-const BASE_PARTICLES_COUNT = 150; // Partículas que siempre están volando
+const BASE_PARTICLES_COUNT = 150; 
+const FIRST_DELAY = 10000;
 const FORM_INTERVAL = 30000; 
 const FORM_DURATION = 7000; 
 
+
 function resize() {
     w = canvas.width = window.innerWidth;
-@@ -606,70 +602,71 @@
+
 window.addEventListener('resize', resize);
 resize();
 
-function createParticle(isExtra = false) {
-function createParticle(isExtra = false, x, y) {
+
     return {
         x: Math.random() * w,
         y: Math.random() * h,
