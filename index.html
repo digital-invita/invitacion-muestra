@@ -644,7 +644,6 @@ html, body {
   let w, h;
 
   function resize() {
-function resize() {
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
   }
@@ -666,7 +665,6 @@ const FORM_DURATION = 6000;
 
   let forming = false;
   let particles = [];
-let particles = [];
 let forming = false;
 
   function createParticle(isExtra = false) {
@@ -843,10 +841,7 @@ function formText() {
     }, FORM_DURATION);
 }
 
-  function animate() {
-    // EL TRUCO DEL RASTRO (COLITA): No borramos con clearRect
-    // Pintamos un rectángulo semi-transparente del color de fondo
-    ctx.fillStyle = 'rgba(75, 29, 107, 0.15)'; // Color --bg-color con opacidad
+ 
 function animate() {
     // Fondo con estela (rastro/colita)
     ctx.fillStyle = 'rgba(75, 29, 107, 0.15)'; 
