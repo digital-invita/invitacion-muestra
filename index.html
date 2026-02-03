@@ -638,77 +638,128 @@ html, body {
     `;
   }, 1000);
 
+  /* ===== SISTEMA DE PARTÍCULAS AVANZADO ===== */
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  let w, h;
  /* ===== SISTEMA DE PARTÍCULAS COMPLETO Y REFINADO ===== */
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let w, h;
 
+  function resize() {
 function resize() {
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
 }
 resize();
 window.addEventListener('resize', resize);
 
+  // CONFIGURACIÓN DE TIEMPOS
+  const BASE_PARTICLES = 150;     // Partículas que siempre flotan
+  const FIRST_DELAY = 10000;      // 10 segundos después de abrir
+  const FORM_INTERVAL = 45000;    // Se repite cada 45 segundos
+  const FORM_DURATION = 5000;     // El nombre se queda quieto 5s
 const BASE_PARTICLES_COUNT = 130; 
 const FIRST_DELAY = 10000;
 const FORM_INTERVAL = 45000;
 const FORM_DURATION = 6000; 
 
+  let forming = false;
+  let particles = [];
 let particles = [];
 let forming = false;
 
+  function createParticle(isExtra = false) {
 function createParticle(isExtra = false) {
-    // Les damos una velocidad inicial aleatoria para que siempre se muevan
     return {
+      x: Math.random() * w,
+      y: Math.random() * h,
+      tx: null, ty: null,
+      vx: (Math.random() - .5) * 0.7,
+      vy: (Math.random() - .5) * 0.7,
+      size: Math.random() * 0.9 + 0.4,
+      alpha: Math.random() * .6 + .2,
+      fade: 1,
+      isExtra: isExtra
         x: Math.random() * w,
         y: Math.random() * h,
         tx: null, ty: null,
         vx: (Math.random() - 0.5) * 0.4,
         vy: (Math.random() - 0.5) * 0.4,
-        vx: (Math.random() - 0.5) * 0.8, // Un poco más de velocidad inicial
-        vy: (Math.random() - 0.5) * 0.8,
         size: Math.random() * 0.8 + 0.4,
         alpha: Math.random() * 0.4 + 0.2,
         baseAlpha: Math.random() * 0.4 + 0.2,
         isExtra: isExtra,
         friction: 0.95
-        friction: 0.98 // Fricción más suave para que no se detengan
     };
+  }
 }
 
+  // Inicialización
+  for (let i = 0; i < BASE_PARTICLES; i++) {
 for (let i = 0; i < BASE_PARTICLES_COUNT; i++) {
     particles.push(createParticle(false));
+  }
 }
 
+  function generateTextPoints(text) {
 function generateTextPoints(text) {
     const temp = document.createElement("canvas");
     const tctx = temp.getContext("2d");
+    temp.width = w;
+    temp.height = h;
+
+    const fontSize = Math.min(h * 0.14, w * 0.35); 
     temp.width = w; temp.height = h;
     const fontSize = Math.min(h * 0.12, w * 0.15); 
     tctx.fillStyle = "#fff";
     tctx.textAlign = "center";
     tctx.textBaseline = "middle";
-    tctx.font = `700 ${fontSize}px "Playfair Display", serif`;
+    tctx.font = `700 ${fontSize}px "Playfair Display"`;
 
+    tctx.font = `700 ${fontSize}px "Playfair Display", serif`;
+    
     // Si tu texto tiene varias líneas, las separamos
     const lines = text.split("\n");
+    const lineHeight = fontSize * 1.05;
+    const totalHeight = lines.length * lineHeight;
+    const startY = (h / 2) - (totalHeight / 4);
+
     lines.forEach((line, i) => {
+      tctx.fillText(line, w / 2, startY + (i * lineHeight));
         tctx.fillText(line, w / 2, h / 2 + (i * fontSize * 1.1));
     });
 
     const data = tctx.getImageData(0, 0, w, h).data;
     const points = [];
+    const step = 2; // ESCANEO DENSO PARA LLENAR BIEN EL TEXTO
+
+    for (let y = 0; y < h; y += step) {
+      for (let x = 0; x < w; x += step) {
+        if (data[(y * w + x) * 4 + 3] > 120) {
+          points.push({ x, y });
     for (let y = 0; y < h; y += 2) { // Paso de 2 para llenar bien
         for (let x = 0; x < w; x += 2) {
             if (data[(y * w + x) * 4 + 3] > 128) {
                 points.push({ x, y });
             }
         }
+      }
     }
     return points;
+  }
 }
 
+  function formText() {
+    const textPoints = generateTextPoints(particleText);
+    
+    // Solo creamos partículas extra si faltan para cubrir los puntos del texto
+    while (particles.length < textPoints.length + BASE_PARTICLES) {
+      particles.push(createParticle(true));
 function formText() {
     const textPoints = generateTextPoints("Sofía\nMis XV"); // Cambia aquí el nombre
     forming = true;
@@ -717,8 +768,20 @@ function formText() {
         particles.push(createParticle(true));
     }
 
+    forming = true;
+    
+    // Mezclamos los puntos para que la formación sea orgánica
     const shuffledPoints = textPoints.sort(() => Math.random() - 0.5);
+
     particles.forEach((p, i) => {
+      if (i < shuffledPoints.length) {
+        p.tx = shuffledPoints[i].x;
+        p.ty = shuffledPoints[i].y;
+        p.fade = 1;
+      } else {
+        // Estas partículas quedan libres (BASE_PARTICLES)
+        p.tx = null; p.ty = null;
+      }
         if (i < shuffledPoints.length) {
             p.tx = shuffledPoints[i].x;
             p.ty = shuffledPoints[i].y;
@@ -726,8 +789,25 @@ function formText() {
     });
 
     setTimeout(() => {
+      forming = false;
+      particles.forEach(p => {
+        if (p.tx !== null) {
+          const angle = Math.random() * Math.PI * 2;
+          const force = Math.random() * 4 + 2; // Explosión más enérgica
+          p.vx = Math.cos(angle) * force;
+          p.vy = Math.sin(angle) * force;
+          p.tx = null; p.ty = null;
+        }
+      });
+
+      const fadeEffect = setInterval(() => {
+        let anyVisible = false;
         forming = false;
         particles.forEach(p => {
+          if (p.isExtra) {
+            p.fade -= 0.015; // Desvanecimiento suave
+            if (p.fade > 0) anyVisible = true;
+          }
             if (p.tx !== null) {
                 const angle = Math.random() * Math.PI * 2;
                 const force = Math.random() * 1.2 + 0.3; 
@@ -736,7 +816,20 @@ function formText() {
                 p.tx = null; p.ty = null;
             }
         });
+        if (!anyVisible) {
+          clearInterval(fadeEffect);
+          particles = particles.filter(p => !p.isExtra);
+        }
+      }, 30);
+    }, FORM_DURATION);
+  }
 
+  function startParticleText() {
+    setTimeout(() => {
+      formText();
+      setInterval(formText, FORM_INTERVAL);
+    }, FIRST_DELAY);
+  }
         // Limpieza de extras
         setTimeout(() => {
             const cleanup = setInterval(() => {
@@ -754,48 +847,64 @@ function formText() {
     }, FORM_DURATION);
 }
 
+  function animate() {
+    // EL TRUCO DEL RASTRO (COLITA): No borramos con clearRect
+    // Pintamos un rectángulo semi-transparente del color de fondo
+    ctx.fillStyle = 'rgba(75, 29, 107, 0.15)'; // Color --bg-color con opacidad
 function animate() {
     // Fondo con estela (rastro/colita)
-    // Estela sutil
     ctx.fillStyle = 'rgba(75, 29, 107, 0.15)'; 
     ctx.fillRect(0, 0, w, h);
 
     particles.forEach(p => {
+      if (forming && p.tx !== null) {
+        // Movimiento hacia el texto
+        p.x += (p.tx - p.x) * 0.08;
+        p.y += (p.ty - p.y) * 0.08;
+      } else {
+        // Movimiento libre o explosión
+        p.x += p.vx;
+        p.y += p.vy;
+        
+        // Rebote o teletransporte en bordes
+        if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+      }
+
+      const fAlpha = (p.tx !== null && forming) ? 1 : p.alpha * p.fade;
+      ctx.fillStyle = `rgba(255, 215, 160, ${fAlpha})`;
+      
+      if (forming && p.tx !== null) {
+        ctx.shadowBlur = 3;
+        ctx.shadowColor = "#ffd7a0";
+      } else {
+        ctx.shadowBlur = 0;
+      }
         if (forming && p.tx !== null) {
-            // Cuando forman el texto
             p.x += (p.tx - p.x) * 0.07;
             p.y += (p.ty - p.y) * 0.07;
 
             const dist = Math.hypot(p.tx - p.x, p.ty - p.y);
             if (dist < 10) {
                 ctx.shadowBlur = 8;
-                ctx.shadowBlur = 10;
                 ctx.shadowColor = "#ffd7a0";
                 p.alpha = 1;
             }
         } else {
             p.vx *= p.friction;
             p.vy *= p.friction;
-            // MOVIMIENTO LIBRE (Aquí evitamos que se queden quietas)
             p.x += p.vx;
             p.y += p.vy;
-
-            // Si la fricción las frena demasiado, les damos un pequeño impulso
-            if (Math.abs(p.vx) < 0.2) p.vx += (Math.random() - 0.5) * 0.05;
-            if (Math.abs(p.vy) < 0.2) p.vy += (Math.random() - 0.5) * 0.05;
-            
-            // Aplicar fricción suave solo si van muy rápido (después de la explosión)
-            if (Math.abs(p.vx) > 1) p.vx *= p.friction;
-            if (Math.abs(p.vy) > 1) p.vy *= p.friction;
-
             p.alpha = p.isExtra ? p.alpha : p.baseAlpha;
             ctx.shadowBlur = 0;
 
-            // Rebote en los bordes
             if (p.x < 0 || p.x > w) p.vx *= -1;
             if (p.y < 0 || p.y > h) p.vy *= -1;
         }
 
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
         ctx.fillStyle = `rgba(255, 215, 160, ${p.alpha})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
@@ -803,6 +912,8 @@ function animate() {
         ctx.shadowBlur = 0; 
     });
     requestAnimationFrame(animate);
+  }
+  animate();
 }
 
 function startParticleText() {
@@ -847,4 +958,3 @@ animate();
 
 </body>
 </html>
-
