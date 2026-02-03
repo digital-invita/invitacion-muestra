@@ -34,7 +34,7 @@ body {
 #particles {
   position: fixed; /* Esto lo deja pegado al fondo aunque subas o bajes */
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
 }
 
@@ -581,26 +581,14 @@ html, body {
 <button id="toTopBtn">↑</button>
 
  <script>
-// 1. FORZAR INICIO ARRIBA
-if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-}
 // 1. REINICIO DE SCROLL
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
 
-// 2. CONFIGURACIÓN DE PARTÍCULAS
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
-let w, h;
-let particles = [];
-let forming = false;
 let w, h, particles = [], forming = false;
 
-const BASE_PARTICLES_COUNT = 130; 
-const FIRST_DELAY = 10000;
-const FORM_INTERVAL = 45000;
-const FORM_DURATION = 6000; 
 // --- CONFIGURACIÓN DINÁMICA ---
 const TEXTO_A_FORMAR = "Sofía\nMis XV"; 
 const BASE_PARTICLES_COUNT = 150; // Partículas que siempre están volando
@@ -609,23 +597,16 @@ const FORM_DURATION = 7000;
 
 function resize() {
     w = canvas.width = window.innerWidth;
-@@ -606,70 +602,71 @@
+    h = canvas.height = window.innerHeight;
+}
 window.addEventListener('resize', resize);
 resize();
 
-function createParticle(isExtra = false) {
 function createParticle(isExtra = false, x, y) {
     return {
-        x: Math.random() * w,
-        y: Math.random() * h,
         x: x || Math.random() * w,
         y: y || Math.random() * h,
         tx: null, ty: null,
-        vx: (Math.random() - 0.5) * 1.2,
-        vy: (Math.random() - 0.5) * 1.2,
-        size: Math.random() * 0.8 + 0.4,
-        alpha: isExtra ? 0 : Math.random() * 0.4 + 0.2,
-        baseAlpha: Math.random() * 0.4 + 0.2,
         vx: (Math.random() - 0.5) * 1.5,
         vy: (Math.random() - 0.5) * 1.5,
         size: Math.random() * 1.2 + 0.5,
@@ -636,10 +617,6 @@ function createParticle(isExtra = false, x, y) {
     };
 }
 
-// Inicializar partículas base
-for (let i = 0; i < BASE_PARTICLES_COUNT; i++) {
-    particles.push(createParticle(false));
-}
 // Inicializar base
 for (let i = 0; i < BASE_PARTICLES_COUNT; i++) particles.push(createParticle());
 
@@ -647,7 +624,6 @@ function generateTextPoints(text) {
     const temp = document.createElement("canvas");
     const tctx = temp.getContext("2d");
     temp.width = w; temp.height = h;
-    const fontSize = Math.min(h * 0.10, w * 0.14); 
     
     // TEXTO MÁS GRANDE (Punto 2)
     const fontSize = Math.min(w * 0.22, h * 0.15); 
@@ -655,20 +631,14 @@ function generateTextPoints(text) {
     tctx.textAlign = "center";
     tctx.textBaseline = "middle";
     tctx.font = `700 ${fontSize}px "Playfair Display", serif`;
-
+    
     const lines = text.split("\n");
     lines.forEach((line, i) => {
-        tctx.fillText(line, w / 2, h / 2 + (i * fontSize * 1.1));
         tctx.fillText(line, w / 2, h / 2 + (i * fontSize * 1.2) - (lines.length * fontSize / 2));
     });
 
     const data = tctx.getImageData(0, 0, w, h).data;
     const points = [];
-    for (let y = 0; y < h; y += 3) { // Salto de 3 para no saturar de puntos
-        for (let x = 0; x < w; x += 3) {
-            if (data[(y * w + x) * 4 + 3] > 128) {
-                points.push({ x, y });
-            }
     // Muestreo inteligente (Punto 3)
     const step = w < 500 ? 3 : 4; 
     for (let y = 0; y < h; y += step) {
@@ -680,11 +650,9 @@ function generateTextPoints(text) {
 }
 
 function formText() {
-    const textPoints = generateTextPoints("Sofía\nMis XV"); 
     const textPoints = generateTextPoints(TEXTO_A_FORMAR);
     forming = true;
 
-    // Ajustar cantidad de partículas
     // Ajustar partículas al texto (Punto 3)
     while (particles.length < textPoints.length) {
         particles.push(createParticle(true));
@@ -697,43 +665,35 @@ function formText() {
             p.tx = shuffledPoints[i].x;
             p.ty = shuffledPoints[i].y;
             p.fadingOut = false;
-            if (p.isExtra) p.alpha = 0; 
         } else {
             // Partículas libres (Punto 1)
             p.tx = null; p.ty = null;
         }
     });
-@@ -679,7 +676,7 @@
+
+    setTimeout(() => {
+        forming = false;
         particles.forEach(p => {
             if (p.tx !== null) {
                 const angle = Math.random() * Math.PI * 2;
-                const force = Math.random() * 2 + 0.5; 
                 const force = Math.random() * 3 + 1;
                 p.vx = Math.cos(angle) * force;
                 p.vy = Math.sin(angle) * force;
                 p.tx = null; p.ty = null;
-@@ -690,39 +687,30 @@
+            }
+            if (p.isExtra) p.fadingOut = true;
+        });
+    }, FORM_DURATION);
 }
 
 function animate() {
-    // FONDO: El truco para que la estela no ensucie el fondo es limpiar 
-    // con un alpha muy bajo sobre el color sólido
-    ctx.fillStyle = 'rgba(75, 29, 107, 0.2)'; 
-    ctx.fillStyle = 'rgba(75, 29, 107, 0.25)'; 
-    ctx.fillRect(0, 0, w, h);
+   ctx.clearRect(0, 0, w, h); // 👈 limpia el canvas sin pintar fondo
+
 
     for (let i = particles.length - 1; i >= 0; i--) {
         let p = particles[i];
 
         if (forming && p.tx !== null) {
-            p.x += (p.tx - p.x) * 0.07;
-            p.y += (p.ty - p.y) * 0.07;
-            p.alpha = Math.min(p.alpha + 0.05, 1);
-            
-            const dist = Math.hypot(p.tx - p.x, p.ty - p.y);
-            if (dist < 5) {
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = "#ffd7a0";
             p.x += (p.tx - p.x) * 0.12;
             p.y += (p.ty - p.y) * 0.12;
             p.alpha = Math.min(p.alpha + 0.08, 1);
@@ -745,67 +705,32 @@ function animate() {
             p.x += p.vx;
             p.y += p.vy;
             ctx.shadowBlur = 0;
-
             if (p.fadingOut) {
-                p.alpha -= 0.01;
-                if (p.alpha <= 0) {
-                    particles.splice(i, 1);
-                    continue;
-                }
                 p.alpha -= 0.015;
                 if (p.alpha <= 0) { particles.splice(i, 1); continue; }
             } else {
-                p.alpha = p.isExtra ? p.alpha : p.baseAlpha;
                 p.alpha = p.isExtra ? Math.max(p.alpha - 0.01, 0) : p.baseAlpha;
             }
-
             if (p.x < 0 || p.x > w) p.vx *= -1;
             if (p.y < 0 || p.y > h) p.vy *= -1;
         }
-@@ -731,110 +719,45 @@
+
+        ctx.fillStyle = `rgba(255, 215, 160, ${p.alpha})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.shadowBlur = 0;
     }
     requestAnimationFrame(animate);
 }
 
-// 3. EVENTOS Y LÓGICA DE INTERFAZ
 // INTERFAZ Y BOTÓN TO TOP (Punto 4)
 window.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('openBtn');
-    const overlay = document.getElementById('overlay');
-    const audio = document.getElementById('audio');
-    const nombre = document.getElementById('nombre');
     const toTopBtn = document.getElementById('toTopBtn');
 
     btn.addEventListener('click', () => {
-        overlay.style.opacity = '0';
-        overlay.style.pointerEvents = 'none';
-        setTimeout(() => overlay.style.display = 'none', 400);
-
         document.getElementById('overlay').style.display = 'none';
         document.body.style.overflow = 'auto';
-        nombre.classList.add('show');
-        
-        // Iniciar ciclo de texto
-        setTimeout(() => {
-            formText();
-            setInterval(formText, FORM_INTERVAL);
-        }, FIRST_DELAY);
-
-        if (audio) {
-            audio.currentTime = 6;
-            audio.volume = 0;
-            audio.play().catch(() => {});
-            let vol = 0;
-            const fade = setInterval(() => {
-                vol += 0.05;
-                audio.volume = Math.min(vol, 1);
-                if (vol >= 1) clearInterval(fade);
-            }, 200);
-        }
         document.getElementById('nombre').classList.add('show');
         setTimeout(formText, 2000); 
         setInterval(formText, FORM_INTERVAL);
@@ -813,84 +738,26 @@ window.addEventListener('DOMContentLoaded', () => {
         const audio = document.getElementById('audio');
         if(audio) { audio.play(); }
     });
-});
 
-// Intersection Observer (Aparición de secciones)
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('show');
-    });
-}, { threshold: 0.1 });
-document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
-
-// Cuenta Regresiva
-const targetDate = new Date('2026-08-15T18:00:00').getTime();
-setInterval(() => {
-    const now = new Date().getTime();
-    const diff = targetDate - now;
-    const d = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
-    const h = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-    const m = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
-    const s = Math.max(0, Math.floor((diff % (1000 * 60)) / 1000));
-
-    const cd = document.getElementById('countdown');
-    if(cd) {
-        cd.innerHTML = `
-            <div class="count-box"><strong>${d}</strong>Días</div>
-            <div class="count-box"><strong>${h}</strong>Horas</div>
-            <div class="count-box"><strong>${m}</strong>Minutos</div>
-            <div class="count-box"><strong>${s}</strong>Segundos</div>
-        `;
-    }
-}, 1000);
-
-// Galería y Lightbox
-document.querySelectorAll('.gallery img').forEach(img => {
-    img.addEventListener('click', () => {
-        document.getElementById('lightbox-img').src = img.src;
-        document.getElementById('lightbox').style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    });
-});
     window.addEventListener('scroll', () => {
         // Cálculo de porcentaje (Punto 4)
         const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
         const scrollActual = window.scrollY;
         const porcentaje = (scrollActual / scrollTotal) * 100;
 
-const closeL = () => {
-    document.getElementById('lightbox').style.display = 'none';
-    document.body.style.overflow = 'auto';
-};
-document.getElementById('closeLightbox').addEventListener('click', closeL);
-document.getElementById('lightbox').addEventListener('click', (e) => {
-    if (e.target.id === 'lightbox') closeL();
-});
         if (porcentaje > 65) toTopBtn.classList.add('show');
         else toTopBtn.classList.remove('show');
     });
 
-// Botón Volver Arriba
-const toTopBtn = document.getElementById('toTopBtn');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) toTopBtn.classList.add('show');
-    else toTopBtn.classList.remove('show');
     toTopBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
 });
-toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-function addToCalendar() {
-    const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('XV Sofía')}&dates=20260815T180000/20260815T230000`;
-    window.open(url, '_blank');
-}
-
-// Iniciar animación
 animate();
 
 // --- Resto de funciones (Countdown, Lightbox, etc.) iguales ---
 // ... (Aquí iría tu código de galería y fechas que ya tienes)
 </script>
-
+  
 </body>
 </html>
-~
+
