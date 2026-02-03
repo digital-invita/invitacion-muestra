@@ -709,7 +709,7 @@ function generateTextPoints(text){
 
   lines.forEach((line, i) => {
     const offset = (i - (lines.length - 1) / 2) * lineHeight;
-    tctx.fillText(line, w / 2, h * 0.38 + offset); // 👈 más arriba
+    tctx.fillText(line, w / 2, h * 0.36 + offset); // 👈 más arriba
   });
 
   const data = tctx.getImageData(0,0,w,h).data;
@@ -745,8 +745,8 @@ function formText(){
 
     p.tx = point.x;
     p.ty = point.y;
-    p.outVX = (Math.random() - 0.5) * 4; // velocidad de salida
-    p.outVY = (Math.random() - 0.5) * 4;
+    p.outVX = (Math.random() - 0.5) * 2.5; // velocidad de salida
+    p.outVY = (Math.random() - 0.5) * 2.5;
   }
 
   forming = true;
@@ -803,8 +803,7 @@ function animate(){
 
   ctx.clearRect(0,0,w,h);
 
-
-  particles.forEach(p=>{
+  particles.forEach(p => {
 
     if(forming && p.tx !== null){
       p.x += (p.tx - p.x) * 0.08;
@@ -819,28 +818,24 @@ function animate(){
       if(p.y > h) p.y = 0;
     }
 
-   ctx.beginPath();
+    if(forming && p.tx !== null){
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = "rgba(255,215,160,0.8)";
+      ctx.fillStyle = "rgba(255,215,160,1)";
+    } else {
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
+    }
 
-if(forming && p.tx !== null){
-  ctx.shadowBlur = 2;
-  ctx.shadowColor = "rgba(255,215,160,0.8)";
-}else{
-if(forming && p.tx !== null){
-  ctx.shadowBlur = 6;
-  ctx.shadowColor = "rgba(255,215,160,0.8)";
-} else {
-  ctx.shadowBlur = 0;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+
+  });
+
+  requestAnimationFrame(animate);
 }
 
-if(forming && p.tx !== null){
-  ctx.fillStyle = "rgba(255,215,160,1)";
-} else {
-  ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
-}
-
-ctx.beginPath();
-ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-ctx.fill();
 
 animate();
 
