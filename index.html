@@ -747,7 +747,8 @@ function generateTextPoints(text) {
     const data = tctx.getImageData(0, 0, w, h).data;
     const points = [];
     // Muestreo inteligente (Punto 3)
-    const step = w < 500 ? 2 : 3; 
+    const step = w < 500 ? 1.5 : 2;
+ 
     for (let y = 0; y < h; y += step) {
         for (let x = 0; x < w; x += step) {
             if (data[(y * w + x) * 4 + 3] > 128) points.push({ x, y });
@@ -764,7 +765,8 @@ function formText() {
     // (este while se elimina)
 
     const shuffledPoints = textPoints.sort(() => Math.random() - 0.5);
-    const formingCount = Math.floor(textPoints.length * 0.65);
+   const formingCount = Math.floor(textPoints.length * 0.9);
+
 
     let textIndex = 0;
 
@@ -843,15 +845,15 @@ if (forming && p.tx !== null) {
     if (!p.spawned && !p.isClone) {
         p.spawned = true;
 
-        const clones = 2; // cuántas copias genera
+        const clones = 3; // cuántas copias genera
         for (let i = 0; i < clones; i++) {
             const c = { ...p };
             c.isClone = true;
             c.spawned = true;
-            c.x += (Math.random() - 0.5) * 4;
-            c.y += (Math.random() - 0.5) * 4;
-            c.alpha = 0;
-            c.baseAlpha = p.baseAlpha * 0.6;
+            c.x += (Math.random() - 0.5) * 2;
+            c.y += (Math.random() - 0.5) * 2;
+            c.alpha = 0.6;
+            c.baseAlpha = p.baseAlpha * 0.8;
             particles.push(c);
         }
     }
