@@ -799,8 +799,11 @@ vy: (Math.random() - 0.5) * (window.innerWidth < 768 ? 0.25 : 0.4),
 let animationStarted = false;
 
 // INTERFAZ Y BOTÓN TO TOP (Punto 4)
-window.addEventListener('DOMContentLoaded', () => {
-  const lightbox = document.getElementById('lightbox');
+const btn = document.getElementById('openBtn');
+const toTopBtn = document.getElementById('toTopBtn');
+
+// LIGHTBOX
+const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const closeLightbox = document.getElementById('closeLightbox');
 
@@ -808,8 +811,37 @@ document.querySelectorAll('.gallery img').forEach(img => {
   img.addEventListener('click', () => {
     lightbox.style.display = 'flex';
     lightboxImg.src = img.src;
-    document.body.style.overflow = 'hidden'; // 🔒 bloquea scroll
+    document.body.style.overflow = 'hidden';
   });
+});
+
+closeLightbox.addEventListener('click', () => {
+  lightbox.style.display = 'none';
+  document.body.style.overflow = 'auto';
+});
+
+lightbox.addEventListener('click', e => {
+  if (e.target === lightbox) {
+    lightbox.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+});
+
+// 👉 BOTÓN ABRIR INVITACIÓN (ESTE YA FUNCIONA)
+btn.addEventListener('click', () => {
+  document.getElementById('overlay').style.display = 'none';
+  document.body.style.overflow = 'auto';
+
+  document.getElementById('nombre').classList.add('show');
+  document.querySelectorAll('.section').forEach(sec => sec.classList.add('show'));
+
+  if (!animationStarted) {
+    animationStarted = true;
+    animate();
+  }
+
+  const audio = document.getElementById('audio');
+  if (audio) audio.play();
 });
 
 closeLightbox.addEventListener('click', () => {
