@@ -796,7 +796,7 @@ vy: (Math.random() - 0.5) * (window.innerWidth < 768 ? 0.25 : 0.4),
 }
 
 
-
+let animationStarted = false;
 
 // INTERFAZ Y BOTÓN TO TOP (Punto 4)
 window.addEventListener('DOMContentLoaded', () => {
@@ -850,9 +850,7 @@ if (!animationStarted) {
     if(audio) { audio.play(); }
 });
 
-    window.addEventListener('scroll', () => {
-        // Cálculo de porcentaje (Punto 4)
-        window.addEventListener('scroll', () => {
+   window.addEventListener('scroll', () => {
   const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
   const scrollActual = window.scrollY;
   const porcentaje = (scrollActual / scrollTotal) * 100;
@@ -864,10 +862,11 @@ if (!animationStarted) {
   }
 });
 
-
-    toTopBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+toTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
-let animationStarted = false;
+
+
 
    function animate() {
   ctx.clearRect(0, 0, w, h);
