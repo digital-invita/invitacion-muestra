@@ -670,6 +670,7 @@ window.scrollTo(0, 0);
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let w, h, particles = [], forming = false;
+let letterParticles = [];
 
 // --- CONFIGURACIÓN DINÁMICA ---
 const TEXTO_A_FORMAR = "Sofía\nMis XV";
@@ -712,6 +713,51 @@ function createParticle(isExtra = false) {
   };
 }
 
+function getLetterPath(letter, size) {
+  const temp = document.createElement("canvas");
+  const ctx = temp.getContext("2d");
+
+  temp.width = 200;
+  temp.height = 200;
+
+  ctx.clearRect(0, 0, 200, 200);
+  ctx.fillStyle = "#fff";
+  ctx.font = `700 ${size}px "Playfair Display", serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(letter, 100, 100);
+
+  const data = ctx.getImageData(0, 0, 200, 200).data;
+  const path = [];
+
+  for (let y = 0; y < 200; y += 2) {
+    for (let x = 0; x < 200; x += 2) {
+      const alpha = data[(y * 200 + x) * 4 + 3];
+const alphaRight = data[(y * 200 + (x + 2)) * 4 + 3];
+const alphaDown  = data[((y + 2) * 200 + x) * 4 + 3];
+
+if (alpha > 200 && (alphaRight < 50 || alphaDown < 50)) {
+
+        path.push({ x, y });
+      }
+    }
+  }
+
+  return path;
+}
+function createLetterParticle(path, x, y) {
+  return {
+    path,
+    x,
+    y,
+    progress: 0,
+    speed: Math.random() * 0.03 + 0.02,
+    trail: [],
+    life: 1,          // 👈 vida de la letra
+    fading: false     // 👈 si ya se está yendo
+  };
+}
+
 
 
 // Inicializar base
@@ -730,153 +776,70 @@ for (let i = 0; i < TOTAL_PARTICLES; i++) {
 
 
 
-function generateTextPoints(text) {
-  const temp = document.createElement("canvas");
-  const tctx = temp.getContext("2d");
 
-  temp.width = w;
-  temp.height = h;
 
-  const fontSize = Math.min(w * 0.22, h * 0.15);
-  tctx.clearRect(0, 0, w, h);
-  tctx.fillStyle = "#fff";
-  tctx.textAlign = "center";
-  tctx.textBaseline = "middle";
-  tctx.font = `700 ${fontSize}px "Playfair Display", serif`;
+function formText() {
+  letterParticles = [];
 
-  const lines = text.split("\n");
+  const text = "SOFÍA MIS XV";
+  const letters = text.split("");
+  const size = Math.min(w * 0.14, h * 0.18);
 
-  lines.forEach((line, i) => {
-    tctx.fillText(
-      line,
-      w / 2,
-      h / 2 + i * fontSize * 1.2 - (lines.length * fontSize) / 2
+  let startX = w / 2 - (letters.length * size * 0.3);
+  let y = h * 0.45;
+
+  letters.forEach((letter, i) => {
+    if (letter === " ") return;
+
+    const path = getLetterPath(letter, size);
+    const x = startX + i * size * 0.6;
+
+    letterParticles.push(
+      createLetterParticle(path, x, y)
+    );
+  });
+}
+// Después de FORM_DURATION las letras se desvanecen
+function formText() {
+  letterParticles = [];
+
+  const text = "SOFÍA MIS XV";
+  const letters = text.split("");
+  const size = Math.min(w * 0.14, h * 0.18);
+
+  let startX = w / 2 - (letters.length * size * 0.3);
+  let y = h * 0.45;
+
+  letters.forEach((letter, i) => {
+    if (letter === " ") return;
+
+    const path = getLetterPath(letter, size);
+    const x = startX + i * size * 0.6;
+
+    letterParticles.push(
+      createLetterParticle(path, x, y)
     );
   });
 
-  const data = tctx.getImageData(0, 0, w, h).data;
-  const points = [];
-  const step = w < 500 ? 1.5 : 2;
-
-  for (let y = 0; y < h; y += step) {
-    for (let x = 0; x < w; x += step) {
-      if (data[(y * w + x) * 4 + 3] > 128) {
-        points.push({ x, y });
-      }
-    }
-  }
-
-  return points;
-}
-
-function formText() {
-    const textPoints = generateTextPoints(TEXTO_A_FORMAR);
-    forming = true;
-
-    const needed = Math.min(textPoints.length, 2000);
- // límite elegante
-const missing = needed - particles.filter(p => !!p.canFormText
-).length;
-
-for (let i = 0; i < missing; i++) {
-  const p = createParticle(true);
-  p.isExtra = true;
-  p.isClone = true;   // 👈 CLAVE
-  p.alpha = 0;
-  particles.push(p);
+  // 👇 ESTE BLOQUE VA AQUÍ
+  setTimeout(() => {
+    letterParticles.forEach(p => p.fading = true);
+  }, FORM_DURATION);
 }
 
 
-
-    const shuffledPoints = textPoints.sort(() => Math.random() - 0.5);
-   const formingCount = Math.min(
-  shuffledPoints.length,
-  particles.filter(p => !!p.canFormText
-).length
-);
-
-
-
-    let textIndex = 0;
-
-    // ✅ ESTE ES EL BLOQUE FINAL
-    particles.forEach(p => {
-
-        // ❌ estas nunca forman texto
-        if (!p.canFormText) {
-
-            p.tx = null;
-            p.ty = null;
-            p.alpha = p.baseAlpha;
-            return;
-        }
-
-        // ✅ solo algunas forman el texto
-        if (textIndex < formingCount) {
-            p.tx = shuffledPoints[textIndex].x;
-            p.ty = shuffledPoints[textIndex].y;
-            p.fadingOut = false;
-            textIndex++;
-        } else {
-            p.tx = null;
-            p.ty = null;
-        }
-    });
-
-    setTimeout(() => {
-    forming = false;
-
-    particles.forEach((p, i) => {
-        if (p.tx !== null) {
-            const angle = Math.random() * Math.PI * 2;
-            const force = Math.random() * 1.2 + 0.4;
-
-            p.vx = Math.cos(angle) * force;
-            p.vy = Math.sin(angle) * force;
-
-            p.fadingOut = true;
-            p.fadeSpeed = p.isClone ? 0.03 : 0.015;
-
-            p.tx = null;
-            p.ty = null;
-        }
-
-        if (p.isExtra && i > formingCount + FREE_PARTICLES) {
-            p.fadingOut = true;
-        }
-    });
-
-}, FORM_DURATION);
-
-}
 
 
 function animate() {
    ctx.clearRect(0, 0, w, h); // limpia el canvas sin pintar fondo
 
-   for (let i = particles.length - 1; i >= 0; i--) {
-       let p = particles[i];
-// Movimiento hacia texto si forming está activo
-if (forming && p.tx !== null) {
-    const dx = p.tx - p.x;
-    const dy = p.ty - p.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
+ for (let i = particles.length - 1; i >= 0; i--) {
+    let p = particles[i];
 
-    if (dist > 1) {
-        p.x += dx * 0.12;
-        p.y += dy * 0.12;
-    } else {
-        p.x = p.tx;
-        p.y = p.ty;
-        p.vx = 0;
-        p.vy = 0;
-        p.alpha = Math.min(p.alpha + 0.08, 1);
-    }
-
-} else {
-    // partículas libres siempre
     p.x += p.vx;
     p.y += p.vy;
+
+
 
     if (p.fadingOut) {
     p.alpha -= p.isClone ? 0.03 : 0.015;
@@ -917,6 +880,44 @@ if (forming && p.tx !== null) {
        p.prevX = p.x;
        p.prevY = p.y;
    }
+// ===== DIBUJO DE TEXTO CON PARTÍCULAS POR LETRA =====
+letterParticles = letterParticles.filter(p => p.life > 0);
+
+letterParticles.forEach(p => {
+
+  if (!p.path.length) return;
+
+  const i = Math.floor(p.progress * p.path.length);
+  const point = p.path[i % p.path.length];
+
+  const x = p.x + point.x - 100;
+  const y = p.y + point.y - 100;
+
+  p.trail.push({ x, y });
+  if (p.trail.length > 18) p.trail.shift();
+
+  // Rastro
+  p.trail.forEach((t, j) => {
+    ctx.globalAlpha = (j / p.trail.length) * p.life;
+
+    ctx.fillStyle = "rgba(255,215,160,0.6)";
+    ctx.fillRect(t.x, t.y, 2, 2);
+  });
+
+  // Partícula principal
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur = 18;
+  ctx.shadowColor = "#FFDFA0";
+  ctx.fillStyle = "#FFDFA0";
+  ctx.fillRect(x, y, 3, 3);
+
+  p.progress += p.speed;
+
+if (p.fading) {
+  p.life -= 0.02;
+}
+
+});
 
    requestAnimationFrame(animate);
 }
