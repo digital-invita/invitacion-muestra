@@ -32,11 +32,12 @@ body {
 
 /* CANVAS PARTÍCULAS */
 #particles {
-  position: fixed; /* Esto lo deja pegado al fondo aunque subas o bajes */
+  position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
 }
+
 
 /* OVERLAY */
 #overlay {
@@ -771,6 +772,33 @@ lightbox.addEventListener('click', e => {
 
     toTopBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
 });
+function animate() {
+  ctx.clearRect(0, 0, w, h);
+
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+
+    p.x += p.vx;
+    p.y += p.vy;
+
+    if (p.sparkle) {
+      p.sparklePhase += 0.03;
+      p.alpha = p.baseAlpha + Math.sin(p.sparklePhase) * 0.25;
+    } else {
+      p.alpha = p.baseAlpha;
+    }
+
+    if (p.x < 0 || p.x > w) p.vx *= -1;
+    if (p.y < 0 || p.y > h) p.vy *= -1;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
+    ctx.fill();
+  }
+
+  requestAnimationFrame(animate);
+}
 
 animate();
 
