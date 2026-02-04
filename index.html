@@ -684,14 +684,12 @@ let particles = [];
 let lastH = window.innerHeight;
 
 
-function resize(force = false) {
+function resize() {
   const newW = window.innerWidth;
   const newH = window.innerHeight;
 
-  // 🚫 Evita reinicio por scroll móvil
-  if (!force) {
-    if (Math.abs(newH - lastH) < 120 && Math.abs(newW - lastW) < 120) return;
-  }
+  // ⛔ Evita reinicio por scroll (especialmente en móvil)
+  if (Math.abs(newH - lastH) < 60 && Math.abs(newW - lastW) < 60) return;
 
   lastW = newW;
   lastH = newH;
@@ -699,9 +697,13 @@ function resize(force = false) {
   w = canvas.width = newW;
   h = canvas.height = newH;
 
-  // ⚠️ NO recreamos partículas
-}
+  TOTAL_PARTICLES = newW < 768 ? 120 : 180;
 
+  particles = [];
+  for (let i = 0; i < TOTAL_PARTICLES; i++) {
+    particles.push(createParticle());
+  }
+}
 
 
 window.addEventListener('resize', resize);
@@ -885,4 +887,3 @@ setInterval(updateCountdown, 1000);
   
 </body>
 </html>
-
