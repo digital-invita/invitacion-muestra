@@ -748,17 +748,22 @@ if (alpha > 200 && (alphaRight < 50 || alphaDown < 50)) {
 }
 function createLetterParticle(path, x, y) {
   return {
-  x,
-  y,
-  vx: 0,
-  vy: 0,
-  size: 2,
-  alpha: 1,
-  glow: 1.5,
-  fading: false,
-};
-
+    x,
+    y,
+    path,
+    progress: Math.random(),
+    speed: 0.015 + Math.random() * 0.01,
+    life: 1,
+    trail: [],
+    vx: 0,
+    vy: 0,
+    size: 2,
+    alpha: 1,
+    glow: 1.5,
+    fading: false,
+  };
 }
+
 
 
 
@@ -784,23 +789,30 @@ function formText() {
   letterParticles = [];
 
   const text = "SOFÍA\nMIS XV";
-
   const letters = text.split("");
   const size = Math.min(w * 0.14, h * 0.18);
 
   let startX = w / 2 - (letters.length * size * 0.3);
   let y = h * 0.45;
 
-  letters.forEach((letter, i) => {
+  letters.forEach((letter, idx) => {
     if (letter === " ") return;
 
     const path = getLetterPath(letter, size);
-    const x = startX + i * size * 0.6;
+    const x = startX + idx * size * 0.6;
 
+    // 3 partículas por letra
     for (let i = 0; i < 3; i++) {
-  letterParticles.push(
-    createLetterParticle(path, x, y)
-  );
+      letterParticles.push(
+        createLetterParticle(path, x, y)
+      );
+    }
+  });
+
+  // desvanecer texto después
+  setTimeout(() => {
+    letterParticles.forEach(p => p.fading = true);
+  }, FORM_DURATION);
 }
 
 
