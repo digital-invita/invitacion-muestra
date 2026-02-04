@@ -753,22 +753,32 @@ function formText() {
 
 const shuffledPoints = textPoints.sort(() => Math.random() - 0.5);
 
-const formingCount = textPoints.length; // USAR TODOS LOS PUNTOS DEL TEXTO
+const formingCount = Math.floor(textPoints.length * 0.65);
+
 
 particles.forEach((p, i) => {
 
-  
+    // Partículas que forman el texto
     if (i < formingCount) {
         p.tx = shuffledPoints[i].x;
         p.ty = shuffledPoints[i].y;
         p.fadingOut = false;
-    } else {
-        // estas quedan SIEMPRE libres
+    } 
+    // Partículas libres visibles
+    else {
         p.tx = null;
         p.ty = null;
+
+        // asegurar que sigan moviéndose
+        if (Math.abs(p.vx) < 0.3 && Math.abs(p.vy) < 0.3) {
+            p.vx = (Math.random() - 0.5) * 1.2;
+            p.vy = (Math.random() - 0.5) * 1.2;
+        }
+
+        // mantenerlas visibles
+        p.alpha = p.baseAlpha;
     }
 });
-
 
     setTimeout(() => {
         forming = false;
