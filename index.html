@@ -672,15 +672,16 @@ const ctx = canvas.getContext('2d');
 let w, h, particles = [], forming = false;
 
 // --- CONFIGURACIÓN DINÁMICA ---
-const TEXTO_A_FORMAR = "Sofía\nMis XV"; 
-const BASE_PARTICLES_COUNT = 150;
-const FREE_PARTICLES_COUNT = 80; // partículas SIEMPRE libres
+const TEXTO_A_FORMAR = "Sofía\nMis XV";
 
-const TEXT_PARTICLE_RATIO = 0.7;
-const FIRST_TEXT_DELAY = 15000; // 15s
-const REPEAT_EVERY = 60000;     // 60s
+/* ===== CONFIGURACIÓN LIMPIA ===== */
+const TOTAL_PARTICLES = 260;
+const TEXT_PARTICLE_RATIO = 0.7; // 70% pueden formar texto
+const FIRST_TEXT_DELAY = 15000;
+const REPEAT_EVERY = 60000;
 const FORM_DURATION = 6000;
 const FREE_PARTICLES = 120; // partículas que siempre quedan flotando
+
 
 
 function resize() {
@@ -714,68 +715,84 @@ function createParticle(isExtra = false) {
 
 
 // Inicializar base
-// Partículas base (pueden formar texto)
-for (let i = 0; i < BASE_PARTICLES_COUNT; i++) {
-  particles.push(createParticle(false));
-}
+particles = [];
 
-// Partículas libres permanentes
-for (let i = 0; i < FREE_PARTICLES_COUNT; i++) {
+// Crear pool fijo de partículas
+for (let i = 0; i < TOTAL_PARTICLES; i++) {
   const p = createParticle(false);
-  p.neverText = true; // 👈 CLAVE
+
+  // 65% pueden formar texto, el resto siempre libres
+  p.canFormText = i < TOTAL_PARTICLES * TEXT_PARTICLE_RATIO;
+
   particles.push(p);
 }
 
 
-function generateTextPoints(text) {
-    const temp = document.createElement("canvas");
-    const tctx = temp.getContext("2d");
-    temp.width = w; temp.height = h;
-    
-    // TEXTO MÁS GRANDE (Punto 2)
-    const fontSize = Math.min(w * 0.22, h * 0.15); 
-    tctx.fillStyle = "#fff";
-    tctx.textAlign = "center";
-    tctx.textBaseline = "middle";
-    tctx.font = `700 ${fontSize}px "Playfair Display", serif`;
-    
-    const lines = text.split("\n");
-    lines.forEach((line, i) => {
-        tctx.fillText(line, w / 2, h / 2 + (i * fontSize * 1.2) - (lines.length * fontSize / 2));
-    });
 
-    const data = tctx.getImageData(0, 0, w, h).data;
-    const points = [];
-    // Muestreo inteligente (Punto 3)
-    const step = w < 500 ? 1.5 : 2;
- 
-    for (let y = 0; y < h; y += step) {
-        for (let x = 0; x < w; x += step) {
-            if (data[(y * w + x) * 4 + 3] > 128) points.push({ x, y });
-        }
+
+function generateTextPoints(text) {
+  const temp = document.createElement("canvas");
+  const tctx = temp.getContext("2d");
+
+  temp.width = w;
+  temp.height = h;
+
+  const fontSize = Math.min(w * 0.22, h * 0.15);
+  tctx.clearRect(0, 0, w, h);
+  tctx.fillStyle = "#fff";
+  tctx.textAlign = "center";
+  tctx.textBaseline = "middle";
+  tctx.font = `700 ${fontSize}px "Playfair Display", serif`;
+
+  const lines = text.split("\n");
+
+  lines.forEach((line, i) => {
+    tctx.fillText(
+      line,
+      w / 2,
+      h / 2 + i * fontSize * 1.2 - (lines.length * fontSize) / 2
+    );
+  });
+
+  const data = tctx.getImageData(0, 0, w, h).data;
+  const points = [];
+  const step = w < 500 ? 1.5 : 2;
+
+  for (let y = 0; y < h; y += step) {
+    for (let x = 0; x < w; x += step) {
+      if (data[(y * w + x) * 4 + 3] > 128) {
+        points.push({ x, y });
+      }
     }
-    return points;
+  }
+
+  return points;
 }
 
 function formText() {
     const textPoints = generateTextPoints(TEXTO_A_FORMAR);
     forming = true;
 
-    const needed = Math.min(textPoints.length * 0.8, 1800); // límite elegante
-const missing = needed - particles.filter(p => !p.neverText).length;
+    const needed = Math.min(textPoints.length, 2000);
+ // límite elegante
+const missing = needed - particles.filter(p => !!p.canFormText
+).length;
 
 for (let i = 0; i < missing; i++) {
   const p = createParticle(true);
   p.isExtra = true;
+  p.isClone = true;   // 👈 CLAVE
   p.alpha = 0;
   particles.push(p);
 }
 
 
+
     const shuffledPoints = textPoints.sort(() => Math.random() - 0.5);
    const formingCount = Math.min(
   shuffledPoints.length,
-  particles.filter(p => !p.neverText).length
+  particles.filter(p => !!p.canFormText
+).length
 );
 
 
@@ -786,7 +803,8 @@ for (let i = 0; i < missing; i++) {
     particles.forEach(p => {
 
         // ❌ estas nunca forman texto
-        if (p.neverText) {
+        if (!p.canFormText) {
+
             p.tx = null;
             p.ty = null;
             p.alpha = p.baseAlpha;
@@ -861,7 +879,8 @@ if (forming && p.tx !== null) {
     p.y += p.vy;
 
     if (p.fadingOut) {
-        p.alpha -= 0.015;
+    p.alpha -= p.isClone ? 0.03 : 0.015;
+
         if (p.alpha <= 0) {
             particles.splice(i, 1);
             continue;
