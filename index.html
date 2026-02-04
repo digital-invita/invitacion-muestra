@@ -663,6 +663,8 @@ html, body {
 <button id="toTopBtn">↑</button>
 
  <script>
+   console.log("JS cargado");
+
 // 1. REINICIO DE SCROLL
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
@@ -672,6 +674,8 @@ window.scrollTo(0, 0);
 
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
+   console.log(canvas, ctx);
+
 
 let w, h;
 let particles = [];
