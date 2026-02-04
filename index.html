@@ -722,7 +722,8 @@ function getLetterPath(letter, size) {
 
   ctx.clearRect(0, 0, 200, 200);
   ctx.fillStyle = "#fff";
-  ctx.font = `700 ${size}px "Playfair Display", serif`;
+  ctx.font = `bold ${size}px "Playfair Display", serif`;
+
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(letter, 100, 100);
@@ -747,15 +748,16 @@ if (alpha > 200 && (alphaRight < 50 || alphaDown < 50)) {
 }
 function createLetterParticle(path, x, y) {
   return {
-    path,
-    x,
-    y,
-    progress: 0,
-    speed: Math.random() * 0.03 + 0.02,
-    trail: [],
-    life: 1,          // 👈 vida de la letra
-    fading: false     // 👈 si ya se está yendo
-  };
+  x,
+  y,
+  vx: 0,
+  vy: 0,
+  size: 2,
+  alpha: 1,
+  glow: 1.5,
+  fading: false,
+};
+
 }
 
 
@@ -781,7 +783,8 @@ for (let i = 0; i < TOTAL_PARTICLES; i++) {
 function formText() {
   letterParticles = [];
 
-  const text = "SOFÍA MIS XV";
+  const text = "SOFÍA\nMIS XV";
+
   const letters = text.split("");
   const size = Math.min(w * 0.14, h * 0.18);
 
@@ -794,39 +797,11 @@ function formText() {
     const path = getLetterPath(letter, size);
     const x = startX + i * size * 0.6;
 
-    letterParticles.push(
-      createLetterParticle(path, x, y)
-    );
-  });
+    for (let i = 0; i < 3; i++) {
+  letterParticles.push(
+    createLetterParticle(path, x, y)
+  );
 }
-// Después de FORM_DURATION las letras se desvanecen
-function formText() {
-  letterParticles = [];
-
-  const text = "SOFÍA MIS XV";
-  const letters = text.split("");
-  const size = Math.min(w * 0.14, h * 0.18);
-
-  let startX = w / 2 - (letters.length * size * 0.3);
-  let y = h * 0.45;
-
-  letters.forEach((letter, i) => {
-    if (letter === " ") return;
-
-    const path = getLetterPath(letter, size);
-    const x = startX + i * size * 0.6;
-
-    letterParticles.push(
-      createLetterParticle(path, x, y)
-    );
-  });
-
-  // 👇 ESTE BLOQUE VA AQUÍ
-  setTimeout(() => {
-    letterParticles.forEach(p => p.fading = true);
-  }, FORM_DURATION);
-}
-
 
 
 
@@ -870,9 +845,15 @@ function animate() {
 
        // Cuerpo de la partícula
        ctx.fillStyle = `rgba(255, 215, 160, ${p.alpha})`;
-       ctx.beginPath();
-       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-       ctx.fill();
+       ctx.shadowBlur = 20 * (p.glow || 0);
+ctx.shadowColor = "rgba(255,255,255,0.9)";
+
+ctx.beginPath();
+ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+ctx.fill();
+
+ctx.shadowBlur = 0;
+
 
        // Guardar posición previa para la colita
        p.prevX = p.x;
