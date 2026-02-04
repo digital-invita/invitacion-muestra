@@ -127,11 +127,17 @@ body {
 .section {
   position: relative;
   z-index: 1;
+
+  max-width: 420px;   /* 👈 ancho controlado */
+  margin: 0 auto;     /* 👈 centra respecto a la línea */
+
   padding: 34px 22px 22px;
+
   opacity: 0;
   transform: translateY(40px) scale(.98);
   transition: all 1s ease;
 }
+
 .section.show {
   opacity: 1;
   transform: none;
@@ -277,19 +283,38 @@ body {
   margin: 24px auto 6px;
 }
 .util {
-  background: rgba(255,255,255,.08);
-  backdrop-filter: blur(10px);
-  border-radius: 14px;
-  padding: 10px 10px;
-  text-decoration: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,.22),
+    rgba(255,255,255,.08)
+  );
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border-radius: 16px;
+  padding: 14px 12px;
+
   color: #fff;
-  font-size: .78rem;
-  transition: transform .25s ease, box-shadow .25s ease;
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .5px;
+
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.35),
+    0 10px 28px rgba(0,0,0,.45);
+
+  text-decoration: none;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
 }
+
 .util:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 10px 28px rgba(0,0,0,.35);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.45),
+    0 18px 45px rgba(0,0,0,.6);
 }
+
 
 /* DIGITAL INVITA DORADO PREMIUM */
 .brand {
@@ -560,6 +585,9 @@ html, body {
   text-align: center;
   text-shadow: 0 2px 10px rgba(0,0,0,.4)
 }
+.footer-section {
+  padding-bottom: 90px; /* espacio para que no tape el botón */
+}
 
 </style>
 </head>
@@ -681,11 +709,12 @@ html, body {
 
 <div class="sep"></div>
 
-<section class="section" style="font-size:.9rem;opacity:.7">
+<section class="section footer-section" style="font-size:.9rem;opacity:.7">
+
 
   <div class="utilities">
     <a class="util" href="#" onclick="addToCalendar()">📅 Agregar al calendario</a>
-    <a class="util" href="#countdown">⏱️ Ver cuenta regresiva</a>
+    <a class="util" href="#" onclick="scrollToCountdown()">⏱️ Ver cuenta regresiva</a>
   </div>
 
   <p class="footer-love" style="margin:24px 0 12px;">Invitación creada con amor</p>
@@ -823,13 +852,18 @@ if (!animationStarted) {
 
     window.addEventListener('scroll', () => {
         // Cálculo de porcentaje (Punto 4)
-        const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollActual = window.scrollY;
-        const porcentaje = (scrollActual / scrollTotal) * 100;
+        window.addEventListener('scroll', () => {
+  const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollActual = window.scrollY;
+  const porcentaje = (scrollActual / scrollTotal) * 100;
 
-        if (porcentaje > 65) toTopBtn.classList.add('show');
-        else toTopBtn.classList.remove('show');
-    });
+  if (porcentaje > 65 && porcentaje < 95) {
+    toTopBtn.classList.add('show');
+  } else {
+    toTopBtn.classList.remove('show');
+  }
+});
+
 
     toTopBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
 });
@@ -937,6 +971,18 @@ function updateCountdown() {
 // Iniciar contador
 updateCountdown();
 setInterval(updateCountdown, 1000);
+function scrollToCountdown() {
+  const section = document.getElementById("countdown");
+  if (!section) return;
+
+  const rect = section.getBoundingClientRect();
+  const sectionCenter = rect.top + window.scrollY - (window.innerHeight / 2) + (rect.height / 2);
+
+  window.scrollTo({
+    top: sectionCenter,
+    behavior: "smooth"
+  });
+}
 
 </script>
   
