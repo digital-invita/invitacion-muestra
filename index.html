@@ -845,19 +845,18 @@ if (forming && p.tx !== null) {
     const dist = Math.sqrt(dx * dx + dy * dy);
 
     if (dist > 1) {
-    p.x += dx * 0.12;
-    p.y += dy * 0.12;
+        p.x += dx * 0.12;
+        p.y += dy * 0.12;
+    } else {
+        p.x = p.tx;
+        p.y = p.ty;
+        p.vx = 0;
+        p.vy = 0;
+        p.alpha = Math.min(p.alpha + 0.08, 1);
+    }
+
 } else {
-    p.x = p.tx;
-    p.y = p.ty;
-    p.vx = 0;
-    p.vy = 0;
-
-
-
-    p.alpha = Math.min(p.alpha + 0.08, 1);
-
-} else { // partículas libres siempre
+    // partículas libres siempre
     p.x += p.vx;
     p.y += p.vy;
 
@@ -868,9 +867,12 @@ if (forming && p.tx !== null) {
             continue;
         }
     } else {
-        p.alpha = p.isExtra ? Math.max(p.alpha - 0.01, 0) : p.baseAlpha;
+        p.alpha = p.isExtra
+            ? Math.max(p.alpha - 0.01, 0)
+            : p.baseAlpha;
     }
 }
+
 
        // Rebote con bordes
        if (p.x < 0 || p.x > w) p.vx *= -1;
