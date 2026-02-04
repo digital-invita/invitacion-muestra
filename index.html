@@ -982,6 +982,18 @@ function scrollToCountdown() {
     behavior: "smooth"
   });
 }
+function addToCalendar() {
+  const start = EVENT_DATE.toISOString().replace(/[-:]/g, '').split('.')[0];
+
+  const url = `https://www.google.com/calendar/render?action=TEMPLATE
+    &text=XV+años+Sofía+Montes
+    &dates=${start}/${start}
+    &details=Mis+XV+años
+    &location=Evento`
+    .replace(/\s+/g, '');
+
+  window.open(url, '_blank');
+}
 
 </script>
   
