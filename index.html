@@ -853,23 +853,6 @@ if (forming && p.tx !== null) {
     p.vx = 0;
     p.vy = 0;
 
-    // ✨ MULTIPLICAR SOLO UNA VEZ
-    if (!p.spawned && !p.isClone) {
-        p.spawned = true;
-
-        const clones = 3; // cuántas copias genera
-        for (let i = 0; i < clones; i++) {
-            const c = { ...p };
-            c.isClone = true;
-            c.spawned = true;
-            c.x += (Math.random() - 0.5) * 2;
-            c.y += (Math.random() - 0.5) * 2;
-            c.alpha = 0.6;
-            c.baseAlpha = p.baseAlpha * 0.8;
-            particles.push(c);
-        }
-    }
-}
 
 
     p.alpha = Math.min(p.alpha + 0.08, 1);
