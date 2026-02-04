@@ -674,6 +674,8 @@ let w, h, particles = [], forming = false;
 // --- CONFIGURACIÓN DINÁMICA ---
 const TEXTO_A_FORMAR = "Sofía\nMis XV"; 
 const BASE_PARTICLES_COUNT = 150;
+const FREE_PARTICLES_COUNT = 80; // partículas SIEMPRE libres
+
 const TEXT_PARTICLE_RATIO = 0.7;
 const FIRST_TEXT_DELAY = 15000; // 15s
 const REPEAT_EVERY = 60000;     // 60s
@@ -711,7 +713,18 @@ function createParticle(isExtra = false) {
 
 
 // Inicializar base
-for (let i = 0; i < BASE_PARTICLES_COUNT; i++) particles.push(createParticle());
+// Partículas base (pueden formar texto)
+for (let i = 0; i < BASE_PARTICLES_COUNT; i++) {
+  particles.push(createParticle(false));
+}
+
+// Partículas libres permanentes
+for (let i = 0; i < FREE_PARTICLES_COUNT; i++) {
+  const p = createParticle(false);
+  p.neverText = true; // 👈 CLAVE
+  particles.push(p);
+}
+
 
 function generateTextPoints(text) {
     const temp = document.createElement("canvas");
@@ -746,61 +759,60 @@ function formText() {
     const textPoints = generateTextPoints(TEXTO_A_FORMAR);
     forming = true;
 
-    // Ajustar partículas al texto (Punto 3)
-    while (particles.length < textPoints.length) {
-        particles.push(createParticle(true));
-    }
+    // ❌ NO crear partículas para cubrir todo el texto
+    // (este while se elimina)
 
-const shuffledPoints = textPoints.sort(() => Math.random() - 0.5);
+    const shuffledPoints = textPoints.sort(() => Math.random() - 0.5);
+    const formingCount = Math.floor(textPoints.length * 0.65);
 
-const formingCount = Math.floor(textPoints.length * 0.65);
+    let textIndex = 0;
 
+    // ✅ ESTE ES EL BLOQUE FINAL
+    particles.forEach(p => {
 
-particles.forEach((p, i) => {
-
-    // Partículas que forman el texto
-    if (i < formingCount) {
-        p.tx = shuffledPoints[i].x;
-        p.ty = shuffledPoints[i].y;
-        p.fadingOut = false;
-    } 
-    // Partículas libres visibles
-    else {
-        p.tx = null;
-        p.ty = null;
-
-        // asegurar que sigan moviéndose
-        if (Math.abs(p.vx) < 0.3 && Math.abs(p.vy) < 0.3) {
-            p.vx = (Math.random() - 0.5) * 1.2;
-            p.vy = (Math.random() - 0.5) * 1.2;
+        // ❌ estas nunca forman texto
+        if (p.neverText) {
+            p.tx = null;
+            p.ty = null;
+            p.alpha = p.baseAlpha;
+            return;
         }
 
-        // mantenerlas visibles
-        p.alpha = p.baseAlpha;
-    }
-});
+        // ✅ solo algunas forman el texto
+        if (textIndex < formingCount) {
+            p.tx = shuffledPoints[textIndex].x;
+            p.ty = shuffledPoints[textIndex].y;
+            p.fadingOut = false;
+            textIndex++;
+        } else {
+            p.tx = null;
+            p.ty = null;
+        }
+    });
 
     setTimeout(() => {
         forming = false;
-      particles.forEach((p, i) => {
-    if (p.tx !== null) {
-        const angle = Math.random() * Math.PI * 2;
-        const force = Math.random() * 1.2 + 0.4;
 
-        p.vx = Math.cos(angle) * force;
-        p.vy = Math.sin(angle) * force;
-        p.tx = null;
-        p.ty = null;
-    }
+        particles.forEach((p, i) => {
+            if (p.tx !== null) {
+                const angle = Math.random() * Math.PI * 2;
+                const force = Math.random() * 1.2 + 0.4;
 
-    // SOLO las extras de sobra se eliminan
-    if (p.isExtra && i > formingCount + FREE_PARTICLES) {
-        p.fadingOut = true;
-    }
-});
+                p.vx = Math.cos(angle) * force;
+                p.vy = Math.sin(angle) * force;
+                p.tx = null;
+                p.ty = null;
+            }
+
+            // SOLO extras de sobra
+            if (p.isExtra && i > formingCount + FREE_PARTICLES) {
+                p.fadingOut = true;
+            }
+        });
 
     }, FORM_DURATION);
 }
+
 
 function animate() {
    ctx.clearRect(0, 0, w, h); // limpia el canvas sin pintar fondo
