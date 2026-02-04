@@ -680,6 +680,9 @@ const ctx = canvas.getContext('2d');
 
 let w, h;
 let particles = [];
+   let lastW = window.innerWidth;
+let lastH = window.innerHeight;
+
 
 function resize() {
   const newW = window.innerWidth;
