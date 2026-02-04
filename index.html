@@ -766,19 +766,15 @@ window.addEventListener('DOMContentLoaded', () => {
     // Mostrar todas las secciones de la invitación
     document.querySelectorAll('.section').forEach(sec => sec.classList.add('show'));
 
-    // Iniciar partículas
-    setTimeout(formText, 2000);  
+    // Iniciar partículas: primera aparición
+setTimeout(formText, 10000);
 
-// Primera aparición del texto a los 10 segundos
-setTimeout(() => {
-    formText();
+// Repetir cada 45 a 60 segundos
+setInterval(() => {
+    const randomDelay = 45000 + Math.random() * 15000;
+    setTimeout(formText, randomDelay);
+}, 60000);
 
-    // Repetición aleatoria cada 45 a 60 segundos
-    setInterval(() => {
-        const randomDelay = 45000 + Math.random() * 15000; // 45s a 60s
-        setTimeout(formText, randomDelay);
-    }, 60000); 
-}, 10000);
 
 
     // Reproducir audio
