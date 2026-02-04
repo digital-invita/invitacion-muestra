@@ -785,19 +785,16 @@ function animate() {
 
    for (let i = particles.length - 1; i >= 0; i--) {
        let p = particles[i];
-
-       // Movimiento hacia texto si forming está activo
+// Movimiento hacia texto si forming está activo
 if (forming && p.tx !== null) {
     const dx = p.tx - p.x;
     const dy = p.ty - p.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
 
     if (dist > 1) {
-        // se mueve hasta llegar
         p.x += dx * 0.12;
         p.y += dy * 0.12;
     } else {
-        // ya llegó → se queda quieta
         p.x = p.tx;
         p.y = p.ty;
         p.vx = 0;
@@ -805,18 +802,21 @@ if (forming && p.tx !== null) {
     }
 
     p.alpha = Math.min(p.alpha + 0.08, 1);
-}
 
-       } else { // partículas libres siempre
-           p.x += p.vx;
-           p.y += p.vy;
-           if (p.fadingOut) {
-               p.alpha -= 0.015;
-               if (p.alpha <= 0) { particles.splice(i, 1); continue; }
-           } else {
-               p.alpha = p.isExtra ? Math.max(p.alpha - 0.01, 0) : p.baseAlpha;
-           }
-       }
+} else { // partículas libres siempre
+    p.x += p.vx;
+    p.y += p.vy;
+
+    if (p.fadingOut) {
+        p.alpha -= 0.015;
+        if (p.alpha <= 0) {
+            particles.splice(i, 1);
+            continue;
+        }
+    } else {
+        p.alpha = p.isExtra ? Math.max(p.alpha - 0.01, 0) : p.baseAlpha;
+    }
+}
 
        // Rebote con bordes
        if (p.x < 0 || p.x > w) p.vx *= -1;
