@@ -666,7 +666,10 @@ html, body {
 // 1. REINICIO DE SCROLL
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
-   const TOTAL_PARTICLES = 160;
+   document.body.style.overflow = 'hidden';
+
+   let TOTAL_PARTICLES = 160;
+
    
 
 
@@ -703,48 +706,35 @@ function createParticle() {
   };
 }
 
-// Crear partículas
-particles = [];
-for (let i = 0; i < TOTAL_PARTICLES; i++) {
-  particles.push(createParticle());
-}
-
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-
-  particles.forEach(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-if (p.sparkle) {
-  p.sparklePhase += 0.03;
-  p.alpha = p.baseAlpha + Math.sin(p.sparklePhase) * 0.25;
-} else {
-  p.alpha = p.baseAlpha;
-}
-
-    if (p.x < 0 || p.x > w) p.vx *= -1;
-    if (p.y < 0 || p.y > h) p.vy *= -1;
-
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
-    ctx.fill();
-  });
-
-  requestAnimationFrame(animate);
-}
-
-
-// Inicializar partículas de fondo
-particles = [];
-
-for (let i = 0; i < TOTAL_PARTICLES; i++) {
-  particles.push(createParticle(false));
-}
 
 
 // INTERFAZ Y BOTÓN TO TOP (Punto 4)
 window.addEventListener('DOMContentLoaded', () => {
+  const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const closeLightbox = document.getElementById('closeLightbox');
+
+document.querySelectorAll('.gallery img').forEach(img => {
+  img.addEventListener('click', () => {
+    lightbox.style.display = 'flex';
+    lightboxImg.src = img.src;
+    document.body.style.overflow = 'hidden'; // 🔒 bloquea scroll
+  });
+});
+
+closeLightbox.addEventListener('click', () => {
+  lightbox.style.display = 'none';
+  document.body.style.overflow = 'auto'; // 🔓 libera scroll
+});
+
+// Cerrar tocando el fondo
+lightbox.addEventListener('click', e => {
+  if (e.target === lightbox) {
+    lightbox.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+});
+
     const btn = document.getElementById('openBtn');
     const toTopBtn = document.getElementById('toTopBtn');
 
