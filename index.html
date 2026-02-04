@@ -766,12 +766,13 @@ lightbox.addEventListener('click', e => {
     // Mostrar todas las secciones de la invitación
     document.querySelectorAll('.section').forEach(sec => sec.classList.add('show'));
 
+    // --- AQUÍ ACTIVAMOS LAS PARTÍCULAS ---
+    animate(); 
 
     // Reproducir audio
     const audio = document.getElementById('audio');
     if(audio) { audio.play(); }
 });
-
 
     window.addEventListener('scroll', () => {
         // Cálculo de porcentaje (Punto 4)
