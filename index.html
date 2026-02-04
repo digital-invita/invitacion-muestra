@@ -668,14 +668,13 @@ if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
    document.body.style.overflow = 'hidden';
 
-   let TOTAL_PARTICLES = 160;
-
-   
-
+ let TOTAL_PARTICLES = 160;
 
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
-let w, h, particles = [], forming = false;
+
+let w, h;
+let particles = [];
 
 function resize() {
   w = canvas.width = window.innerWidth;
@@ -699,12 +698,13 @@ function createParticle() {
     r: Math.random() * 2.2 + 0.8,
     vx: (Math.random() - 0.5) * 0.4,
     vy: (Math.random() - 0.5) * 0.4,
-    alpha: Math.random() * 0.4 + 0.2,
     baseAlpha: Math.random() * 0.4 + 0.2,
-    sparkle: Math.random() < 0.08, // 👈 solo algunas
+    alpha: 0,
+    sparkle: Math.random() < 0.08,
     sparklePhase: Math.random() * Math.PI * 2
   };
 }
+
 
 
 
