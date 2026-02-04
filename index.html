@@ -24,7 +24,7 @@ body {
   background-size: cover;
   background-attachment: fixed;
   color: var(--text-light);
-  overflow: hidden;
+  overflow-x: hidden;
   font-size: 19px;
   line-height: 1.7;
   text-align: center;
@@ -678,6 +678,8 @@ const TEXT_PARTICLE_RATIO = 0.7;
 const FIRST_TEXT_DELAY = 15000; // 15s
 const REPEAT_EVERY = 60000;     // 60s
 const FORM_DURATION = 6000;
+const FREE_PARTICLES = 120; // partículas que siempre quedan flotando
+
 
 function resize() {
     w = canvas.width = window.innerWidth;
@@ -731,7 +733,7 @@ function generateTextPoints(text) {
     const data = tctx.getImageData(0, 0, w, h).data;
     const points = [];
     // Muestreo inteligente (Punto 3)
-    const step = w < 500 ? 3 : 4; 
+    const step = w < 500 ? 2 : 3; 
     for (let y = 0; y < h; y += step) {
         for (let x = 0; x < w; x += step) {
             if (data[(y * w + x) * 4 + 3] > 128) points.push({ x, y });
@@ -749,12 +751,13 @@ function formText() {
         particles.push(createParticle(true));
     }
 
-    const shuffledPoints = textPoints.sort(() => Math.random() - 0.5);
-    
-const formingCount = Math.floor(textPoints.length * TEXT_PARTICLE_RATIO);
+const shuffledPoints = textPoints.sort(() => Math.random() - 0.5);
 
+const formingCount = textPoints.length; // USAR TODOS LOS PUNTOS DEL TEXTO
 
 particles.forEach((p, i) => {
+
+  
     if (i < formingCount) {
         p.tx = shuffledPoints[i].x;
         p.ty = shuffledPoints[i].y;
@@ -769,17 +772,23 @@ particles.forEach((p, i) => {
 
     setTimeout(() => {
         forming = false;
-        particles.forEach(p => {
-            if (p.tx !== null) {
-                const angle = Math.random() * Math.PI * 2;
-               const force = Math.random() * 1.2 + 0.4;
+      particles.forEach((p, i) => {
+    if (p.tx !== null) {
+        const angle = Math.random() * Math.PI * 2;
+        const force = Math.random() * 1.2 + 0.4;
 
-                p.vx = Math.cos(angle) * force;
-                p.vy = Math.sin(angle) * force;
-                p.tx = null; p.ty = null;
-            }
-            if (p.isExtra) p.fadingOut = true;
-        });
+        p.vx = Math.cos(angle) * force;
+        p.vy = Math.sin(angle) * force;
+        p.tx = null;
+        p.ty = null;
+    }
+
+    // SOLO las extras de sobra se eliminan
+    if (p.isExtra && i > formingCount + FREE_PARTICLES) {
+        p.fadingOut = true;
+    }
+});
+
     }, FORM_DURATION);
 }
 
