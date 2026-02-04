@@ -591,9 +591,11 @@ let w, h, particles = [], forming = false;
 
 // --- CONFIGURACIÓN DINÁMICA ---
 const TEXTO_A_FORMAR = "Sofía\nMis XV"; 
-const BASE_PARTICLES_COUNT = 150; // Partículas que siempre están volando
-const FORM_INTERVAL = 30000; 
-const FORM_DURATION = 7000; 
+const BASE_PARTICLES_COUNT = 150;
+const TEXT_PARTICLE_RATIO = 0.7;
+const FIRST_TEXT_DELAY = 15000; // 15s
+const REPEAT_EVERY = 60000;     // 60s
+const FORM_DURATION = 6000;
 
 function resize() {
     w = canvas.width = window.innerWidth;
@@ -602,24 +604,25 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
-function createParticle(isExtra = false, x, y) {
-    return {
-        x: x || Math.random() * w,
-        y: y || Math.random() * h,
-        prevX: x || Math.random() * w, // posición previa para la cola
-        prevY: y || Math.random() * h, // posición previa para la cola
-        tx: null,
-        ty: null,
-        vx: (Math.random() - 0.5) * 1.5,
-        vy: (Math.random() - 0.5) * 1.5,
-        size: Math.random() * 1.2 + 0.5,
-        alpha: isExtra ? 0 : Math.random() * 0.5 + 0.2,
-        baseAlpha: Math.random() * 0.5 + 0.2,
-        isExtra: isExtra,
-        fadingOut: false,
-        trail: Math.random() < 0.35 // 35% de las partículas tendrán cola
-    };
+function createParticle(isExtra = false) {
+  return {
+    x: Math.random() * w,
+    y: Math.random() * h,
+    prevX: 0,
+    prevY: 0,
+    tx: null,
+    ty: null,
+    vx: (Math.random() - 0.5) * 1.5,
+    vy: (Math.random() - 0.5) * 1.5,
+    size: Math.random() * 1.2 + 0.6,
+    alpha: isExtra ? 0 : Math.random() * 0.6 + 0.2,
+    baseAlpha: Math.random() * 0.6 + 0.2,
+    isExtra,
+    fadingOut: false,
+    trail: Math.random() < 0.4
+  };
 }
+
 
 
 // Inicializar base
