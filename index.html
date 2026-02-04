@@ -682,16 +682,26 @@ let w, h;
 let particles = [];
 
 function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
+  const newW = window.innerWidth;
+  const newH = window.innerHeight;
 
-  TOTAL_PARTICLES = window.innerWidth < 768 ? 120 : 180;
+  // ⛔ Evita reinicio por scroll (especialmente en móvil)
+  if (Math.abs(newH - lastH) < 60 && Math.abs(newW - lastW) < 60) return;
+
+  lastW = newW;
+  lastH = newH;
+
+  w = canvas.width = newW;
+  h = canvas.height = newH;
+
+  TOTAL_PARTICLES = newW < 768 ? 120 : 180;
 
   particles = [];
   for (let i = 0; i < TOTAL_PARTICLES; i++) {
     particles.push(createParticle());
   }
 }
+
 
 window.addEventListener('resize', resize);
 resize();
