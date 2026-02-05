@@ -656,10 +656,11 @@ html, body {
 
 <div class="sep"></div>
 
-<section class="section">
+<section class="section" id="countdown-section">
   <h2>Faltan pocos días para este gran día</h2>
   <div id="countdown"></div>
 </section>
+
 
 <div class="sep"></div>
 
@@ -1011,17 +1012,21 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 function scrollToCountdown() {
-  const section = document.getElementById("countdown");
+  const section = document.getElementById("countdown-section");
   if (!section) return;
 
-  const rect = section.getBoundingClientRect();
-  const sectionCenter = rect.top + window.scrollY - (window.innerHeight / 2) + (rect.height / 2);
+  const y =
+    section.getBoundingClientRect().top +
+    window.pageYOffset -
+    (window.innerHeight / 2) +
+    (section.offsetHeight / 2);
 
   window.scrollTo({
-    top: sectionCenter,
+    top: y,
     behavior: "smooth"
   });
 }
+
 function addToCalendar() {
   const start = EVENT_DATE.toISOString().replace(/[-:]/g, '').split('.')[0];
 
