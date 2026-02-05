@@ -36,14 +36,15 @@ body {
 }
 /* CANVAS PARTÍCULAS */
 #particles {
-  position: absolute;
+  position: fixed;   /* ⬅️ volvemos a fixed */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
   pointer-events: none;
 }
+
 
 
 
@@ -758,35 +759,25 @@ const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 
 
+
    console.log(canvas, ctx);
 
 
 let w, h;
 let particles = [];
-   let lastW = window.innerWidth;
-let lastH = window.innerHeight;
-
 
 function resize() {
-  const newW = window.innerWidth;
-  const newH = window.innerHeight;
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
 
-  if (Math.abs(newH - lastH) < 60 && Math.abs(newW - lastW) < 60) return;
-
-  lastW = newW;
-  lastH = newH;
-
-  w = canvas.width = newW;
-  h = canvas.height = newH;
-
-  // 📱 Menos partículas en celular
-  TOTAL_PARTICLES = newW < 768 ? 80 : 160;
+  TOTAL_PARTICLES = w < 768 ? 80 : 160;
 
   particles = [];
   for (let i = 0; i < TOTAL_PARTICLES; i++) {
     particles.push(createParticle());
   }
 }
+
 
 
 window.addEventListener('resize', resize);
@@ -844,6 +835,19 @@ lightbox.addEventListener('click', e => {
 
 // 👉 BOTÓN ABRIR INVITACIÓN (ESTE YA FUNCIONA)
 btn.addEventListener('click', () => {
+  document.getElementById('overlay').style.display = 'none';
+  document.body.style.overflow = 'auto';
+
+  resize();        // 👈 recalcula canvas
+  animate();       // 👈 inicia partículas
+
+  document.getElementById('nombre').classList.add('show');
+  document.querySelectorAll('.section').forEach(sec => sec.classList.add('show'));
+
+  const audio = document.getElementById('audio');
+  if (audio) audio.play();
+});
+
   document.getElementById('overlay').style.display = 'none';
   document.body.style.overflow = 'auto';
 
