@@ -751,7 +751,8 @@ window.scrollTo(0, 0);
  let TOTAL_PARTICLES = 160;
 
 const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d', { alpha: true });
+
    console.log(canvas, ctx);
 
 
@@ -785,6 +786,8 @@ function resize() {
 
 window.addEventListener('resize', resize);
 resize();
+// 🔑 Frame inicial para Android
+ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 function createParticle() {
   return {
@@ -802,6 +805,7 @@ vy: (Math.random() - 0.5) * (window.innerWidth < 768 ? 0.25 : 0.4),
 }
 
 
+   
 let animationStarted = false;
 
 // INTERFAZ Y BOTÓN TO TOP (Punto 4)
