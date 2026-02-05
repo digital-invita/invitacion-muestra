@@ -138,29 +138,33 @@ body {
   position: relative;
   z-index: 2;
 
-  max-width: 400px;
+  max-width: 380px;
   margin: 0 auto;
 
   padding: 34px 22px 22px;
 
-  /* 👇 OPCIÓN 1 · GLASS */
+  /* GLASS · usando tus valores (ajuste fino) */
   background: linear-gradient(
     135deg,
-    rgba(255,255,255,0.12),
-    rgba(255,255,255,0.03)
+    rgba(255,255,255,0.08),
+    rgba(255,255,255,0.02)
   );
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(18px);
 
-  /* 👇 OPCIÓN 2 · BORDE DORADO */
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+
+  /* BORDE DORADO · mismo tono, mejor lectura */
   border: 1px solid rgba(246, 211, 101, 0.55);
 
+  /* HALO + PROFUNDIDAD (sin exagerar) */
   box-shadow:
-    inset 0 1px 1px rgba(255,255,255,.35),
-    0 18px 45px rgba(0,0,0,.45);
+    inset 0 1px 2px rgba(255,255,255,.45),
+    0 0 0 1px rgba(246,211,101,.35),
+    0 20px 55px rgba(246,211,101,.35);
 
   border-radius: 26px;
 
+  /* ANIMACIÓN (no tocar para transparencia) */
   opacity: 0;
   transform: translateY(40px) scale(.98);
   transition: all 1s ease;
@@ -738,7 +742,7 @@ html, body {
 
 <div class="sep"></div>
 
-<section class="section footer-section" style="font-size:.9rem;opacity:0">
+<section class="section footer-section" style="font-size:.9rem;opacity:.7">
 
 
   <div class="utilities">
