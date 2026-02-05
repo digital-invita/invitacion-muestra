@@ -848,23 +848,7 @@ btn.addEventListener('click', () => {
   if (audio) audio.play();
 });
 
-  document.getElementById('overlay').style.display = 'none';
-  document.body.style.overflow = 'auto';
-
-  resize(); // 👈 CLAVE PARA ANDROID
-
-  document.getElementById('nombre').classList.add('show');
-  document.querySelectorAll('.section').forEach(sec => sec.classList.add('show'));
-
-  if (!animationStarted) {
-    animationStarted = true;
-    animate();
-  }
-
-  const audio = document.getElementById('audio');
-  if (audio) audio.play();
-});
-
+ 
 
 closeLightbox.addEventListener('click', () => {
   lightbox.style.display = 'none';
