@@ -467,9 +467,7 @@ body {
 html, body {
   overscroll-behavior: none;
 }
-html, body {
-  scroll-behavior: auto !important;
-}
+
   /* ===== BOTÓN CERRAR LIGHTBOX ESTILO APPLE ===== */
 
 #closeLightbox {
@@ -619,6 +617,19 @@ html, body {
 }
 .footer-section {
   padding-bottom: 90px; /* espacio para que no tape el botón */
+}
+/* Imagen código de vestimenta */
+.dresscode-img {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.dresscode-img img {
+  width: 80%;
+  max-width: 260px;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
 </style>
@@ -1016,13 +1027,9 @@ function scrollToCountdown() {
   const section = document.getElementById("countdown-section");
   if (!section) return;
 
-  const rect = section.getBoundingClientRect();
-  const offset = rect.top + window.pageYOffset;
-  const centered = offset - (window.innerHeight / 2) + (rect.height / 2);
-
-  window.scrollTo({
-    top: centered,
-    behavior: "smooth"
+  section.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
   });
 }
 
