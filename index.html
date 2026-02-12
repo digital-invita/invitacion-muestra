@@ -625,12 +625,14 @@ html, body {
 }
 
 .dresscode-img img {
-  width: 80%;
-  max-width: 260px;
+  width: 75%;
+  max-width: 220px;
   height: auto;
+  display: block;
+  margin: 10px auto 0 auto;
   border-radius: 18px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
+
 
 </style>
 </head>
@@ -763,7 +765,8 @@ html, body {
 
   <div class="utilities">
     <a class="util" href="#" onclick="addToCalendar()">📅 Agregar al calendario</a>
-    <a class="util" href="#" onclick="scrollToCountdown()">⏱️ Ver cuenta regresiva</a>
+    <a class="util" href="javascript:void(0);" onclick="scrollToCountdown()">⏱️ Ver cuenta regresiva</a>
+
   </div>
 
   <p class="footer-love" style="margin:24px 0 12px;">Invitación creada con amor</p>
@@ -1027,11 +1030,14 @@ function scrollToCountdown() {
   const section = document.getElementById("countdown-section");
   if (!section) return;
 
-  section.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
+  const y = section.offsetTop - (window.innerHeight / 2) + (section.offsetHeight / 2);
+
+  window.scrollTo({
+    top: y,
+    behavior: "smooth"
   });
 }
+
 
 
 
