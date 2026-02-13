@@ -718,6 +718,45 @@ html, body {
   100% { transform: scale(1); }
 }
 
+/* ===== MARCA FOOTER PREMIUM ===== */
+.marca-footer {
+  text-align: center;
+  padding: 70px 20px 50px;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  position: relative;
+}
+
+.marca-footer::before {
+  content: "";
+  width: 70px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #d4af37, transparent);
+  display: block;
+  margin: 0 auto 20px;
+  opacity: .8;
+}
+
+.marca-footer p {
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.marca-footer a {
+  display: inline-block;
+  margin-top: 8px;
+  text-decoration: none;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: #d4af37;
+  transition: all .3s ease;
+}
+
+.marca-footer a:hover {
+  transform: translateY(-2px);
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgba(212,175,55,.6));
+}
 
 
 </style>
@@ -989,16 +1028,23 @@ lightbox.addEventListener('click', e => {
 
 
  
-   window.addEventListener('scroll', () => {
+  window.addEventListener('scroll', () => {
+
   const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
   const scrollActual = window.scrollY;
   const porcentaje = (scrollActual / scrollTotal) * 100;
 
-  if (porcentaje > 65 && porcentaje < 95) {
+  const marca = document.querySelector('.marca-footer');
+  const marcaTop = marca.offsetTop;
+
+  const estaAntesDeMarca = scrollActual + window.innerHeight < marcaTop;
+
+  if (porcentaje > 40 && estaAntesDeMarca) {
     toTopBtn.classList.add('show');
   } else {
     toTopBtn.classList.remove('show');
   }
+
 });
 
 toTopBtn.addEventListener('click', () => {
