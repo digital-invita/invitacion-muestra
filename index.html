@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Invitación XV Sofía</title>
+<title>Mis XV Sofía</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
@@ -52,15 +52,27 @@ body {
 #overlay {
   position: fixed;
   inset: 0;
-  backdrop-filter: blur(18px);
-  background: rgba(0,0,0,0.65);
+
+  background: linear-gradient(
+    145deg,
+    rgba(20,10,15,0.65),
+    rgba(0,0,0,0.85)
+  );
+
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   z-index: 9999;
-  gap: 14px;
+  gap: 20px;
+
+  transition: opacity .8s ease;
 }
+
 #overlay .intro-text {
   font-size: 1.6rem;
   max-width: 280px;
@@ -135,22 +147,45 @@ body {
 }
 .nombre {
   font-family: 'Great Vibes', cursive;
-  font-size: 3.8rem;
-  background: var(--gold-btn);
+  font-size: 4.5rem;
+
+  background: linear-gradient(135deg, #fff8dc, #f6d365, #d4af37, #fff1a8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-align: center;
+
+  text-shadow:
+    0 0 12px rgba(255,215,160,.7),
+    0 0 30px rgba(212,175,55,.6);
+
   opacity: 0;
-  transform: translateY(20px) scale(.9);
+  transform: translateY(60px) scale(.9);
+  filter: blur(12px);
+
   display: inline-block;
 }
+
 .nombre.show {
-  animation: drawName 2.2s ease forwards;
+  animation: luxuryReveal 2s cubic-bezier(.22,1,.36,1) forwards;
 }
-@keyframes drawName {
-  0% { filter: drop-shadow(0 0 0 rgba(255,215,160,0)); opacity: 0; }
-  100% { filter: drop-shadow(0 10px 24px rgba(255,215,160,.9)); opacity: 1; transform: none; }
+
+@keyframes luxuryReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(.9);
+    filter: blur(12px);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(-8px) scale(1.05);
+    filter: blur(0);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+  }
 }
+
 
 /* SECCIONES */
 .section {
@@ -676,7 +711,7 @@ html, body {
 <canvas id="particles"></canvas>
 
 <div id="overlay">
-  <div class="intro-text">Porque eres parte de este momento</div>
+  
   <button id="openBtn">Abrir invitación</button>
 </div>
 
