@@ -817,6 +817,22 @@ html, body {
   transform: translateY(-3px);
   filter: drop-shadow(0 0 10px rgba(212,175,55,.7));
 }
+.rsvp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.rsvp-form input,
+.rsvp-form select {
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  outline: none;
+}
 
 
 </style>
@@ -939,8 +955,29 @@ html, body {
 <div class="sep"></div>
 
 <section class="section">
-  <h2>¡Estás invitado!</h2>
-  <a class="btn" href="https://wa.me/525550591264" target="_blank">Confirmar asistencia</a>
+  <h2>Confirma tu asistencia</h2>
+
+  <div class="rsvp-form">
+
+    <input type="text" id="guestName" placeholder="Escribe tu nombre">
+
+    <select id="guestCount">
+      <option value="">Selecciona cuántas personas te acompañan</option>
+      <option value="Asistiré solo">Asistiré solo</option>
+      <option value="Me acompaña 1 persona">Me acompaña 1 persona</option>
+      <option value="Me acompañan 2 personas">Me acompañan 2 personas</option>
+    </select>
+
+    <button class="btn" onclick="sendConfirmation(true)">
+      Confirmo asistencia
+    </button>
+
+    <button class="btn" style="margin-top:10px;background:rgba(255,255,255,.2);" 
+            onclick="sendConfirmation(false)">
+      Lo siento mucho, no podré asistir
+    </button>
+
+  </div>
 </section>
 
 <div class="sep"></div>
@@ -1255,6 +1292,47 @@ function addToCalendar() {
     .replace(/\s+/g, '');
 
   window.open(url, '_blank');
+}
+function sendConfirmation(attending) {
+
+  const name = document.getElementById("guestName").value.trim();
+  const count = document.getElementById("guestCount").value;
+
+  if (!name) {
+    alert("Por favor escribe tu nombre.");
+    return;
+  }
+
+  let message = "";
+
+  if (attending) {
+
+    if (!count) {
+      alert("Selecciona cuántas personas te acompañan.");
+      return;
+    }
+
+    message = `✨ Confirmación XV Sofía Montes ✨
+
+Nombre: ${name}
+${count}
+
+Confirmo mi asistencia 🎉`;
+
+  } else {
+
+    message = `✨ XV Sofía Montes ✨
+
+Nombre: ${name}
+
+Lo siento mucho, no podré asistir al evento.`;
+
+  }
+
+  const phone = "525550591264"; // TU NÚMERO
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+  window.open(url, "_blank");
 }
 
 </script>
