@@ -1246,19 +1246,6 @@ btn.addEventListener('click', () => {
 
  
 
-closeLightbox.addEventListener('click', () => {
-  lightbox.style.display = 'none';
-  document.body.style.overflow = 'auto'; // 🔓 libera scroll
-});
-
-// Cerrar tocando el fondo
-lightbox.addEventListener('click', e => {
-  if (e.target === lightbox) {
-    lightbox.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  }
-});
-
 
  
   window.addEventListener('scroll', () => {
