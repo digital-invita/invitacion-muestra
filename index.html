@@ -1082,14 +1082,12 @@ html, body {
     </div>
 
     <div class="field">
-      <label>¿Cuántas personas asistirán?</label>
-      <select id="guestCount">
-        <option value="">Selecciona una opción</option>
-        <option value="Asistiré solo">Asistiré solo</option>
-        <option value="Me acompaña 1 persona">Me acompaña 1 persona</option>
-        <option value="Me acompañan 2 personas">Me acompañan 2 personas</option>
-      </select>
-    </div>
+  <label>¿Cuántas personas asistirán?</label>
+  <select id="guestCount" data-pases="6">
+    <option value="">Selecciona una opción</option>
+  </select>
+</div>
+
 
     <div class="rsvp-buttons">
       <button class="btn" onclick="sendConfirmation(true)">
@@ -1417,7 +1415,32 @@ function addToCalendar() {
 
   window.open(url, '_blank');
 }
-function sendConfirmation(attending) {
+
+  function actualizarOpciones() {
+  const select = document.getElementById("guestCount");
+  const maxPases = parseInt(select.dataset.pases) || 1;
+
+  // Limpiar opciones excepto el placeholder
+  select.innerHTML = '<option value="">Selecciona una opción</option>';
+
+  for (let i = 0; i < maxPases; i++) {
+    let texto;
+    if (i === 0) {
+      texto = "Asistiré solo";
+    } else {
+      texto = `Me acompaña${i > 1 ? 'n' : ''} ${i} persona${i > 1 ? 's' : ''}`;
+    }
+    const option = document.createElement("option");
+    option.value = texto;
+    option.textContent = texto;
+    select.appendChild(option);
+  }
+}
+
+// Ejecutar al cargar la página
+actualizarOpciones();
+ 
+   function sendConfirmation(attending) {
 
   const name = document.getElementById("guestName").value.trim();
   const count = document.getElementById("guestCount").value;
