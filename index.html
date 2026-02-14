@@ -950,6 +950,20 @@ html, body {
   background: rgba(255,255,255,.08);
 }
 
+/* Latido elegante para Digital Invita */
+@keyframes elegantPulse {
+  0%   { transform: scale(1);   opacity: 1; }
+50%  { transform: scale(1.02); opacity: 0.95; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+.digital-invita {
+  display: inline-block;
+  animation: elegantPulse 2.8s ease-in-out infinite;
+  text-shadow: 
+    0 0 6px rgba(212, 175, 55, 0.4),
+    0 0 12px rgba(212, 175, 55, 0.25);
+}
 
 
 </style>
@@ -1116,9 +1130,11 @@ html, body {
 <div class="marca-footer">
   <p>Invitación creada con amor digital</p>
 
-  <a href="https://www.facebook.com/profile.php?id=61587804296779&locale=es_LA" target="_blank">
-    DIGITAL INVITA
-  </a>
+  <a class="digital-invita"
+   href="https://www.facebook.com/profile.php?id=61587804296779&locale=es_LA"
+   target="_blank">
+  DIGITAL INVITA
+</a>
 
   <p class="marca-pregunta">
     ¿Tienes tu evento y no tienes invitaciones?
