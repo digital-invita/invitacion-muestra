@@ -718,45 +718,76 @@ html, body {
   100% { transform: scale(1); }
 }
 
-/* ===== MARCA FOOTER PREMIUM ===== */
+/* ================================
+   FOOTER · FIRMA COMERCIAL PREMIUM
+================================ */
+
 .marca-footer {
-  text-align: center;
-  padding: 70px 20px 50px;
-  font-size: 0.75rem;
-  opacity: 0.6;
   position: relative;
+  text-align: center;
+  padding: 100px 20px 60px;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  opacity: 0.75;
 }
 
+/* Línea dorada decorativa */
 .marca-footer::before {
   content: "";
-  width: 70px;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
   height: 1px;
-  background: linear-gradient(to right, transparent, #d4af37, transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212,175,55,.9),
+    rgba(255,241,168,1),
+    rgba(212,175,55,.9),
+    transparent
+  );
+  box-shadow: 0 0 18px rgba(212,175,55,.5);
+}
+
+/* Texto superior */
+.marca-footer p {
+  margin: 0;
+  margin-bottom: 12px;
+  opacity: .9;
+}
+
+/* Marca principal */
+.marca-footer a {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+
+  background: var(--gold-btn);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  transition: all .4s ease;
+}
+
+/* Subtexto comercial */
+.marca-sub {
   display: block;
-  margin: 0 auto 20px;
+  font-size: .65rem;
+  letter-spacing: 1px;
+  margin-top: 6px;
   opacity: .8;
 }
 
-.marca-footer p {
-  margin: 0;
-  letter-spacing: 1px;
-}
-
-.marca-footer a {
-  display: inline-block;
-  margin-top: 8px;
-  text-decoration: none;
-  font-size: 0.7rem;
-  letter-spacing: 2px;
-  color: #d4af37;
-  transition: all .3s ease;
-}
-
+/* Hover elegante */
 .marca-footer a:hover {
-  transform: translateY(-2px);
-  opacity: 1;
-  filter: drop-shadow(0 0 6px rgba(212,175,55,.6));
+  transform: translateY(-3px);
+  filter: drop-shadow(0 0 12px rgba(212,175,55,.7));
 }
+
 
 
 </style>
@@ -895,8 +926,11 @@ html, body {
 
 
 <div class="marca-footer">
-  <p>Invitación creada con amor digital ✨</p>
-  <a href="#">¿Aún no tienes la tuya? Consíguela aquí</a>
+  <p>Invitación creada con amor digital</p>
+  <a href="https://www.facebook.com/profile.php?id=61587804296779&locale=es_LA">
+    DIGITAL INVITA
+    <span class="marca-sub">Obtén tu invitación personalizada</span>
+  </a>
 </div>
 
   
