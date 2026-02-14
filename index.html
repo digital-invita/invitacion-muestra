@@ -953,7 +953,7 @@ html, body {
 /* Latido elegante para Digital Invita */
 @keyframes elegantPulse {
   0%   { transform: scale(1);   opacity: 1; }
-50%  { transform: scale(1.02); opacity: 0.95; }
+  50%  { transform: scale(1.04); opacity: 0.92; }
   100% { transform: scale(1);   opacity: 1; }
 }
 
@@ -978,7 +978,8 @@ html, body {
   <button id="openBtn">Abrir invitación</button>
 </div>
 
-<audio id="audio" src="cancio.mp3.mp3"></audio>
+<audio id="audio" src="cancio.mp3.mp3" loop></audio>
+
 
 <section class="hero">
   <img src="FPrincipal.jpg">
@@ -1257,7 +1258,11 @@ btn.addEventListener('click', () => {
   document.querySelectorAll('.section').forEach(sec => sec.classList.add('show'));
 
   const audio = document.getElementById('audio');
-  if (audio) audio.play();
+if (audio) {
+  audio.volume = 0.4;  // 40% de volumen (elegante)
+  audio.play();
+}
+
 });
 
  
