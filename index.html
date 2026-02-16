@@ -993,7 +993,7 @@ html, body {
     0 0 12px rgba(212, 175, 55, 0.25);
 }
 
-/* ===== SELLO DE CERA ULTRA REALISTA ===== */
+/* ===== BOTÓN METAL DORADO LUJO ===== */
 .wax-btn {
   position: relative;
   width: 150px;
@@ -1003,61 +1003,68 @@ html, body {
   cursor: pointer;
 
   font-family: 'Playfair Display', serif;
-  font-size: 20px;
+  font-size: 19px;
+  letter-spacing: .8px;
   line-height: 1.15;
-  letter-spacing: .5px;
-  color: #ffe9c9;
+  color: #fff7d6;
 
-  /* CERA PROFUNDA */
   background:
-    radial-gradient(circle at 30% 28%, #f1c08a 0%, #c07a45 25%, #8f4e25 55%, #5a2f15 100%),
-    radial-gradient(circle at 70% 75%, rgba(0,0,0,.35), transparent 60%);
+    radial-gradient(circle at 30% 30%, #fff3c4 0%, #e0b94f 30%, #c89b2c 55%, #8a6a12 85%, #5a4308 100%);
 
   box-shadow:
-    inset -12px -14px 22px rgba(0,0,0,.55),
-    inset 10px 12px 18px rgba(255,210,150,.35),
-    0 18px 35px rgba(0,0,0,.5);
+    inset -8px -10px 18px rgba(0,0,0,.45),
+    inset 8px 10px 18px rgba(255,240,180,.55),
+    0 18px 35px rgba(0,0,0,.45);
 
   transition: transform .25s ease, box-shadow .25s ease;
 }
 
-/* BORDE ORGÁNICO */
+/* aro metálico */
 .wax-btn::before {
-  content: "";
-  position: absolute;
-  inset: -10px;
-  border-radius: 50%;
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:50%;
 
   background:
-    radial-gradient(circle at 20% 25%, #f3c693 0%, #c07a45 35%, #7a4320 70%, #5a2f15 100%);
-
-  filter: blur(2px);
-  z-index: -1;
+    linear-gradient(145deg,#fff6cc,#caa33a,#7a5d14);
 
   box-shadow:
-    inset -6px -8px 14px rgba(0,0,0,.45),
-    inset 6px 8px 14px rgba(255,210,150,.25);
+    inset 0 2px 4px rgba(255,255,255,.6),
+    inset 0 -3px 6px rgba(0,0,0,.5);
+
+  z-index:-1;
 }
 
-/* BRILLO CERA */
+/* brillo metálico */
 .wax-btn::after {
-  content: "";
-  position: absolute;
-  top: 22%;
-  left: 28%;
-  width: 38%;
-  height: 28%;
-  border-radius: 50%;
+  content:"";
+  position:absolute;
+  top:18%;
+  left:28%;
+  width:40%;
+  height:28%;
+  border-radius:50%;
+  background:radial-gradient(ellipse,rgba(255,255,255,.55),transparent 70%);
+  filter:blur(1px);
+}
 
-  background: radial-gradient(
-    ellipse,
-    rgba(255,255,255,.35),
-    rgba(255,255,255,.12) 40%,
-    transparent 70%
-  );
+/* hover */
+.wax-btn:hover {
+  transform:translateY(-3px) scale(1.04);
+  box-shadow:
+    inset -8px -10px 18px rgba(0,0,0,.45),
+    inset 8px 10px 18px rgba(255,240,180,.6),
+    0 26px 45px rgba(0,0,0,.5);
+}
 
-  filter: blur(1.2px);
-  pointer-events: none;
+/* click */
+.wax-btn:active {
+  transform:translateY(2px) scale(.97);
+  box-shadow:
+    inset -12px -14px 22px rgba(0,0,0,.55),
+    inset 4px 6px 10px rgba(255,240,180,.3),
+    0 8px 14px rgba(0,0,0,.4);
 }
 
 /* HOVER */
