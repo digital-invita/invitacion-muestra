@@ -1054,6 +1054,48 @@ html, body {
     inset 4px 6px 10px rgba(255,210,150,0.25),
     0 6px 12px rgba(0,0,0,0.4);
 }
+/* ===== BOTÓN CERA EN OVERLAY ===== */
+#overlay .wax-btn {
+  transform: scale(.9);
+  opacity: 0;
+  animation: waxIn 1.2s ease forwards;
+}
+
+@keyframes waxIn {
+  0% {
+    transform: scale(.7) rotate(-8deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05) rotate(2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+/* brillo sutil respirando */
+#overlay .wax-btn::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255,210,150,0.35),
+    transparent 70%
+  );
+  opacity: .6;
+  animation: waxGlow 2.8s ease-in-out infinite;
+}
+
+@keyframes waxGlow {
+  0% { transform: scale(1); opacity: .4; }
+  50% { transform: scale(1.08); opacity: .7; }
+  100% { transform: scale(1); opacity: .4; }
+}
 
 </style>
 </head>
