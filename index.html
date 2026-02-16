@@ -179,7 +179,15 @@ body {
   transform: translateY(70px) scale(.8);
   filter: blur(12px);
 
+  
+}
+
+  .nombre.show {
   animation: sofiaReveal 2.2s cubic-bezier(.19,1,.22,1) forwards;
+}
+
+.nombre.show::after {
+  animation: shine 3.5s ease-out 1.8s forwards;
 }
 
 /* BRILLO QUE CRUZA */
@@ -1532,6 +1540,31 @@ pero te deseo un día maravilloso y lleno de felicidad 💐`;
 
 
 </script>
+
+  <script>
+const openBtn = document.getElementById("openBtn");
+const overlay = document.getElementById("overlay");
+const audio = document.getElementById("audio");
+const nombre = document.getElementById("nombre");
+
+openBtn.addEventListener("click", () => {
+
+  /* desaparecer overlay */
+  overlay.style.opacity = "0";
+
+  setTimeout(() => {
+    overlay.style.display = "none";
+
+    /* 🔥 activar animación Sofía Montes */
+    nombre.classList.add("show");
+
+  }, 800);
+
+  /* música */
+  audio.play().catch(()=>{});
+});
+</script>
+
   
 </body>
 </html>
