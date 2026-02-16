@@ -503,6 +503,31 @@ backdrop-filter: blur(18px);
   text-align: center;
 }
 
+/* ===== BOTÓN MÚSICA (CLON DE VOLVER ARRIBA) ===== */
+#musicBtn {
+  position: fixed;
+  bottom: 20px;
+  left: 18px; /* lado contrario */
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.18);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,.4);
+  opacity: 1; /* siempre visible */
+  transform: scale(1);
+  transition: all .3s ease;
+  z-index: 9999;
+}
+
+#musicBtn:hover {
+  transform: scale(1.08);
+}
 
 
 /* =====  RESPONSIVE ===== */
@@ -1271,6 +1296,7 @@ html, body {
 
 <!-- BOTÓN SUBIR ARRIBA -->
 <button id="toTopBtn">↑</button>
+<button id="musicBtn">⏸</button>
 
  <script>
    console.log("JS cargado");
@@ -1631,6 +1657,7 @@ openBtn.addEventListener("click", () => {
 
   /* música */
   audio.play().catch(()=>{});
+    document.getElementById("musicBtn").textContent = "⏸";
 });
 </script>
 <script>
@@ -1655,6 +1682,22 @@ openBtn.addEventListener("click", () => {
   }, 300);
 
 });
+  /* ===== CONTROL PLAY / PAUSA ===== */
+const audio = document.getElementById("audio");
+const musicBtn = document.getElementById("musicBtn");
+
+musicBtn.addEventListener("click", () => {
+
+  if (audio.paused) {
+    audio.play();
+    musicBtn.textContent = "⏸";
+  } else {
+    audio.pause();
+    musicBtn.textContent = "▶";
+  }
+
+});
+
 </script>
 
   
