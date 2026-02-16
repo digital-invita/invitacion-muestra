@@ -1111,7 +1111,10 @@ html, body {
 
 </div>
 
-<audio id="audio" src="cancio.mp3.mp3" loop></audio>
+<audio id="audio" loop preload="auto">
+  <source src="cancio.mp3.mp3" type="audio/mpeg">
+</audio>
+
 
 
 <section class="hero">
@@ -1655,9 +1658,23 @@ openBtn.addEventListener("click", () => {
 
   }, 800);
 
-  /* música */
-  audio.play().catch(()=>{});
-    document.getElementById("musicBtn").textContent = "⏸";
+
+ /* música — inicializar correctamente para permitir pausa/play */
+audio.volume = 1;
+audio.currentTime = 0;
+
+const playPromise = audio.play();
+
+if (playPromise !== undefined) {
+  playPromise.then(() => {
+    console.log("audio iniciado");
+  }).catch(() => {
+    console.log("autoplay bloqueado");
+  });
+}
+
+musicBtn.textContent = "⏸";
+
 });
 </script>
 <script>
@@ -1682,21 +1699,25 @@ openBtn.addEventListener("click", () => {
   }, 300);
 
 });
-  /* ===== CONTROL PLAY / PAUSA ===== */
-const audio = document.getElementById("audio");
+/* ===== BOTÓN PLAY / PAUSA REAL ===== */
 const musicBtn = document.getElementById("musicBtn");
+const audio = document.getElementById("audio");
+
+let isPlaying = true;
 
 musicBtn.addEventListener("click", () => {
 
-  if (audio.paused) {
-    audio.play();
-    musicBtn.textContent = "⏸";
-  } else {
+  if (isPlaying) {
     audio.pause();
     musicBtn.textContent = "▶";
+  } else {
+    audio.play().catch(()=>{});
+    musicBtn.textContent = "⏸";
   }
 
+  isPlaying = !isPlaying;
 });
+
 
 </script>
 
