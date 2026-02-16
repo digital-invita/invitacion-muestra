@@ -158,16 +158,22 @@ body {
   z-index: 2;
 
   /* DORADO METÁLICO REAL */
-  background: linear-gradient(
-    120deg,
-    #fff6d5 0%,
-    #f7d774 25%,
-    #d4a93a 50%,
-    #f7d774 75%,
-    #fff6d5 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #f7d774; /* base dorado sólido */
+
+background: linear-gradient(
+  120deg,
+  #fff6d5 0%,
+  #f7d774 25%,
+  #d4a93a 50%,
+  #f7d774 75%,
+  #fff6d5 100%
+);
+background-clip: text;
+-webkit-background-clip: text;
+
+/* SOLO Safari necesita transparencia */
+-webkit-text-fill-color: transparent;
+
 
   /* RELIEVE PREMIUM */
   text-shadow:
@@ -205,6 +211,8 @@ body {
   animation: shine 2.8s ease-out 1.2s forwards;
   pointer-events: none;
   opacity: 0.9;
+  mix-blend-mode: screen;
+
 }
 
 
@@ -224,11 +232,13 @@ body {
     letter-spacing: 2px;
   }
 
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    letter-spacing: 1px;
-  }
+100% {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  letter-spacing: 1px;
+  filter: blur(0);   /* ← FIX CLAVE */
+}
+
 }
 
 /* BRILLO DESLIZANTE */
