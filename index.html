@@ -1644,82 +1644,40 @@ const openBtn = document.getElementById("openBtn");
 const overlay = document.getElementById("overlay");
 const audio = document.getElementById("audio");
 const nombre = document.getElementById("nombre");
+const musicBtn = document.getElementById("musicBtn");
 
+/* ===== ABRIR INVITACIÓN (mantiene autoplay) ===== */
 openBtn.addEventListener("click", () => {
 
-  /* desaparecer overlay */
-  overlay.style.opacity = "0";
-
-  setTimeout(() => {
-    overlay.style.display = "none";
-
-    /* 🔥 activar animación Sofía Montes */
-    nombre.classList.add("show");
-
-  }, 800);
-
-
- /* música — inicializar correctamente para permitir pausa/play */
-audio.volume = 1;
-audio.currentTime = 0;
-
-const playPromise = audio.play();
-
-if (playPromise !== undefined) {
-  playPromise.then(() => {
-    console.log("audio iniciado");
-  }).catch(() => {
-    console.log("autoplay bloqueado");
-  });
-}
-
-musicBtn.textContent = "⏸";
-
-});
-</script>
-<script>
-const overlay = document.getElementById("overlay");
-const openBtn = document.getElementById("openBtn");
-const audio = document.getElementById("audio");
-const nombre = document.getElementById("nombre");
-
-openBtn.addEventListener("click", () => {
-
-  /* fade elegante */
   overlay.style.opacity = "0";
   overlay.style.pointerEvents = "none";
 
-  /* audio */
-  audio.currentTime = 0;
-  audio.play();
+  /* reproducir UNA sola vez */
+  audio.play().catch(()=>{});
 
-  /* animación nombre */
   setTimeout(() => {
     nombre.classList.add("show");
   }, 300);
 
+  musicBtn.textContent = "⏸";
 });
-/* ===== BOTÓN PLAY / PAUSA REAL ===== */
-const musicBtn = document.getElementById("musicBtn");
-const audio = document.getElementById("audio");
 
-let isPlaying = true;
 
+/* ===== BOTÓN PAUSA / CONTINUAR ===== */
 musicBtn.addEventListener("click", () => {
 
-  if (isPlaying) {
-    audio.pause();
-    musicBtn.textContent = "▶";
-  } else {
+  if (audio.paused) {
     audio.play().catch(()=>{});
     musicBtn.textContent = "⏸";
+  } else {
+    audio.pause();
+    musicBtn.textContent = "▶";
   }
 
-  isPlaying = !isPlaying;
 });
-
-
 </script>
+
+
 
   
 </body>
