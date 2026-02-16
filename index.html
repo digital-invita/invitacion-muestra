@@ -194,18 +194,19 @@ body {
 .nombre::after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -10% -20%;
   background: linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(255,255,255,0.9) 50%,
-    transparent 70%
+    105deg,
+    transparent 45%,
+    rgba(255,255,255,0.85) 50%,
+    transparent 55%
   );
-  mix-blend-mode: screen;
   transform: translateX(-120%);
-  animation: shine 3.5s ease-out 1.8s forwards;
+  animation: shine 2.8s ease-out 1.2s forwards;
   pointer-events: none;
+  opacity: 0.9;
 }
+
 
 /* ANIMACIÓN ENTRADA */
 @keyframes sofiaReveal {
@@ -232,10 +233,14 @@ body {
 
 /* BRILLO DESLIZANTE */
 @keyframes shine {
-  to {
-    transform: translateX(120%);
+  0% {
+    transform: translateX(-140%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(140%) skewX(-15deg);
   }
 }
+
 
 
 
