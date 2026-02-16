@@ -1013,28 +1013,14 @@ html, body {
 
   filter: drop-shadow(0 18px 28px rgba(0,0,0,.45));
   transition: transform .35s ease, filter .35s ease;
-}
 
-/* texto centrado */
-.wax-btn span {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  letter-spacing: .5px;
-  color: #fff7d6;
-  text-shadow: 0 2px 4px rgba(0,0,0,.6);
-
-  pointer-events: none;
+  /* respiración elegante */
+  animation: waxPulse 3s ease-in-out infinite;
 }
 
 /* hover lujo */
 .wax-btn:hover img {
-  transform: scale(1.06) rotate(-2deg);
+  transform: scale(1.08) rotate(-3deg);
   filter: drop-shadow(0 26px 40px rgba(0,0,0,.55));
 }
 
@@ -1051,6 +1037,29 @@ html, body {
   animation: waxIn 1.2s cubic-bezier(.2,.8,.2,1) forwards;
 }
 
+/* TEXTO MICRO DEBAJO */
+.wax-caption {
+  margin-top: 14px;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: .75;
+
+  background: linear-gradient(
+    90deg,
+    #fff6d5,
+    #f7d774,
+    #d4a93a,
+    #fff6d5
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: waxTextFade 2.8s ease-in-out infinite;
+}
+
+/* ===== ANIMACIONES ===== */
+
 @keyframes waxIn {
   0% {
     opacity: 0;
@@ -1066,6 +1075,19 @@ html, body {
   }
 }
 
+@keyframes waxPulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes waxTextFade {
+  0%   { opacity: .6; transform: translateY(0); }
+  50%  { opacity: 1; transform: translateY(2px); }
+  100% { opacity: .6; transform: translateY(0); }
+}
+
+
 
 </style>
 </head>
@@ -1076,10 +1098,12 @@ html, body {
 
 <div id="overlay">
   
- <button class="wax-btn" id="openBtn">
+<button class="wax-btn" id="openBtn">
   <img src="sello_cera.png" alt="Abrir invitación">
-  <span>Abrir</span>
 </button>
+
+<div class="wax-caption">Tocar para abrir</div>
+
 
 
 </div>
