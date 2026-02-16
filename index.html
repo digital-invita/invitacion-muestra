@@ -341,14 +341,16 @@ backdrop-filter: blur(18px);
 }
 
 /* CUENTA REGRESIVA */
-# {
+#countdown {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
   margin: 6px auto 0;
   flex-wrap: nowrap;
   max-width: 90%;
 }
+
 .count-box {
   background: rgba(255,255,255,.08);
   border-radius: 14px;
@@ -381,10 +383,11 @@ backdrop-filter: blur(18px);
 }
 
 
-# div {
+#countdown span {
   font-size: .7rem;
   white-space: nowrap;
 }
+
 
 @media (max-width: 420px) {
   .count-box {
@@ -1177,12 +1180,11 @@ html, body {
 
 <div class="sep"></div>
 
+  
 <section class="section" id="countdown-section">
   <h2>Faltan pocos días para este gran día</h2>
   <div id="countdown"></div>
 </section>
-
-
 <div class="sep"></div>
   
 <section class="section">
