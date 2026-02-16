@@ -50,6 +50,7 @@ body {
 
 /* OVERLAY */
 #overlay {
+   text-align: center;
   position: fixed;
   inset: 0;
 
@@ -77,39 +78,7 @@ body {
   font-size: 1.6rem;
   max-width: 280px;
 }
-#openBtn {
-  padding: 16px 42px;
-  font-size: 18px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  border-radius: 40px;
-  cursor: pointer;
 
-  background: linear-gradient(135deg, #f5e6b3, #d4af37, #f5e6b3);
-  background-size: 200% 200%;
-
-  color: #fff;
-  border: 1px solid rgba(255, 215, 0, 0.6);
-
-  box-shadow:
-    0 4px 15px rgba(212,175,55,0.4),
-    inset 0 1px 2px rgba(255,255,255,0.6);
-
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-
-  transition: all .4s ease;
-  animation: goldFlow 4s ease-in-out infinite,
-             pulseSoft 2.5s ease-in-out infinite;
-}
-
-/* Hover elegante */
-#openBtn:hover {
-  transform: scale(1.05);
-  box-shadow:
-    0 8px 25px rgba(212,175,55,0.6),
-    inset 0 1px 3px rgba(255,255,255,0.8);
-}
 
 
 /* HERO */
@@ -1641,6 +1610,29 @@ openBtn.addEventListener("click", () => {
 
   /* música */
   audio.play().catch(()=>{});
+});
+</script>
+<script>
+const overlay = document.getElementById("overlay");
+const openBtn = document.getElementById("openBtn");
+const audio = document.getElementById("audio");
+const nombre = document.getElementById("nombre");
+
+openBtn.addEventListener("click", () => {
+
+  /* fade elegante */
+  overlay.style.opacity = "0";
+  overlay.style.pointerEvents = "none";
+
+  /* audio */
+  audio.currentTime = 0;
+  audio.play();
+
+  /* animación nombre */
+  setTimeout(() => {
+    nombre.classList.add("show");
+  }, 300);
+
 });
 </script>
 
