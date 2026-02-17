@@ -1565,13 +1565,7 @@ function renderThumbs() {
 
 
 
-  thumb.addEventListener('click', () => {
-    showImage(index);
-  });
-
-  thumbsContainer.appendChild(thumb);
-});
-
+  
    function showImage(index){
   currentIndex = index;
 
@@ -1587,13 +1581,9 @@ function renderThumbs() {
 document.querySelectorAll('.gallery img').forEach((img, index) => {
   img.addEventListener('click', () => {
 
-  lightbox.classList.add('show');
-
-  showImage(index); // 👈 esta es la clave nueva
-
-  document.body.style.overflow = 'hidden';
-});
-
+    lightbox.classList.add('show');
+    showImage(index);
+    document.body.style.overflow = 'hidden';
 
     // efecto iPhone
     lightboxImg.style.transform = "scale(.92)";
@@ -1604,9 +1594,9 @@ document.querySelectorAll('.gallery img').forEach((img, index) => {
       lightboxImg.style.opacity = "1";
     }, 30);
 
-    document.body.style.overflow = 'hidden';
   });
 });
+
 
 
 function closeGallery() {
