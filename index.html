@@ -162,8 +162,10 @@ background-clip: text;
 }
 
 .nombre.show::after {
+  opacity: 0.9; /* 🔥 aparece solo aquí */
   animation: shine 3.5s ease-out 1.8s forwards;
 }
+
 
 /* BRILLO QUE CRUZA */
 .nombre::after {
@@ -177,11 +179,12 @@ background-clip: text;
     transparent 55%
   );
   transform: translateX(-120%);
-  animation: shine 2.8s ease-out 1.2s forwards;
   pointer-events: none;
-  opacity: 0.9;
+  opacity: 0; /* 🔥 CAMBIO CLAVE */
   mix-blend-mode: screen;
-
+}
+.nombre.activar-brillo::after {
+  animation: shine 2.8s ease-out forwards;
 }
 
 
