@@ -37,14 +37,12 @@ body {
 }
 /* CANVAS PARTÍCULAS */
 #particles {
-  position: fixed; 
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
+  inset: 0;              /* 👈 reemplaza top/left/width/height */
   z-index: 1;
   pointer-events: none;
 }
+
 
 
 
@@ -1519,8 +1517,11 @@ function createParticle() {
     x: Math.random() * w,
     y: Math.random() * h,
     r: Math.random() * 2.2 + 0.8,
-    vx: (Math.random() - 0.5) * (window.innerWidth < 768 ? 0.25 : 0.4),
-vy: (Math.random() - 0.5) * (window.innerWidth < 768 ? 0.25 : 0.4),
+const speed = w < 768 ? 0.25 : 0.4;
+
+vx: (Math.random() - 0.5) * speed,
+vy: (Math.random() - 0.5) * speed,
+
 
     baseAlpha: Math.random() * 0.4 + 0.2,
     alpha: 0,
