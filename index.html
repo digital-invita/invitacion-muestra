@@ -606,6 +606,7 @@ border-bottom: 7px solid transparent;
 /* ===== LIGHTBOX POPUP GALERÍA ===== */
 
 #lightbox {
+  overflow: hidden;
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,.85);
@@ -625,7 +626,9 @@ border-bottom: 7px solid transparent;
   
 #lightbox img {
   max-width: 90vw;
-  max-height: 75vh; /* 🔥 bajamos un poco */
+  max-height: min(75vh, 75svh);
+
+
   object-fit: contain;
 
   border-radius: 14px;
@@ -1609,10 +1612,16 @@ document.getElementById('closeLightbox').addEventListener('click', () => {
 // Actualizar imagen grande
 function updateLightbox() {
   lightboxImg.src = galleryImages[currentIndex].src;
+
+  // 🔒 Forzar centrado absoluto
+  lightbox.scrollTop = 0;
+  window.scrollTo({ top: 0, behavior: "instant" });
+
   document.querySelectorAll('#thumbs img').forEach((t, i) => {
     t.classList.toggle('active', i === currentIndex);
   });
 }
+
 
 // Renderizar miniaturas
 function renderThumbs() {
