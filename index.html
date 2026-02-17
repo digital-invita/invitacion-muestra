@@ -1429,14 +1429,19 @@ html, body {
 
   
 <div id="lightbox">
-  <span id="closeLightbox">×</span>
+
+  <button id="closeLightbox">×</button>
 
   <div class="lightbox-content">
-    <img id="lightbox-img">
 
-    <div id="thumbs"></div> <!-- 👈 NUEVO -->
+    <img id="lightboxImg">
+
+    <div id="thumbs"></div>
+
   </div>
+
 </div>
+
 
 
 <!-- BOTÓN SUBIR ARRIBA -->
@@ -1509,15 +1514,67 @@ const toTopBtn = document.getElementById('toTopBtn');
 // LIGHTBOX
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
+const thumbs = document.getElementById("thumbs");
+let currentImages = [];
+let currentIndex = 0;
+
 const closeLightbox = document.getElementById('closeLightbox');
 const thumbsContainer = document.getElementById('thumbs');
 const galleryImages = document.querySelectorAll('.gallery img');
 
 let currentIndex = 0;
+const galleryImages = document.querySelectorAll(".gallery img");
+
 galleryImages.forEach((img, index) => {
 
-  const thumb = document.createElement('img');
-  thumb.src = img.src;
+  img.addEventListener("click", () => {
+
+    currentImages = [...galleryImages];
+    currentIndex = index;
+
+    openLightbox();
+
+  });
+
+});
+function openLightbox(){
+
+  lightbox.classList.add("show");
+  updateLightbox();
+  renderThumbs();
+
+}
+function updateLightbox(){
+
+  lightboxImg.src = currentImages[currentIndex].src;
+
+  document.querySelectorAll("#thumbs img").forEach((t,i)=>{
+    t.classList.toggle("active", i === currentIndex);
+  });
+
+}
+function renderThumbs(){
+
+  thumbs.innerHTML = "";
+
+  currentImages.forEach((img,i)=>{
+
+    const t = document.createElement("img");
+    t.src = img.src;
+
+    if(i === currentIndex) t.classList.add("active");
+
+    t.addEventListener("click",()=>{
+      currentIndex = i;
+      updateLightbox();
+    });
+
+    thumbs.appendChild(t);
+
+  });
+
+}
+
 
   thumb.addEventListener('click', () => {
     showImage(index);
