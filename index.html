@@ -1741,21 +1741,30 @@ const musicBtn = document.getElementById("musicBtn");
 /* ===== ABRIR INVITACIÓN (mantiene autoplay) ===== */
 openBtn.addEventListener("click", () => {
 
+  /* Oculta portada */
   overlay.style.opacity = "0";
   overlay.style.pointerEvents = "none";
 
-  /* reproducir UNA sola vez */
+  /* 🔓 activar scroll de la página */
+  document.body.style.overflow = "auto";
+
+  /* ▶ iniciar partículas */
+  resize();
+  animate();
+
+  /* 🎵 música automática */
   audio.play().catch(()=>{});
 
+  /* mostrar botón música */
   musicBtn.classList.add("show");
-
   musicBtn.classList.remove("play");
 
-  setTimeout(() => {
-    nombre.classList.add("show");
-  }, 300);
+  /* mostrar contenido */
+  nombre.classList.add("show");
+  document.querySelectorAll('.section').forEach(sec => sec.classList.add('show'));
 
 });
+
 
 
 /* ===== BOTÓN PAUSA / CONTINUAR ===== */
