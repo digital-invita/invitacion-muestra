@@ -1202,30 +1202,38 @@ html, body {
 
 /* ===== MINIATURAS LIGHTBOX ===== */
 
-.lightbox-content{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:18px;
-}
-.lightbox-main{
-  height:75vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.lightbox-content {
+  width: min(92vw, 480px);
+  height: 90vh;              /* 🔥 altura fija total */
+  display: flex;
+  flex-direction: column;    /* 🔥 apila vertical */
 }
 
-/* contenedor miniaturas */
-#thumbs{
-  display:flex;
-  gap:12px;
-  overflow-x:auto;      /* 👈 scroll horizontal */
-  padding:10px 6px;
-  max-width:90vw;
-  margin-top:20px;
-  justify-content:flex-start; /* 👈 evita reacomodo */
-  flex-wrap:nowrap;           /* 👈 CLAVE */
+.lightbox-main {
+  flex: 1;                   /* 🔥 ocupa todo el espacio disponible */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;       /* 🔥 no corta */
+}
+
+
+/* contenedor miniaturas */
+#thumbs {
+  height: 80px;              /* 🔒 altura fija */
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;            /* 🔥 no se reduce */
+  padding: 8px 0;
+}
+
 
 
 /* ocultar scrollbar */
@@ -1235,12 +1243,21 @@ html, body {
 
 
 /* cada miniatura */
-#thumbs img{
-  width:60px;
-  height:60px;   /* mejor que aspect-ratio en este caso */
-  object-fit:cover;
-  border-radius:12px;
+#thumbs img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  opacity: .6;
+  transition: all .3s ease;
 }
+
+#thumbs img.active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
 
 
 /* efecto hover */
