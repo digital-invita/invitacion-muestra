@@ -519,10 +519,49 @@ backdrop-filter: blur(18px);
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 10px 25px rgba(0,0,0,.4);
-  opacity: 1; /* siempre visible */
-  transform: scale(1);
+    opacity: 0;              /* oculto al inicio */
+  pointer-events: none;    /* no clickeable */
+  transform: scale(.8);
   transition: all .3s ease;
   z-index: 9999;
+}
+  #musicBtn.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+/* ICONO PAUSA / PLAY PREMIUM */
+#musicBtn::before,
+#musicBtn::after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 16px;
+  background: rgba(255,255,255,.9);
+  border-radius: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all .3s ease;
+}
+
+/* barras pausa */
+#musicBtn::before { left: 17px; }
+#musicBtn::after  { right: 17px; }
+
+/* estado PLAY (triángulo elegante) */
+#musicBtn.play::before {
+  width: 0;
+  height: 0;
+  border-left: 14px solid rgba(255,255,255,.9);
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  background: none;
+  left: 16px;
+}
+
+#musicBtn.play::after {
+  display: none;
 }
 
 #musicBtn:hover {
@@ -1337,7 +1376,7 @@ html, body {
 
 <!-- BOTÓN SUBIR ARRIBA -->
 <button id="toTopBtn">↑</button>
-<button id="musicBtn">▐▐</button>
+<button id="musicBtn"></button>
 
  <script>
    console.log("JS cargado");
@@ -1693,6 +1732,10 @@ openBtn.addEventListener("click", () => {
   /* reproducir UNA sola vez */
   audio.play().catch(()=>{});
 
+  musicBtn.classList.add("show");
+
+  musicBtn.classList.remove("play");
+
   setTimeout(() => {
     nombre.classList.add("show");
   }, 300);
@@ -1705,14 +1748,15 @@ openBtn.addEventListener("click", () => {
 musicBtn.addEventListener("click", () => {
 
   if (audio.paused) {
-    audio.play().catch(()=>{});
-    musicBtn.textContent = "⏸";
+    audio.play();
+    musicBtn.classList.remove("play"); // muestra pausa
   } else {
     audio.pause();
-    musicBtn.textContent = "▶";
+    musicBtn.classList.add("play"); // muestra play
   }
 
 });
+
 </script>
 
 
