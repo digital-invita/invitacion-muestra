@@ -1067,6 +1067,12 @@ html, body {
   cursor: pointer;
   padding: 0;
 }
+
+.wax-btn {
+  position: relative;
+  overflow: hidden; /* 👈 esto evita que el brillo se salga */
+}
+  
 .wax-btn::after {
   content: "";
   position: absolute;
@@ -1074,14 +1080,16 @@ html, body {
   border-radius: 50%;
   background: linear-gradient(
     120deg,
-    transparent 40%,
+    transparent 42%,
     rgba(255,255,255,.35) 50%,
-    transparent 60%
+    transparent 58%
   );
   transform: translateX(-140%);
-  opacity: .0;
   pointer-events: none;
+
+  animation: waxAutoShine 12s linear infinite;
 }
+
 
 /* imagen del sello */
 .wax-btn img {
@@ -1109,16 +1117,34 @@ html, body {
     drop-shadow(0 10px 14px rgba(0,0,0,.35));
 }
 
-/* ACTIVAR BRILLO AL PASAR EL MOUSE */
-.wax-btn:hover::after {
-  animation: waxShine 1.2s ease forwards;
-  opacity: 1;
-}
+
 
 /* ANIMACIÓN DEL BRILLO */
 @keyframes waxShine {
   from { transform: translateX(-140%); }
   to   { transform: translateX(140%); }
+}
+@keyframes waxAutoShine {
+
+  0% {
+    transform: translateX(-140%);
+    opacity: 0;
+  }
+
+  4% {
+    opacity: 1;
+  }
+
+  10% {
+    transform: translateX(140%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(140%);
+    opacity: 0;
+  }
+
 }
 
 /* click */
