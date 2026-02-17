@@ -1629,6 +1629,21 @@ function showImage(index){
 
 }
 
+galleryImages.forEach((img, index) => {
+
+  img.addEventListener('click', () => {
+
+    currentIndex = index;
+
+    renderThumbs();
+    showImage(index);
+
+    lightbox.classList.add('show');
+    document.body.style.overflow = 'hidden';
+
+  });
+
+});
 
 function closeGallery() {
   lightboxImg.style.transform = "scale(.92)";
