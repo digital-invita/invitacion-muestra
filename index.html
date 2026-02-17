@@ -1206,42 +1206,40 @@ html, body {
   align-items:center;
   gap:18px;
 }
+.lightbox-main{
+  height:75vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
 /* contenedor miniaturas */
 #thumbs{
   display:flex;
-  gap:10px;
-  overflow-x:auto;
+  gap:12px;
+  overflow-x:auto;      /* 👈 scroll horizontal */
   padding:10px 6px;
   max-width:90vw;
+  margin-top:20px;
+  justify-content:flex-start; /* 👈 evita reacomodo */
+  flex-wrap:nowrap;           /* 👈 CLAVE */
 }
+
 
 /* ocultar scrollbar */
 #thumbs::-webkit-scrollbar{
   display:none;
 }
 
-/* contenedor */
-#thumbs{
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-top:20px;
-}
 
 /* cada miniatura */
 #thumbs img{
-  width:70px;
-  aspect-ratio:1 / 1; /* 🔥 evita que cambien tamaño */
+  width:60px;
+  height:60px;   /* mejor que aspect-ratio en este caso */
   object-fit:cover;
-  border-radius:14px;
-  cursor:pointer;
-  opacity:.6;
-  transition:all .3s ease;
-  border:2px solid transparent;
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  border-radius:12px;
 }
+
 
 /* efecto hover */
 #thumbs img:hover{
