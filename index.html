@@ -1070,21 +1070,27 @@ html, body {
 
 .wax-btn {
   position: relative;
-  overflow: hidden; /* 👈 esto evita que el brillo se salga */
+  overflow: hidden;
+  border-radius: 50%;
 }
+
   
 .wax-btn::after {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: 50%;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+
   background: linear-gradient(
     120deg,
-    transparent 42%,
+    transparent 46%,
     rgba(255,255,255,.35) 50%,
-    transparent 58%
+    transparent 54%
   );
-  transform: translateX(-140%);
+
+  transform: translateX(-100%);
   pointer-events: none;
 
   animation: waxAutoShine 12s linear infinite;
@@ -1127,7 +1133,7 @@ html, body {
 @keyframes waxAutoShine {
 
   0% {
-    transform: translateX(-140%);
+    transform: translateX(-100%);
     opacity: 0;
   }
 
@@ -1136,16 +1142,17 @@ html, body {
   }
 
   10% {
-    transform: translateX(140%);
+    transform: translateX(100%);
     opacity: 0;
   }
 
   100% {
-    transform: translateX(140%);
+    transform: translateX(100%);
     opacity: 0;
   }
 
 }
+
 
 /* click */
 .wax-btn:active img {
