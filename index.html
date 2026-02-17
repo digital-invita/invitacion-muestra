@@ -1434,7 +1434,7 @@ html, body {
 
   <div class="lightbox-content">
 
-    <img id="lightboxImg">
+    <img id="lightbox-img">
 
     <div id="thumbs"></div>
 
@@ -1514,66 +1514,55 @@ const toTopBtn = document.getElementById('toTopBtn');
 // LIGHTBOX
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
-const thumbs = document.getElementById("thumbs");
-let currentImages = [];
-let currentIndex = 0;
-
-const closeLightbox = document.getElementById('closeLightbox');
-const thumbsContainer = document.getElementById('thumbs');
+const thumbs = document.getElementById('thumbs');
 const galleryImages = document.querySelectorAll('.gallery img');
 
 let currentIndex = 0;
-const galleryImages = document.querySelectorAll(".gallery img");
 
+// Abrir lightbox
 galleryImages.forEach((img, index) => {
-
-  img.addEventListener("click", () => {
-
-    currentImages = [...galleryImages];
+  img.addEventListener('click', () => {
     currentIndex = index;
-
     openLightbox();
-
   });
-
 });
-function openLightbox(){
 
-  lightbox.classList.add("show");
+function openLightbox() {
+  lightbox.classList.add('show');
   updateLightbox();
   renderThumbs();
-
+  document.body.style.overflow = 'hidden';
 }
-function updateLightbox(){
 
-  lightboxImg.src = currentImages[currentIndex].src;
+// Cerrar lightbox
+document.getElementById('closeLightbox').addEventListener('click', () => {
+  lightbox.classList.remove('show');
+  document.body.style.overflow = '';
+});
 
-  document.querySelectorAll("#thumbs img").forEach((t,i)=>{
-    t.classList.toggle("active", i === currentIndex);
+// Actualizar imagen grande
+function updateLightbox() {
+  lightboxImg.src = galleryImages[currentIndex].src;
+  document.querySelectorAll('#thumbs img').forEach((t, i) => {
+    t.classList.toggle('active', i === currentIndex);
   });
-
 }
-function renderThumbs(){
 
-  thumbs.innerHTML = "";
-
-  currentImages.forEach((img,i)=>{
-
-    const t = document.createElement("img");
+// Renderizar miniaturas
+function renderThumbs() {
+  thumbs.innerHTML = '';
+  galleryImages.forEach((img, i) => {
+    const t = document.createElement('img');
     t.src = img.src;
-
-    if(i === currentIndex) t.classList.add("active");
-
-    t.addEventListener("click",()=>{
+    if (i === currentIndex) t.classList.add('active');
+    t.addEventListener('click', () => {
       currentIndex = i;
       updateLightbox();
     });
-
     thumbs.appendChild(t);
-
   });
-
 }
+
 
 
   thumb.addEventListener('click', () => {
