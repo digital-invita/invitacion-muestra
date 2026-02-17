@@ -1630,20 +1630,6 @@ function showImage(index){
 }
 
 
-    // Animación suave tipo iPhone
-    lightboxImg.style.transform = "scale(.94)";
-    lightboxImg.style.opacity = "0";
-
-    requestAnimationFrame(() => {
-      lightboxImg.style.transform = "scale(1)";
-      lightboxImg.style.opacity = "1";
-    });
-
-  });
-});
-
-
-
 function closeGallery() {
   lightboxImg.style.transform = "scale(.92)";
   lightboxImg.style.opacity = "0";
