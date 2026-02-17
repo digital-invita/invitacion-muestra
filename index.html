@@ -612,25 +612,27 @@ border-bottom: 7px solid transparent;
   backdrop-filter: blur(8px);
 
   display: none;
-
-  
   justify-content: center;
   align-items: center;
+
   z-index: 10000;
-  padding: 20px;
   animation: fadeIn .3s ease;
 }
 #lightbox.show {
   display: flex;
 }
+
   
 #lightbox img {
-  max-width: 92%;
-  max-height: 85vh;
+  max-width: 90vw;
+  max-height: 75vh; /* 🔥 bajamos un poco */
+  object-fit: contain;
+
   border-radius: 14px;
   box-shadow: 0 25px 60px rgba(0,0,0,.6);
   transition: transform .25s ease, opacity .25s ease;
 }
+
 
 
 /* Animaciones */
@@ -1224,15 +1226,28 @@ html, body {
 
 /* contenedor miniaturas */
 #thumbs {
-  height: 80px;              /* 🔒 altura fija */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
   display: flex;
-  gap: 10px;
+  gap: 8px;
+  padding: 8px 12px;
+
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(12px);
+
+  border-radius: 18px;
+
   overflow-x: auto;
-  align-items: center;
+  max-width: 92vw;
+
+  z-index: 10001;
+  flex-wrap: nowrap;
   justify-content: center;
-  flex-shrink: 0;            /* 🔥 no se reduce */
-  padding: 8px 0;
 }
+
 
 
 
@@ -1244,13 +1259,11 @@ html, body {
 
 /* cada miniatura */
 #thumbs img {
-  width: 45px;
-  height: 45px;
+  width: 42px;
+  height: 42px;
   object-fit: cover;
-  border-radius: 10px;
-  flex-shrink: 0;
-  opacity: .6;
-  transition: all .3s ease;
+  border-radius: 8px;
+  flex-shrink: 0; /* 🔒 evita que se aplasten */
 }
 
 #thumbs img.active {
