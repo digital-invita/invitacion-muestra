@@ -458,24 +458,26 @@ backdrop-filter: blur(18px);
 
 #audio { display:none; }
   /* ===== BOTÓN VOLVER ARRIBA ESTILO APPLE ===== */
-#toTopBtn {
+#musicBtn {
   position: fixed;
   bottom: 20px;
-  right: 18px;
+  left: 18px;              /* lado izquierdo */
   width: 46px;
   height: 46px;
   border-radius: 50%;
   border: none;
+
   background: rgba(255,255,255,.18);
   backdrop-filter: blur(12px);
-  color: #fff;
-  font-size: 20px;
-  font-weight: bold;
+  -webkit-backdrop-filter: blur(12px);
+
   cursor: pointer;
   box-shadow: 0 10px 25px rgba(0,0,0,.4);
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(20px) scale(.9);
+
+  display: none;   
+  align-items: center;
+  justify-content: center;
+
   transition: all .3s ease;
   z-index: 9999;
 }
@@ -1739,7 +1741,7 @@ openBtn.addEventListener("click", () => {
   /* reproducir UNA sola vez */
   audio.play().catch(()=>{});
 
-  
+  musicBtn.style.display = "flex";   // ← mostrar botón aquí
 
   musicBtn.classList.remove("play");
 
@@ -1748,6 +1750,7 @@ openBtn.addEventListener("click", () => {
   }, 300);
 
 });
+
 
 
 /* ===== BOTÓN PAUSA / CONTINUAR ===== */
