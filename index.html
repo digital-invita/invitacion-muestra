@@ -624,13 +624,29 @@ border-bottom: 7px solid transparent;
   display: flex;
 }
   
-#lightbox img {
-  max-width: 92%;
-  max-height: 85vh;
-  border-radius: 14px;
-  box-shadow: 0 25px 60px rgba(0,0,0,.6);
-  transition: transform .25s ease, opacity .25s ease;
+#lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  backdrop-filter: blur(8px);
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 10000;
 }
+
+#lightbox.show {
+  display: flex;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
 
 
 /* Animaciones */
@@ -1203,10 +1219,37 @@ html, body {
 /* ===== MINIATURAS LIGHTBOX ===== */
 
 .lightbox-content {
-  width: min(92vw, 480px);
-  height: 90vh;              /* 🔥 altura fija total */
+  width: min(92vw, 520px);
+  height: 90vh;
+
   display: flex;
-  flex-direction: column;    /* 🔥 apila vertical */
+  flex-direction: column;
+
+  position: relative;
+}
+
+/* CONTENEDOR IMAGEN PRINCIPAL */
+.lightbox-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+/* MINIATURAS FIJAS ABAJO */
+#thumbs {
+  height: 90px;
+  flex-shrink: 0;
+
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+  overflow-x: auto;
+  padding: 10px 0;
 }
 
 .lightbox-main {
@@ -1479,13 +1522,16 @@ html, body {
 
   <button id="closeLightbox">×</button>
 
-  <div class="lightbox-content">
+<div class="lightbox-content">
 
-    <img id="lightbox-img">
-
-    <div id="thumbs"></div>
-
+  <div class="lightbox-main">
+    <img id="lightbox-img" class="lightbox-img">
   </div>
+
+  <div id="thumbs"></div>
+
+</div>
+
 
 </div>
 
