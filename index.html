@@ -505,16 +505,20 @@ backdrop-filter: blur(18px);
 
 /* ===== BOTÓN MÚSICA (CLON DE VOLVER ARRIBA) ===== */
 #musicBtn {
-  
+  position: fixed;
   bottom: 20px;
   left: 18px; /* lado contrario */
+  right: auto;
+
+  
   width: 46px;
   height: 46px;
 
    display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+  
+  
   
   border-radius: 50%;
   border: none;
@@ -525,7 +529,7 @@ backdrop-filter: blur(18px);
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 10px 25px rgba(0,0,0,.4);
-    opacity: 0;              /* oculto al inicio */
+  opacity: 0;              /* oculto al inicio */
   pointer-events: none;    /* no clickeable */
   transform: scale(.8);
   transition: all .3s ease;
