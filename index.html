@@ -626,8 +626,7 @@ border-bottom: 7px solid transparent;
   
 #lightbox img {
   max-width: 92%;
-  max-height: 85svh;
-
+  max-height: 85vh;
   border-radius: 14px;
   box-shadow: 0 25px 60px rgba(0,0,0,.6);
   transition: transform .25s ease, opacity .25s ease;
@@ -1573,6 +1572,20 @@ const galleryImages = document.querySelectorAll('.gallery img');
 
 let currentIndex = 0;
 
+// Abrir lightbox
+galleryImages.forEach((img, index) => {
+  img.addEventListener('click', () => {
+    currentIndex = index;
+    openLightbox();
+  });
+});
+
+function openLightbox() {
+  lightbox.classList.add('show');
+  updateLightbox();
+  renderThumbs();
+  document.body.style.overflow = 'hidden';
+}
 
 // Cerrar lightbox
 document.getElementById('closeLightbox').addEventListener('click', () => {
@@ -1606,44 +1619,38 @@ function renderThumbs() {
 
 
   
-function showImage(index){
-
+   function showImage(index){
   currentIndex = index;
 
-  // Fade suave sin reflow raro
-  lightboxImg.style.opacity = "0";
+  lightboxImg.src = galleryImages[index].src;
 
-  setTimeout(() => {
-    lightboxImg.src = galleryImages[index].src;
-
-    document.querySelectorAll('#thumbs img').forEach(t => 
-      t.classList.remove('active')
-    );
-
-    document.querySelectorAll('#thumbs img')[index]
-      .classList.add('active');
-
-    lightboxImg.style.opacity = "1";
-
-  }, 120);
-
+  document.querySelectorAll('#thumbs img').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#thumbs img')[index].classList.add('active');
 }
 
-galleryImages.forEach((img, index) => {
 
+   
+
+document.querySelectorAll('.gallery img').forEach((img, index) => {
   img.addEventListener('click', () => {
 
-    currentIndex = index;
-
-    renderThumbs();
-    showImage(index);
-
     lightbox.classList.add('show');
+    showImage(index);
     document.body.style.overflow = 'hidden';
 
-  });
+    // efecto iPhone
+    lightboxImg.style.transform = "scale(.92)";
+    lightboxImg.style.opacity = "0";
 
+    setTimeout(() => {
+      lightboxImg.style.transform = "scale(1)";
+      lightboxImg.style.opacity = "1";
+    }, 30);
+
+  });
 });
+
+
 
 function closeGallery() {
   lightboxImg.style.transform = "scale(.92)";
