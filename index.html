@@ -525,17 +525,13 @@ backdrop-filter: blur(18px);
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 10px 25px rgba(0,0,0,.4);
-    opacity: 0;              /* oculto al inicio */
-  pointer-events: none;    /* no clickeable */
-  transform: scale(.8);
-  transition: all .3s ease;
-  z-index: 9999;
-}
-  #musicBtn.show {
   opacity: 1;
   pointer-events: auto;
-  transform: scale(1);
+  transform: none;
+
+  z-index: 9999;
 }
+ 
 
 /* ICONO PAUSA / PLAY PREMIUM */
 /* ===== ICONO BASE (PAUSA) ===== */
@@ -1743,7 +1739,7 @@ openBtn.addEventListener("click", () => {
   /* reproducir UNA sola vez */
   audio.play().catch(()=>{});
 
-  musicBtn.classList.add("show");
+  
 
   musicBtn.classList.remove("play");
 
