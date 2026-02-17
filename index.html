@@ -599,7 +599,7 @@ border-bottom: 7px solid transparent;
 /* ===== LIGHTBOX POPUP GALERÍA ===== */
 
 #lightbox {
-  
+  position: fixed;
   inset: 0;
   background: rgba(0,0,0,.85);
   backdrop-filter: blur(8px);
@@ -610,14 +610,18 @@ border-bottom: 7px solid transparent;
   padding: 20px;
   animation: fadeIn .3s ease;
 }
-
-#lightbox img {
-  max-width: 95%;
-  max-height: 90vh;
-  border-radius: 18px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.7);
-  animation: zoomIn .35s ease;
+#lightbox.show {
+  display: flex;
 }
+  
+#lightbox img {
+  max-width: 92%;
+  max-height: 85vh;
+  border-radius: 14px;
+  box-shadow: 0 25px 60px rgba(0,0,0,.6);
+  transition: transform .25s ease, opacity .25s ease;
+}
+
 
 /* Animaciones */
 
@@ -1462,47 +1466,43 @@ const closeLightbox = document.getElementById('closeLightbox');
 
 document.querySelectorAll('.gallery img').forEach(img => {
   img.addEventListener('click', () => {
-    lightbox.style.display = 'flex';
+
+    lightbox.classList.add('show');
     lightboxImg.src = img.src;
+
+    // efecto iPhone
+    lightboxImg.style.transform = "scale(.92)";
+    lightboxImg.style.opacity = "0";
+
+    setTimeout(() => {
+      lightboxImg.style.transform = "scale(1)";
+      lightboxImg.style.opacity = "1";
+    }, 30);
+
     document.body.style.overflow = 'hidden';
   });
 });
 
-closeLightbox.addEventListener('click', () => {
-  lightbox.style.display = 'none';
-  document.body.style.overflow = 'auto';
-});
 
-lightbox.addEventListener('click', e => {
-  if (e.target === lightbox) {
-    lightbox.style.display = 'none';
+function closeGallery() {
+  lightboxImg.style.transform = "scale(.92)";
+  lightboxImg.style.opacity = "0";
+
+  setTimeout(() => {
+    lightbox.classList.remove('show');
     document.body.style.overflow = 'auto';
-  }
-});
-
-// 👉 BOTÓN ABRIR INVITACIÓN (ESTE YA FUNCIONA)
-btn.addEventListener('click', () => {
-  document.getElementById('overlay').style.display = 'none';
-  document.body.style.overflow = 'auto';
-
-  resize();        // 👈 recalcula canvas
-  animate();       // 👈 inicia partículas
-
-  document.getElementById('nombre').classList.add('show');
-  document.querySelectorAll('.section').forEach(sec => sec.classList.add('show'));
-
-  const audio = document.getElementById('audio');
-if (audio) {
-  audio.volume = 0.4;  // 40% de volumen (elegante)
-  audio.play();
+  }, 180);
 }
 
+closeLightbox.addEventListener('click', closeGallery);
+
+
+lightbox.addEventListener('click', e => {
+  if (e.target === lightbox) closeGallery();
 });
 
- 
 
 
- 
   window.addEventListener('scroll', () => {
 
   const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
