@@ -298,16 +298,18 @@ backdrop-filter: blur(18px);
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
+
 .gallery .big { grid-column: span 2; }
 
- .gallery img {
+.gallery img {
   width: 100%;
-  aspect-ratio: 1 / 1;   /* 👈 todas cuadradas */
-  object-fit: cover;     /* 👈 llena sin deformar */
+  height: auto;           /* 🔥 mantiene proporción real */
+  display: block;
   border-radius: 16px;
   cursor: pointer;
   transition: transform .5s ease, box-shadow .5s ease;
 }
+
 
 .gallery img:hover {
   transform: scale(1.05);
