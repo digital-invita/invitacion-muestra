@@ -2071,6 +2071,8 @@ openBtn.addEventListener("click", () => {
 
 });
 
+<script>
+
 // Animación de secciones al hacer scroll
 const sections = document.querySelectorAll(".section");
 
@@ -2086,12 +2088,15 @@ function revealSections() {
   });
 }
 
-<script>
 window.addEventListener("scroll", revealSections);
 revealSections();
+
 </script>
 
+
+<!-- 👇 ESTE ES EL QUE TE FALTA -->
 <script src="config-default.js"></script>
+
 
 <script>
 function cargarConfig() {
@@ -2126,7 +2131,7 @@ function cargarConfig() {
     audio.src = CONFIG.musica;
   }
 
-  // Secciones (con protección segura)
+  // Secciones
   if (CONFIG.secciones && !CONFIG.secciones.galeria) {
     const galeria = document.getElementById("galeriaSection");
     if (galeria) galeria.style.display = "none";
@@ -2141,7 +2146,5 @@ function cargarConfig() {
 document.addEventListener("DOMContentLoaded", cargarConfig);
 </script>
 
-
-</script>
 </body>
 </html>
