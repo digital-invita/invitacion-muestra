@@ -1729,31 +1729,42 @@ closeLightbox.addEventListener('click', closeGallery);
 
 
 lightbox.addEventListener('click', e => {
+  if (isSwiping) return; // evita doble ejecución
   if (e.target === lightbox) closeGallery();
 });
 
 
 
 
-// --- SWIPE LIMPIO ---
+
+// --- SWIPE CORREGIDO ---
 let startX = 0;
+let isSwiping = false;
 
 lightbox.addEventListener("touchstart", function(e) {
   startX = e.touches[0].clientX;
+  isSwiping = true;
 });
 
 lightbox.addEventListener("touchend", function(e) {
+  if (!isSwiping) return;
+
   let endX = e.changedTouches[0].clientX;
   let diff = startX - endX;
 
-  if (Math.abs(diff) < 50) return;
-
-  if (diff > 0) {
-    nextImage();
-  } else {
-    prevImage();
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) {
+      nextImage();
+    } else {
+      prevImage();
+    }
   }
+
+  setTimeout(() => {
+    isSwiping = false;
+  }, 50);
 });
+
 
 
 
