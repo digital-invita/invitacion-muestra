@@ -2168,6 +2168,93 @@ function cargarConfig() {
 
 document.addEventListener("DOMContentLoaded", cargarConfig);
 </script>
+<script>
+/* =========================
+   OVERLAY · ABRIR INVITACIÓN
+========================= */
+const overlay = document.getElementById("overlay");
+
+document.querySelectorAll(".wax-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    overlay.style.opacity = "0";
+    setTimeout(() => overlay.style.display = "none", 800);
+
+    // activar animaciones al entrar
+    document.querySelectorAll(".nombre, .section").forEach(el =>
+      el.classList.add("show")
+    );
+
+    // mostrar botón música
+    musicBtn.classList.add("show");
+  });
+});
+
+
+/* =========================
+   BOTÓN MÚSICA
+========================= */
+const musicBtn = document.getElementById("musicBtn");
+const audio = document.getElementById("audio");
+
+if (musicBtn && audio) {
+  musicBtn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      musicBtn.classList.remove("play");
+    } else {
+      audio.pause();
+      musicBtn.classList.add("play");
+    }
+  });
+}
+
+
+/* =========================
+   BOTÓN VOLVER ARRIBA
+========================= */
+const toTopBtn = document.getElementById("toTopBtn");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    toTopBtn.classList.add("show");
+  } else {
+    toTopBtn.classList.remove("show");
+  }
+});
+
+if (toTopBtn) {
+  toTopBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+
+/* =========================
+   LIGHTBOX GALERÍA
+========================= */
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.querySelector(".lightbox-img");
+const closeLightbox = document.getElementById("closeLightbox");
+
+document.querySelectorAll(".gallery img").forEach(img => {
+  img.addEventListener("click", () => {
+    lightbox.classList.add("show");
+    lightboxImg.src = img.src;
+  });
+});
+
+if (closeLightbox) {
+  closeLightbox.addEventListener("click", () => {
+    lightbox.classList.remove("show");
+  });
+}
+
+lightbox?.addEventListener("click", e => {
+  if (e.target === lightbox) {
+    lightbox.classList.remove("show");
+  }
+});
+</script>
 
 </body>
 </html>
