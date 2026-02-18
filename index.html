@@ -1347,7 +1347,7 @@ body.locked {
 
 
 
-<section id="heroSection" class="hero">
+<section class="hero">
   <img src="FPrincipal.jpg">
   <div class="hero-content">
     <div class="mis15">Mis 15 años</div>
@@ -1360,7 +1360,7 @@ body.locked {
 
 <div class="sep"></div>
 
-<section id="historiaSection" class="section">
+<section class="section">
   <h2>Mi historia</h2>
   <p>Hoy celebro no solo mis 15 años, sino cada sonrisa que iluminó mi camino, cada aprendizaje que fortaleció mi corazón y cada sueño que, con amor y esperanza, me ha traído hasta este momento tan especial de mi vida.</p>
   <div class="photo"><img src="FHistoria.jpg"></div>
@@ -1369,7 +1369,7 @@ body.locked {
 
 <div class="sep"></div>
 
-<section id="papasSection" class="section">
+<section class="section">
   <h2>Mis papás</h2>
   <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">
     María González<br>&<br>Carlos Montes
@@ -1378,7 +1378,7 @@ body.locked {
 
 <div class="sep"></div>
 
-<section id="padrinosSection" class="section">
+<section class="section">
   <h2>Mis padrinos</h2>
   <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">
     Laura Pérez<br>&<br>José Hernández
@@ -1387,7 +1387,7 @@ body.locked {
 
 <div class="sep"></div>
 
-<section id="ceremoniaSection" class="section">
+<section class="section">
   <h2>Ceremonia</h2>
   <p>18:00 hrs</p>
   <p>Parroquia Ejemplo</p>
@@ -1401,7 +1401,7 @@ body.locked {
 
 
   
-<section id="recepcionSection" class="section">
+<section class="section">
   <h2>Recepción</h2>
   <p>20:00 hrs</p>
   <p>Salón Ejemplo</p>
@@ -1414,13 +1414,13 @@ body.locked {
 <div class="sep"></div>
 
   
-<section id="contadorSection" class="section">
+<section class="section" id="countdown-section">
   <h2>Faltan pocos días para este gran día</h2>
   <div id="countdown"></div>
 </section>
 <div class="sep"></div>
   
-<section id="galeriaSection" class="section">
+<section class="section">
   <h2>Galería</h2>
   <div class="gallery">
     <img src="G1.jpg">
@@ -1435,7 +1435,7 @@ body.locked {
 <div class="sep"></div>
 
 
-  <section id="vestimentaSection" class="section">
+  <section class="section">
   <h2>Código de vestimenta</h2>
   <p>Divinas y guapos</p>
 
@@ -1445,7 +1445,7 @@ body.locked {
 </section>
 <div class="sep"></div>
   
-<section id="confirmacionSection" class="section">
+<section class="section">
   <h2>Confirma tu presencia</h2>
 
   <div class="rsvp-card">
@@ -1479,7 +1479,7 @@ body.locked {
 <div class="sep"></div>
   
   
-<section id="regalosSection" class="section">
+<section class="section">
   <h2>Mesa de regalos</h2>
   <p>Liverpool – Evento #123456</p>
   <p>Transferencia: 1234 5678 9012</p>
@@ -1491,7 +1491,7 @@ body.locked {
 
 
 
-<section id="agendaSection" class="section">
+<section class="section">
   <h2>Agenda este momento</h2>
 
   <a class="btn" href="#" onclick="addToCalendar()">Agregar al calendario</a>
@@ -1547,7 +1547,6 @@ body.locked {
 
  <script>
    console.log("JS cargado");
-  document.addEventListener("DOMContentLoaded", function() {
 
 // 1. REINICIO DE SCROLL
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -1556,25 +1555,8 @@ if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
  let TOTAL_PARTICLES = 160;
 
-document.addEventListener("DOMContentLoaded", function() {
-
-  let TOTAL_PARTICLES = 160;
-
-  const canvas = document.getElementById('particles');
-  if (!canvas) return;
-
-  const ctx = canvas.getContext('2d');
-
-  let w, h;
-  let particles = [];
-
-  // aquí TODO tu código de partículas completo
-  // resizeCanvas()
-  // createParticles()
-  // animate()
-  // etc
-
-});
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
 
 
 
@@ -2034,13 +2016,13 @@ pero te deseo un día maravilloso y lleno de felicidad 💐`;
 
   }
 
-  const phone = window.telefonoConfirmacion || "525550591264";
+  const phone = "525550591264";
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
   window.open(url, "_blank");
 }
 
-});
+
 </script>
 
 <script>
@@ -2053,48 +2035,41 @@ document.addEventListener("DOMContentLoaded", function() {
   const nombre = document.getElementById("nombre");
   const musicBtn = document.getElementById("musicBtn");
 
-  if (openBtn) {
-    openBtn.addEventListener("click", () => {
+// ===== ABRIR INVITACIÓN =====
+openBtn.addEventListener("click", () => {
 
-      if (overlay) {
-        overlay.style.opacity = "0";
+  overlay.style.opacity = "0";
 
-        setTimeout(() => {
-          overlay.style.display = "none";
-          document.body.classList.remove("locked");
-        }, 800);
-      }
+  setTimeout(() => {
+    overlay.style.display = "none";
+    document.body.classList.remove("locked");
+  }, 800);
 
-      if (musicBtn) musicBtn.classList.add("show");
+  // Mostrar botón música
+  musicBtn.classList.add("show");
 
-      if (audio) {
-        audio.play().catch(() => {});
-      }
+  // Reproducir música
+  audio.play().catch(() => {});
 
-      if (nombre) {
-        nombre.classList.add("show");
-      }
-
-    });
-  }
-
-  if (musicBtn && audio) {
-    musicBtn.addEventListener("click", () => {
-      if (audio.paused) {
-        audio.play();
-        musicBtn.classList.remove("play");
-      } else {
-        audio.pause();
-        musicBtn.classList.add("play");
-      }
-    });
-  }
+  // Animar nombre
+  nombre.classList.add("show");
 
 });
-</script>
 
+  /* ===== BOTÓN PAUSA / CONTINUAR ===== */
+  musicBtn.addEventListener("click", () => {
 
-<script>
+    if (audio.paused) {
+      audio.play();
+      musicBtn.classList.remove("play");
+    } else {
+      audio.pause();
+      musicBtn.classList.add("play");
+    }
+
+  });
+
+});
 
 // Animación de secciones al hacer scroll
 const sections = document.querySelectorAll(".section");
@@ -2114,147 +2089,7 @@ function revealSections() {
 window.addEventListener("scroll", revealSections);
 revealSections();
 
+
 </script>
-
-
-<!-- 👇 ESTE ES EL QUE TE FALTA -->
-<script src="config-default.js"></script>
-
-
-<script>
-function cargarConfig() {
-
-  const guardado = localStorage.getItem("invitacionConfig");
-
-  const CONFIG = guardado 
-    ? JSON.parse(guardado)
-    : DEFAULT_CONFIG;
-
-  // Nombre
-  const nombreEl = document.getElementById("nombre");
-  if (nombreEl) nombreEl.textContent = CONFIG.nombre;
-
-  // Fecha
-  const fechaEl = document.getElementById("fecha");
-  if (fechaEl) fechaEl.textContent = CONFIG.fecha;
-
-  // Color principal
-  if (CONFIG.colorPrincipal) {
-    const gradient = `linear-gradient(135deg, ${CONFIG.colorPrincipal}, #000000)`;
-    document.documentElement.style
-      .setProperty('--bg-color', gradient);
-  }
-
-  // Teléfono
-  window.telefonoConfirmacion = CONFIG.telefono;
-
-  // Música
-  const audio = document.getElementById("audio");
-  if (audio && CONFIG.musica) {
-    audio.src = CONFIG.musica;
-  }
-
-  // Secciones
-  if (CONFIG.secciones && !CONFIG.secciones.galeria) {
-    const galeria = document.getElementById("galeriaSection");
-    if (galeria) galeria.style.display = "none";
-  }
-
-  if (CONFIG.secciones && !CONFIG.secciones.confirmacion) {
-    const confirm = document.getElementById("confirmacionSection");
-    if (confirm) confirm.style.display = "none";
-  }
-}
-
-document.addEventListener("DOMContentLoaded", cargarConfig);
-</script>
-<script>
-/* =========================
-   OVERLAY · ABRIR INVITACIÓN
-========================= */
-const overlay = document.getElementById("overlay");
-
-document.querySelectorAll(".wax-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    overlay.style.opacity = "0";
-    setTimeout(() => overlay.style.display = "none", 800);
-
-    // activar animaciones al entrar
-    document.querySelectorAll(".nombre, .section").forEach(el =>
-      el.classList.add("show")
-    );
-
-    // mostrar botón música
-    musicBtn.classList.add("show");
-  });
-});
-
-
-/* =========================
-   BOTÓN MÚSICA
-========================= */
-const musicBtn = document.getElementById("musicBtn");
-const audio = document.getElementById("audio");
-
-if (musicBtn && audio) {
-  musicBtn.addEventListener("click", () => {
-    if (audio.paused) {
-      audio.play();
-      musicBtn.classList.remove("play");
-    } else {
-      audio.pause();
-      musicBtn.classList.add("play");
-    }
-  });
-}
-
-
-/* =========================
-   BOTÓN VOLVER ARRIBA
-========================= */
-const toTopBtn = document.getElementById("toTopBtn");
-
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 300) {
-    toTopBtn.classList.add("show");
-  } else {
-    toTopBtn.classList.remove("show");
-  }
-});
-
-if (toTopBtn) {
-  toTopBtn.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-}
-
-
-/* =========================
-   LIGHTBOX GALERÍA
-========================= */
-const lightbox = document.getElementById("lightbox");
-const lightboxImg = document.querySelector(".lightbox-img");
-const closeLightbox = document.getElementById("closeLightbox");
-
-document.querySelectorAll(".gallery img").forEach(img => {
-  img.addEventListener("click", () => {
-    lightbox.classList.add("show");
-    lightboxImg.src = img.src;
-  });
-});
-
-if (closeLightbox) {
-  closeLightbox.addEventListener("click", () => {
-    lightbox.classList.remove("show");
-  });
-}
-
-lightbox?.addEventListener("click", e => {
-  if (e.target === lightbox) {
-    lightbox.classList.remove("show");
-  }
-});
-</script>
-
 </body>
 </html>
