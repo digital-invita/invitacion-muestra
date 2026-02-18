@@ -2135,6 +2135,34 @@ openBtn.addEventListener('click', () => {
   document.getElementById('musicBtn').classList.add('show');
 });
 
+// BOTÓN ABRIR INVITACIÓN
+const overlay = document.getElementById('overlay');
+const openBtn = document.getElementById('openBtn');
+const audio = document.getElementById('audio');
+const nombre = document.getElementById('nombre');
+const sections = document.querySelectorAll('.section');
+
+openBtn.addEventListener('click', () => {
+  // Oculta overlay con transición
+  overlay.style.opacity = '0';
+  overlay.style.pointerEvents = 'none';
+  setTimeout(() => overlay.style.display = 'none', 800);
+
+  // Reproducir música
+  audio.play().catch(() => console.log("Autoplay bloqueado"));
+
+  // Animar nombre
+  nombre.classList.add('show');
+
+  // Mostrar secciones progresivamente
+  sections.forEach((sec, i) => {
+    setTimeout(() => sec.classList.add('show'), 400 + i * 300);
+  });
+
+  // Activar botón música
+  const musicBtn = document.getElementById('musicBtn');
+  musicBtn.classList.add('show');
+});
 
     
 </script>
