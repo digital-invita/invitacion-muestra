@@ -1329,7 +1329,9 @@ html, body {
   touch-action: pan-y;
 }
 
-
+body.locked {
+  overflow: hidden;
+}
 </style>
 </head>
 
@@ -2033,30 +2035,6 @@ const nombre = document.getElementById("nombre");
 const musicBtn = document.getElementById("musicBtn");
 
 
-/* ===== ABRIR INVITACIÓN (mantiene autoplay) ===== */
-openBtn.addEventListener("click", () => {
-  // 1️⃣ Oculta el overlay
-  overlay.style.display = "none";
-
-  // 2️⃣ Desbloquea scroll
-  document.body.style.overflow = "auto";
-  document.documentElement.style.overflow = "auto";
-
-  // 3️⃣ Inicia partículas
-  resize();
-  animate();
-
-  // 4️⃣ Reproduce música
-  audio.play().catch(() => {});
-
-  // 5️⃣ Muestra botón de música y contenido
-  musicBtn.classList.add("show");
-  musicBtn.classList.remove("play");
-  nombre.classList.add("show");
-  document.querySelectorAll('.section').forEach(sec => sec.classList.add('show'));
-});
-
-
 
 /* ===== BOTÓN PAUSA / CONTINUAR ===== */
 musicBtn.addEventListener("click", () => {
@@ -2106,7 +2084,28 @@ musicBtn.addEventListener("click", () => {
   }
 
 });
+<script>
+const openBtn = document.getElementById("openBtn");
+const overlay = document.getElementById("overlay");
 
+openBtn.addEventListener("click", () => {
+
+  // animación de salida
+  overlay.style.opacity = "0";
+  overlay.style.pointerEvents = "none";
+
+  // liberar scroll
+  document.body.style.overflow = "auto";
+
+  // eliminar overlay después de animación
+  setTimeout(() => {
+    overlay.style.display = "none";
+  }, 800);
+
+});
+</script>
+
+<body class="locked">
     
 </script>
 </body>
