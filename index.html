@@ -1729,7 +1729,6 @@ closeLightbox.addEventListener('click', closeGallery);
 
 
 lightbox.addEventListener('click', e => {
-  if (isSwiping) return; // evita doble ejecución
   if (e.target === lightbox) closeGallery();
 });
 
@@ -1737,32 +1736,33 @@ lightbox.addEventListener('click', e => {
 
 
 
-// --- SWIPE CORREGIDO ---
+// --- SWIPE DEFINITIVO ---
 let startX = 0;
-let isSwiping = false;
+let moved = false;
 
 lightbox.addEventListener("touchstart", function(e) {
   startX = e.touches[0].clientX;
-  isSwiping = true;
+  moved = false;
+});
+
+lightbox.addEventListener("touchmove", function(e) {
+  moved = true;
 });
 
 lightbox.addEventListener("touchend", function(e) {
-  if (!isSwiping) return;
+
+  if (!moved) return; // evita tap normal
 
   let endX = e.changedTouches[0].clientX;
   let diff = startX - endX;
 
-  if (Math.abs(diff) > 50) {
-    if (diff > 0) {
-      nextImage();
-    } else {
-      prevImage();
-    }
-  }
+  if (Math.abs(diff) < 50) return;
 
-  setTimeout(() => {
-    isSwiping = false;
-  }, 50);
+  if (diff > 0) {
+    nextImage();
+  } else {
+    prevImage();
+  }
 });
 
 
