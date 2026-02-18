@@ -1642,17 +1642,30 @@ function prevImage() {
   currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
   animateImageChange();
 }
+   
+let isAnimating = false;
 
 function animateImageChange() {
+
+  if (isAnimating) return;
+  isAnimating = true;
+
   lightboxImg.style.transform = "scale(.92)";
   lightboxImg.style.opacity = "0";
 
   setTimeout(() => {
     updateLightbox();
+
     lightboxImg.style.transform = "scale(1)";
     lightboxImg.style.opacity = "1";
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 120);
+
   }, 120);
 }
+
 
 
 function openLightbox() {
@@ -1682,6 +1695,7 @@ t.addEventListener('click', () => {
   currentIndex = i;
   animateImageChange();
 });
+
 
     thumbs.appendChild(t);
   });
