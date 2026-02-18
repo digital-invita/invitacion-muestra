@@ -2016,7 +2016,7 @@ pero te deseo un día maravilloso y lleno de felicidad 💐`;
 
   }
 
-  const phone = "525550591264";
+  const phone = window.telefonoConfirmacion || "525550591264";
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
   window.open(url, "_blank");
@@ -2088,6 +2088,55 @@ function revealSections() {
 
 window.addEventListener("scroll", revealSections);
 revealSections();
+
+<script src="config-default.js"></script>
+
+<script>
+function cargarConfig() {
+
+  const guardado = localStorage.getItem("invitacionConfig");
+
+  const CONFIG = guardado 
+    ? JSON.parse(guardado)
+    : DEFAULT_CONFIG;
+
+  // Nombre
+  const nombreEl = document.getElementById("nombre");
+  if (nombreEl) nombreEl.textContent = CONFIG.nombre;
+
+  // Fecha
+  const fechaEl = document.getElementById("fecha");
+  if (fechaEl) fechaEl.textContent = CONFIG.fecha;
+
+  // Color principal
+  if (CONFIG.colorPrincipal) {
+  const gradient = `linear-gradient(135deg, ${CONFIG.colorPrincipal}, #000000)`;
+  document.documentElement.style
+    .setProperty('--bg-color', gradient);
+}
+  // Teléfono
+  window.telefonoConfirmacion = CONFIG.telefono;
+
+  // Música
+  const audio = document.getElementById("audio");
+  if (audio && CONFIG.musica) {
+    audio.src = CONFIG.musica;
+  }
+
+  // Secciones
+  if (!CONFIG.secciones.galeria) {
+    const galeria = document.getElementById("galeriaSection");
+    if (galeria) galeria.style.display = "none";
+  }
+
+  if (!CONFIG.secciones.confirmacion) {
+    const confirm = document.getElementById("confirmacionSection");
+    if (confirm) confirm.style.display = "none";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", cargarConfig);
+</script>
 
 
 </script>
