@@ -1628,10 +1628,12 @@ let currentIndex = 0;
 });
 
    
-   function nextImage() {
+function nextImage() {
+  console.log("NEXT DISPARADO");
   currentIndex = (currentIndex + 1) % galleryImages.length;
   animateImageChange();
 }
+
 
 function prevImage() {
   currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
@@ -1736,34 +1738,37 @@ lightbox.addEventListener('click', e => {
 
 
 
-// --- SWIPE DEFINITIVO ---
+// --- SWIPE DEFINITIVO SIN DOBLE DISPARO ---
 let startX = 0;
-let moved = false;
+let startY = 0;
 
 lightbox.addEventListener("touchstart", function(e) {
   startX = e.touches[0].clientX;
-  moved = false;
-});
-
-lightbox.addEventListener("touchmove", function(e) {
-  moved = true;
-});
+  startY = e.touches[0].clientY;
+}, { passive: true });
 
 lightbox.addEventListener("touchend", function(e) {
 
-  if (!moved) return; // evita tap normal
-
   let endX = e.changedTouches[0].clientX;
-  let diff = startX - endX;
+  let endY = e.changedTouches[0].clientY;
 
-  if (Math.abs(diff) < 50) return;
+  let diffX = startX - endX;
+  let diffY = startY - endY;
 
-  if (diff > 0) {
-    nextImage();
-  } else {
-    prevImage();
+  // Solo permitir swipe horizontal real
+  if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
+
+    e.preventDefault(); // bloquea el click fantasma
+
+    if (diffX > 0) {
+      nextImage();
+    } else {
+      prevImage();
+    }
   }
-});
+
+}, { passive: false });
+
 
 
 
