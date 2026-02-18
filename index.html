@@ -1323,9 +1323,6 @@ body.locked {
   overflow: hidden;
 }
 </style>
- 
-  <script src="config-default.js"></script>
-
 </head>
 
 <body class="locked">
@@ -1344,63 +1341,53 @@ body.locked {
 
 </div>
 
-<audio id="musicaFondo" autoplay loop>
+<audio id="audio" loop preload="auto">
   <source src="cancio.mp3.mp3" type="audio/mpeg">
 </audio>
 
 
 
-
-
-<section id="hero" class="hero">
-  <img id="imgPortada">
-
+<section class="hero">
+  <img src="FPrincipal.jpg">
   <div class="hero-content">
     <div class="mis15">Mis 15 años</div>
+    <div class="nombre" id="nombre" data-text="Sofía Montes">Sofía Montes</div>
 
-    
-<div class="nombre" id="nombre"></div>
 <div class="fecha-evento" id="fechaEvento"></div>
 
-
   </div>
 </section>
 
 <div class="sep"></div>
 
-<section id="historia" class="section">
+<section class="section">
   <h2>Mi historia</h2>
-
-  <p id="historia1"></p>
-
-  <div class="photo">
-    <img src="FHistoria.jpg">
-  </div>
-
-  <p id="historia2"></p>
+  <p>Hoy celebro no solo mis 15 años, sino cada sonrisa que iluminó mi camino, cada aprendizaje que fortaleció mi corazón y cada sueño que, con amor y esperanza, me ha traído hasta este momento tan especial de mi vida.</p>
+  <div class="photo"><img src="FHistoria.jpg"></div>
+  <p>Aquí termina un capítulo lleno de recuerdos que atesoraré por siempre… y comienza uno nuevo, donde la ilusión, la luz y los sueños por cumplir marcan el inicio de todo lo que está por venir.</p>
 </section>
-
-
 
 <div class="sep"></div>
 
-<section id="padres" class="section">
+<section class="section">
   <h2>Mis papás</h2>
-  <p id="padresTexto" style="font-family:'Great Vibes',cursive;font-size:2.2rem;"></p>
-
+  <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">
+    María González<br>&<br>Carlos Montes
+  </p>
 </section>
 
 <div class="sep"></div>
 
-<section id="padrinos" class="section">
+<section class="section">
   <h2>Mis padrinos</h2>
- <p id="padrinosTexto" style="font-family:'Great Vibes',cursive;font-size:2.2rem;"></p>
-
+  <p style="font-family:'Great Vibes',cursive;font-size:2.2rem;">
+    Laura Pérez<br>&<br>José Hernández
+  </p>
 </section>
 
 <div class="sep"></div>
 
-<section id="ceremonia" class="section">
+<section class="section">
   <h2>Ceremonia</h2>
   <p>18:00 hrs</p>
   <p>Parroquia Ejemplo</p>
@@ -1414,7 +1401,7 @@ body.locked {
 
 
   
-<section id="recepcion" class="section">
+<section class="section">
   <h2>Recepción</h2>
   <p>20:00 hrs</p>
   <p>Salón Ejemplo</p>
@@ -1427,13 +1414,13 @@ body.locked {
 <div class="sep"></div>
 
   
-<section id="countdown-section" class="section">
+<section class="section" id="countdown-section">
   <h2>Faltan pocos días para este gran día</h2>
   <div id="countdown"></div>
 </section>
 <div class="sep"></div>
   
-<section id="galeria" class="section">
+<section class="section">
   <h2>Galería</h2>
   <div class="gallery">
     <img src="G1.jpg">
@@ -1445,23 +1432,20 @@ body.locked {
   </div>
 </section>
 
-
-
 <div class="sep"></div>
 
 
-  <section id="vestimenta" class="section">
+  <section class="section">
   <h2>Código de vestimenta</h2>
   <p>Divinas y guapos</p>
 
   <div class="dresscode-img">
-   <img id="vestimentaImg" alt="Código de vestimenta">
-
+    <img src="vestimenta.png" alt="Código de vestimenta">
   </div>
 </section>
 <div class="sep"></div>
   
-<section id="confirmacion" class="section">
+<section class="section">
   <h2>Confirma tu presencia</h2>
 
   <div class="rsvp-card">
@@ -1495,7 +1479,7 @@ body.locked {
 <div class="sep"></div>
   
   
-<section id="Regalos" class="section">
+<section class="section">
   <h2>Mesa de regalos</h2>
   <p>Liverpool – Evento #123456</p>
   <p>Transferencia: 1234 5678 9012</p>
@@ -1507,7 +1491,7 @@ body.locked {
 
 
 
-<section id="agenda" class="section">
+<section class="section">
   <h2>Agenda este momento</h2>
 
   <a class="btn" href="#" onclick="addToCalendar()">Agregar al calendario</a>
@@ -2107,155 +2091,5 @@ revealSections();
 
 
 </script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  // NOMBRE
-  const nombreEl = document.getElementById("nombre");
-  if (nombreEl && CONFIG.nombre) {
-    nombreEl.textContent = CONFIG.nombre;
-    nombreEl.setAttribute("data-text", CONFIG.nombre);
-  }
-
-  // FECHA
-  const fechaEl = document.getElementById("fechaEvento");
-  if (fechaEl && CONFIG.fecha) {
-    fechaEl.textContent = CONFIG.fecha;
-  }
-
-  // PORTADA
-  const portadaImg = document.getElementById("imgPortada");
-  if (portadaImg && CONFIG.portada) {
-    portadaImg.src = CONFIG.portada;
-  }
-
-  // MUSICA
-  const audio = document.getElementById("audio");
-  if (audio && CONFIG.musica) {
-    audio.src = CONFIG.musica;
-  }
-
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  if (!window.CONFIG) return;
-
-  // ======================
-  // HERO
-  // ======================
-  const nombre = document.getElementById("nombre");
-  const fecha = document.getElementById("fechaEvento");
-  const portada = document.getElementById("imgPortada");
-
-  if (nombre && CONFIG.nombre)
-    nombre.innerHTML = CONFIG.nombre;
-
-  if (fecha && CONFIG.fecha)
-    fecha.innerHTML = CONFIG.fecha;
-
-  if (portada && CONFIG.portada)
-    portada.src = CONFIG.portada;
-
-
-  // ======================
-  // HISTORIA
-  // ======================
-  const h1 = document.getElementById("historia1");
-  const h2 = document.getElementById("historia2");
-  const fotoHistoria = document.getElementById("fotoHistoria");
-
-  if (h1 && CONFIG.textos?.historia1)
-    h1.innerHTML = CONFIG.textos.historia1;
-
-  if (h2 && CONFIG.textos?.historia2)
-    h2.innerHTML = CONFIG.textos.historia2;
-
-  if (fotoHistoria && CONFIG.fotoHistoria)
-    fotoHistoria.src = CONFIG.fotoHistoria;
-
-
-  // ======================
-  // PADRES / PADRINOS
-  // ======================
-  const padres = document.getElementById("padresTexto");
-  const padrinos = document.getElementById("padrinosTexto");
-
-  if (padres && CONFIG.textos?.padres)
-    padres.innerHTML = CONFIG.textos.padres;
-
-  if (padrinos && CONFIG.textos?.padrinos)
-    padrinos.innerHTML = CONFIG.textos.padrinos;
-
-
-  // ======================
-  // VESTIMENTA
-  // ======================
-  const vestimenta = document.getElementById("vestimentaImg");
-
-  if (vestimenta && CONFIG.vestimentaImg)
-    vestimenta.src = CONFIG.vestimentaImg;
-
-
-  // ======================
-  // MUSICA
-  // ======================
-  const musica = document.getElementById("musicaFondo");
-
-  if (musica && CONFIG.musica)
-    musica.src = CONFIG.musica;
-
-
-  // ======================
-  // TELEFONO CONFIRMACION
-  // ======================
-  const btnConfirmar = document.getElementById("btnConfirmar");
-
-  if (btnConfirmar && CONFIG.telefono) {
-    btnConfirmar.href = `https://wa.me/${CONFIG.telefono}`;
-  }
-
-
-  // ======================
-  // COLORES FONDO
-  // ======================
-  if (CONFIG.colores) {
-
-    const root = document.documentElement;
-
-    if (CONFIG.colores.tipo === "solido") {
-      root.style.setProperty("--bg-color", CONFIG.colores.color1);
-      root.style.setProperty("--bg-grad", CONFIG.colores.color1);
-    }
-
-    if (CONFIG.colores.tipo === "degradado") {
-      const grad = `linear-gradient(135deg, ${CONFIG.colores.color1}, ${CONFIG.colores.color2})`;
-      root.style.setProperty("--bg-grad", grad);
-    }
-  }
-
-
-  // ======================
-  // CONTROL SECCIONES
-  // ======================
-  if (CONFIG.secciones) {
-
-    Object.keys(CONFIG.secciones).forEach(id => {
-      const seccion = document.getElementById(id);
-
-      if (seccion) {
-        seccion.style.display = CONFIG.secciones[id] ? "" : "none";
-      }
-    });
-  }
-
-});
-</script>
-
-
-  
 </body>
 </html>
