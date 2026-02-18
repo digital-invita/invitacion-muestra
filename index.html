@@ -1325,8 +1325,6 @@ body.locked {
 </style>
 </head>
 
-<body class="locked">
-
 <canvas id="particles"></canvas>
 
 <div id="overlay">
@@ -1583,6 +1581,9 @@ function resize() {
 
 window.addEventListener('resize', resize);
 resize();
+
+animate();
+
 // 🔑 Frame inicial para Android
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -2096,6 +2097,25 @@ openBtn.addEventListener("click", () => {
   }
 
 });
+
+// Animación de secciones al hacer scroll
+const sections = document.querySelectorAll(".section");
+
+function revealSections() {
+  const trigger = window.innerHeight * 0.85;
+
+  sections.forEach(section => {
+    const top = section.getBoundingClientRect().top;
+
+    if (top < trigger) {
+      section.classList.add("show");
+    }
+  });
+}
+
+window.addEventListener("scroll", revealSections);
+revealSections();
+
 
 </script>
 </body>
