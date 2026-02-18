@@ -1615,6 +1615,8 @@ const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const thumbs = document.getElementById('thumbs');
 const galleryImages = document.querySelectorAll('.gallery img');
+const closeLightbox = document.getElementById('closeLightbox');
+
 
 let currentIndex = 0;
 
@@ -1647,11 +1649,6 @@ function openLightbox() {
   document.body.style.overflow = 'hidden';
 }
 
-// Cerrar lightbox
-document.getElementById('closeLightbox').addEventListener('click', () => {
-  lightbox.classList.remove('show');
-  document.body.style.overflow = '';
-});
 
 // Actualizar imagen grande
 function updateLightbox() {
