@@ -1335,7 +1335,7 @@ body.locked {
 </style>
 </head>
 
-<body>
+<body class="locked">
 
 <canvas id="particles"></canvas>
 
@@ -2036,6 +2036,27 @@ document.addEventListener("DOMContentLoaded", function() {
   const audio = document.getElementById("audio");
   const nombre = document.getElementById("nombre");
   const musicBtn = document.getElementById("musicBtn");
+
+// ===== ABRIR INVITACIÓN =====
+openBtn.addEventListener("click", () => {
+
+  overlay.style.opacity = "0";
+
+  setTimeout(() => {
+    overlay.style.display = "none";
+    document.body.classList.remove("locked");
+  }, 800);
+
+  // Mostrar botón música
+  musicBtn.classList.add("show");
+
+  // Reproducir música
+  audio.play().catch(() => {});
+
+  // Animar nombre
+  nombre.classList.add("show");
+
+});
 
   /* ===== BOTÓN PAUSA / CONTINUAR ===== */
   musicBtn.addEventListener("click", () => {
