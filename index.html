@@ -2027,29 +2027,30 @@ pero te deseo un día maravilloso y lleno de felicidad 💐`;
 
 </script>
 
-  <script>
-const openBtn = document.getElementById("openBtn");
-const overlay = document.getElementById("overlay");
-const audio = document.getElementById("audio");
-const nombre = document.getElementById("nombre");
-const musicBtn = document.getElementById("musicBtn");
+<script>
 
+document.addEventListener("DOMContentLoaded", function() {
 
+  const openBtn = document.getElementById("openBtn");
+  const overlay = document.getElementById("overlay");
+  const audio = document.getElementById("audio");
+  const nombre = document.getElementById("nombre");
+  const musicBtn = document.getElementById("musicBtn");
 
-/* ===== BOTÓN PAUSA / CONTINUAR ===== */
-musicBtn.addEventListener("click", () => {
+  /* ===== BOTÓN PAUSA / CONTINUAR ===== */
+  musicBtn.addEventListener("click", () => {
 
-  if (audio.paused) {
-    audio.play();
-    musicBtn.classList.remove("play"); // muestra pausa
-  } else {
-    audio.pause();
-    musicBtn.classList.add("play"); // muestra play
-  }
+    if (audio.paused) {
+      audio.play();
+      musicBtn.classList.remove("play");
+    } else {
+      audio.pause();
+      musicBtn.classList.add("play");
+    }
 
-});
+  });
 
-    document.addEventListener("DOMContentLoaded", function() {
+  /* ===== SWIPE GALERÍA ===== */
 
   let startX = 0;
   let endX = 0;
@@ -2084,29 +2085,7 @@ musicBtn.addEventListener("click", () => {
   }
 
 });
-<script>
-const openBtn = document.getElementById("openBtn");
-const overlay = document.getElementById("overlay");
 
-openBtn.addEventListener("click", () => {
-
-  // animación de salida
-  overlay.style.opacity = "0";
-  overlay.style.pointerEvents = "none";
-
-  // liberar scroll
-  document.body.style.overflow = "auto";
-
-  // eliminar overlay después de animación
-  setTimeout(() => {
-    overlay.style.display = "none";
-  }, 800);
-
-});
-</script>
-
-<body class="locked">
-    
 </script>
 </body>
 </html>
