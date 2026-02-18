@@ -2111,57 +2111,29 @@ const openBtn = document.getElementById('openBtn');
 const audio = document.getElementById('audio');
 const nombre = document.getElementById('nombre');
 const sections = document.querySelectorAll('.section');
+const toTopBtn = document.getElementById('toTopBtn');
+const musicBtn = document.getElementById('musicBtn');
 
 openBtn.addEventListener('click', () => {
-  // Oculta overlay
-  overlay.style.opacity = 0;
-  overlay.style.pointerEvents = 'none';
-  
-  // Reproduce audio
-  if (audio) {
-    audio.play().catch(e => console.log("Autoplay bloqueado, toca play manualmente"));
-  }
-
-  // Muestra nombre con animación
-  if (nombre) nombre.classList.add('show');
-
-  // Muestra secciones con delay
-  sections.forEach((sec, i) => {
-    setTimeout(() => sec.classList.add('show'), i * 300);
-  });
-
-  // Mostrar botones fijos
-  document.getElementById('toTopBtn').classList.add('show');
-  document.getElementById('musicBtn').classList.add('show');
-});
-
-// BOTÓN ABRIR INVITACIÓN
-const overlay = document.getElementById('overlay');
-const openBtn = document.getElementById('openBtn');
-const audio = document.getElementById('audio');
-const nombre = document.getElementById('nombre');
-const sections = document.querySelectorAll('.section');
-
-openBtn.addEventListener('click', () => {
-  // Oculta overlay con transición
+  // Ocultar overlay con transición suave
   overlay.style.opacity = '0';
   overlay.style.pointerEvents = 'none';
   setTimeout(() => overlay.style.display = 'none', 800);
 
   // Reproducir música
-  audio.play().catch(() => console.log("Autoplay bloqueado"));
+  if (audio) audio.play().catch(() => console.log("Autoplay bloqueado"));
 
   // Animar nombre
-  nombre.classList.add('show');
+  if (nombre) nombre.classList.add('show');
 
   // Mostrar secciones progresivamente
   sections.forEach((sec, i) => {
     setTimeout(() => sec.classList.add('show'), 400 + i * 300);
   });
 
-  // Activar botón música
-  const musicBtn = document.getElementById('musicBtn');
-  musicBtn.classList.add('show');
+  // Mostrar botones fijos
+  if (toTopBtn) toTopBtn.classList.add('show');
+  if (musicBtn) musicBtn.classList.add('show');
 });
 
     
