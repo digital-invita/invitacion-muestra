@@ -1323,6 +1323,9 @@ body.locked {
   overflow: hidden;
 }
 </style>
+ 
+  <script src="config-default.js"></script>
+
 </head>
 
 <body class="locked">
@@ -1341,17 +1344,17 @@ body.locked {
 
 </div>
 
-<audio id="audio" loop preload="auto">
-  <source src="cancio.mp3.mp3" type="audio/mpeg">
-</audio>
+<audio id="audio" loop preload="auto"></audio>
+
 
 
 
 <section class="hero">
-  <img src="FPrincipal.jpg">
+  <img id="imgPortada">
+
   <div class="hero-content">
     <div class="mis15">Mis 15 años</div>
-    <div class="nombre" id="nombre" data-text="Sofía Montes">Sofía Montes</div>
+<div class="nombre" id="nombre"></div>
 
 <div class="fecha-evento" id="fechaEvento"></div>
 
@@ -2091,5 +2094,38 @@ revealSections();
 
 
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // NOMBRE
+  const nombreEl = document.getElementById("nombre");
+  if (nombreEl && CONFIG.nombre) {
+    nombreEl.textContent = CONFIG.nombre;
+    nombreEl.setAttribute("data-text", CONFIG.nombre);
+  }
+
+  // FECHA
+  const fechaEl = document.getElementById("fechaEvento");
+  if (fechaEl && CONFIG.fecha) {
+    fechaEl.textContent = CONFIG.fecha;
+  }
+
+  // PORTADA
+  const portadaImg = document.getElementById("imgPortada");
+  if (portadaImg && CONFIG.portada) {
+    portadaImg.src = CONFIG.portada;
+  }
+
+  // MUSICA
+  const audio = document.getElementById("audio");
+  if (audio && CONFIG.musica) {
+    audio.src = CONFIG.musica;
+  }
+
+});
+</script>
+
+  
 </body>
 </html>
