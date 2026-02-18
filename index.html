@@ -1614,7 +1614,7 @@ const toTopBtn = document.getElementById('toTopBtn');
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const thumbs = document.getElementById('thumbs');
-const galleryImages = document.querySelectorAll('.gallery img');
+const galleryImages = Array.from(document.querySelectorAll('.gallery img'));
 const closeLightbox = document.getElementById('closeLightbox');
 
 
