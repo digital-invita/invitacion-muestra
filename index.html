@@ -2127,6 +2127,75 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  if (!window.CONFIG) return;
+
+  // HERO
+  const nombre = document.getElementById("nombre");
+  const fecha = document.getElementById("fechaEvento");
+  const portada = document.getElementById("imgPortada");
+
+  if (nombre && CONFIG.nombre)
+    nombre.innerHTML = CONFIG.nombre;
+
+  if (fecha && CONFIG.fecha)
+    fecha.innerHTML = CONFIG.fecha;
+
+  if (portada && CONFIG.portada)
+    portada.src = CONFIG.portada;
+
+  // HISTORIA
+  const h1 = document.getElementById("historia1");
+  const h2 = document.getElementById("historia2");
+  const fotoHistoria = document.getElementById("fotoHistoria");
+
+  if (h1 && CONFIG.textos?.historia1)
+    h1.innerHTML = CONFIG.textos.historia1;
+
+  if (h2 && CONFIG.textos?.historia2)
+    h2.innerHTML = CONFIG.textos.historia2;
+
+  if (fotoHistoria && CONFIG.fotoHistoria)
+    fotoHistoria.src = CONFIG.fotoHistoria;
+
+  // PADRES / PADRINOS
+  const padres = document.getElementById("padres");
+  const padrinos = document.getElementById("padrinos");
+
+  if (padres && CONFIG.textos?.padres)
+    padres.innerHTML = CONFIG.textos.padres;
+
+  if (padrinos && CONFIG.textos?.padrinos)
+    padrinos.innerHTML = CONFIG.textos.padrinos;
+
+  // GALERIA
+  const galeria = document.getElementById("galeriaImgs");
+
+  if (galeria && CONFIG.galeria) {
+    galeria.innerHTML = "";
+
+    CONFIG.galeria.forEach((src, i) => {
+      const img = document.createElement("img");
+      img.src = src;
+
+      if (i === 2 || i === 3)
+        img.classList.add("big");
+
+      galeria.appendChild(img);
+    });
+  }
+
+  // VESTIMENTA
+  const vestimenta = document.getElementById("vestimentaImg");
+
+  if (vestimenta && CONFIG.vestimentaImg)
+    vestimenta.src = CONFIG.vestimentaImg;
+
+});
+</script>
+
   
 </body>
 </html>
