@@ -1616,16 +1616,14 @@ const overlay = document.getElementById('overlay');
 
 btn.addEventListener('click', () => {
 
-  overlay.style.opacity = "0";
-  overlay.style.pointerEvents = "none";
+  overlay.remove(); // 👈 elimina completamente el overlay
 
-  setTimeout(() => {
-    overlay.style.display = "none";
-  }, 800);
+  document.body.style.overflow = 'auto'; // 👈 asegura que haya scroll
 
   document.getElementById('audio').play();
   animate();
 });
+
 
 
    
