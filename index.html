@@ -2041,9 +2041,7 @@ openBtn.addEventListener("click", () => {
 
   /* 🔓 activar scroll */
   document.body.style.overflow = "auto";
-  document.documentElement.style.overflow = "auto"; // 👈 AGREGA ESTA
-});
-
+  document.documentElement.style.overflow = "auto";
 
   /* ▶ iniciar partículas */
   resize();
@@ -2058,7 +2056,9 @@ openBtn.addEventListener("click", () => {
 
   /* mostrar contenido */
   nombre.classList.add("show");
-  document.querySelectorAll('.section').forEach(sec => sec.classList.add('show'));
+  document.querySelectorAll('.section').forEach(sec => 
+    sec.classList.add('show')
+  );
 
 });
 
