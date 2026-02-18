@@ -1612,6 +1612,23 @@ let animationStarted = false;
 
 // INTERFAZ Y BOTÓN TO TOP (Punto 4)
 const btn = document.getElementById('openBtn');
+const overlay = document.getElementById('overlay');
+
+btn.addEventListener('click', () => {
+
+  overlay.style.opacity = "0";
+  overlay.style.pointerEvents = "none";
+
+  setTimeout(() => {
+    overlay.style.display = "none";
+  }, 800);
+
+  document.getElementById('audio').play();
+  animate();
+});
+
+
+   
 const toTopBtn = document.getElementById('toTopBtn');
 
 // LIGHTBOX
