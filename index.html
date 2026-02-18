@@ -2086,8 +2086,10 @@ function revealSections() {
   });
 }
 
+<script>
 window.addEventListener("scroll", revealSections);
 revealSections();
+</script>
 
 <script src="config-default.js"></script>
 
@@ -2110,10 +2112,11 @@ function cargarConfig() {
 
   // Color principal
   if (CONFIG.colorPrincipal) {
-  const gradient = `linear-gradient(135deg, ${CONFIG.colorPrincipal}, #000000)`;
-  document.documentElement.style
-    .setProperty('--bg-color', gradient);
-}
+    const gradient = `linear-gradient(135deg, ${CONFIG.colorPrincipal}, #000000)`;
+    document.documentElement.style
+      .setProperty('--bg-color', gradient);
+  }
+
   // Teléfono
   window.telefonoConfirmacion = CONFIG.telefono;
 
@@ -2123,13 +2126,13 @@ function cargarConfig() {
     audio.src = CONFIG.musica;
   }
 
-  // Secciones
-  if (!CONFIG.secciones.galeria) {
+  // Secciones (con protección segura)
+  if (CONFIG.secciones && !CONFIG.secciones.galeria) {
     const galeria = document.getElementById("galeriaSection");
     if (galeria) galeria.style.display = "none";
   }
 
-  if (!CONFIG.secciones.confirmacion) {
+  if (CONFIG.secciones && !CONFIG.secciones.confirmacion) {
     const confirm = document.getElementById("confirmacionSection");
     if (confirm) confirm.style.display = "none";
   }
