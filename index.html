@@ -1382,7 +1382,7 @@ body.locked {
 
 <section id="padres" class="section">
   <h2>Mis papás</h2>
-  <p id="padres" style="font-family:'Great Vibes',cursive;font-size:2.2rem;"></p>
+  <p id="padresTexto" style="font-family:'Great Vibes',cursive;font-size:2.2rem;"></p>
 
 </section>
 
@@ -1390,7 +1390,7 @@ body.locked {
 
 <section id="padrinos" class="section">
   <h2>Mis padrinos</h2>
- <p id="padrinos" style="font-family:'Great Vibes',cursive;font-size:2.2rem;"></p>
+ <p id="padrinosTexto" style="font-family:'Great Vibes',cursive;font-size:2.2rem;"></p>
 
 </section>
 
@@ -1431,8 +1431,16 @@ body.locked {
   
 <section id="galeria" class="section">
   <h2>Galería</h2>
-  <div class="gallery" id="galeriaImgs"></div>
+  <div class="gallery">
+    <img src="G1.jpg">
+    <img src="G2.jpg">
+    <img class="big" src="G3.jpg">
+    <img class="big" src="G4.jpg">
+    <img src="G5.jpg">
+    <img src="G6.jpg">
+  </div>
 </section>
+
 
 
 <div class="sep"></div>
@@ -2161,8 +2169,9 @@ document.addEventListener("DOMContentLoaded", () => {
     fotoHistoria.src = CONFIG.fotoHistoria;
 
   // PADRES / PADRINOS
-  const padres = document.getElementById("padres");
-  const padrinos = document.getElementById("padrinos");
+const padres = document.getElementById("padresTexto");
+const padrinos = document.getElementById("padrinosTexto");
+
 
   if (padres && CONFIG.textos?.padres)
     padres.innerHTML = CONFIG.textos.padres;
