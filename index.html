@@ -1344,7 +1344,10 @@ body.locked {
 
 </div>
 
-<audio id="audio" loop preload="auto"></audio>
+<audio id="musicaFondo" autoplay loop>
+  <source src="cancio.mp3.mp3" type="audio/mpeg">
+</audio>
+
 
 
 
@@ -1371,11 +1374,12 @@ body.locked {
   <p id="historia1"></p>
 
   <div class="photo">
-    <img id="FHistoria.jpg">
+    <img src="FHistoria.jpg">
   </div>
 
   <p id="historia2"></p>
 </section>
+
 
 
 <div class="sep"></div>
@@ -2135,12 +2139,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-  <script>
+<script>
 document.addEventListener("DOMContentLoaded", () => {
 
   if (!window.CONFIG) return;
 
+  // ======================
   // HERO
+  // ======================
   const nombre = document.getElementById("nombre");
   const fecha = document.getElementById("fechaEvento");
   const portada = document.getElementById("imgPortada");
@@ -2154,7 +2160,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (portada && CONFIG.portada)
     portada.src = CONFIG.portada;
 
+
+  // ======================
   // HISTORIA
+  // ======================
   const h1 = document.getElementById("historia1");
   const h2 = document.getElementById("historia2");
   const fotoHistoria = document.getElementById("fotoHistoria");
@@ -2168,10 +2177,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (fotoHistoria && CONFIG.fotoHistoria)
     fotoHistoria.src = CONFIG.fotoHistoria;
 
-  // PADRES / PADRINOS
-const padres = document.getElementById("padresTexto");
-const padrinos = document.getElementById("padrinosTexto");
 
+  // ======================
+  // PADRES / PADRINOS
+  // ======================
+  const padres = document.getElementById("padresTexto");
+  const padrinos = document.getElementById("padrinosTexto");
 
   if (padres && CONFIG.textos?.padres)
     padres.innerHTML = CONFIG.textos.padres;
@@ -2179,31 +2190,71 @@ const padrinos = document.getElementById("padrinosTexto");
   if (padrinos && CONFIG.textos?.padrinos)
     padrinos.innerHTML = CONFIG.textos.padrinos;
 
-  // GALERIA
-  const galeria = document.getElementById("galeriaImgs");
 
-  if (galeria && CONFIG.galeria) {
-    galeria.innerHTML = "";
-
-    CONFIG.galeria.forEach((src, i) => {
-      const img = document.createElement("img");
-      img.src = src;
-
-      if (i === 2 || i === 3)
-        img.classList.add("big");
-
-      galeria.appendChild(img);
-    });
-  }
-
+  // ======================
   // VESTIMENTA
+  // ======================
   const vestimenta = document.getElementById("vestimentaImg");
 
   if (vestimenta && CONFIG.vestimentaImg)
     vestimenta.src = CONFIG.vestimentaImg;
 
+
+  // ======================
+  // MUSICA
+  // ======================
+  const musica = document.getElementById("musicaFondo");
+
+  if (musica && CONFIG.musica)
+    musica.src = CONFIG.musica;
+
+
+  // ======================
+  // TELEFONO CONFIRMACION
+  // ======================
+  const btnConfirmar = document.getElementById("btnConfirmar");
+
+  if (btnConfirmar && CONFIG.telefono) {
+    btnConfirmar.href = `https://wa.me/${CONFIG.telefono}`;
+  }
+
+
+  // ======================
+  // COLORES FONDO
+  // ======================
+  if (CONFIG.colores) {
+
+    const root = document.documentElement;
+
+    if (CONFIG.colores.tipo === "solido") {
+      root.style.setProperty("--bg-color", CONFIG.colores.color1);
+      root.style.setProperty("--bg-grad", CONFIG.colores.color1);
+    }
+
+    if (CONFIG.colores.tipo === "degradado") {
+      const grad = `linear-gradient(135deg, ${CONFIG.colores.color1}, ${CONFIG.colores.color2})`;
+      root.style.setProperty("--bg-grad", grad);
+    }
+  }
+
+
+  // ======================
+  // CONTROL SECCIONES
+  // ======================
+  if (CONFIG.secciones) {
+
+    Object.keys(CONFIG.secciones).forEach(id => {
+      const seccion = document.getElementById(id);
+
+      if (seccion) {
+        seccion.style.display = CONFIG.secciones[id] ? "" : "none";
+      }
+    });
+  }
+
 });
 </script>
+
 
   
 </body>
