@@ -123,72 +123,52 @@ body {
 .nombre {
   position: relative;
   font-family: 'Great Vibes', cursive;
-  font-size: clamp(56px, 8vw, 110px);
-  letter-spacing: 1px;
+  font-size: clamp(62px, 8.5vw, 120px);
+  letter-spacing: .3px;
   display: inline-block;
   z-index: 2;
 
-  /* dorado metálico profundo */
+  /* champagne mate más natural */
   background: linear-gradient(
-    120deg,
-    #fff6d5 0%,
-    #f7d774 25%,
-    #d4a93a 50%,
-    #f7d774 75%,
-    #fff6d5 100%
+    95deg,
+    #faf6e8 0%,
+    #e6c873 45%,
+    #c9a13a 50%,
+    #e6c873 55%,
+    #faf6e8 100%
   );
+
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
+  /* profundidad elegante, no exagerada */
   text-shadow:
-    0 1px 0 #fff2b0,
-    0 2px 0 #e6c25a,
-    0 8px 22px rgba(0,0,0,.45);
+    0 1px 2px rgba(0,0,0,.15),
+    0 6px 18px rgba(0,0,0,.22);
 
   opacity: 0;
-  transform: translateY(80px) scale(.75);
-  filter: blur(14px);
+  transform: translateY(40px);
+  filter: blur(6px);
 
-  animation: nombreLuxuryReveal 2.6s cubic-bezier(.19,1,.22,1) forwards;
-  animation-delay: .7s;
+  animation: nombreLuxuryReveal 2.2s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay: .5s;
 }
 
 /* REVELADO LUJO */
 @keyframes nombreLuxuryReveal {
-
   0% {
     opacity: 0;
-    transform: translateY(80px) scale(.75);
-    filter: blur(14px);
-    letter-spacing: 8px;
-  }
-
-  45% {
-    opacity: 1;
-    transform: translateY(-10px) scale(1.08);
-    filter: blur(0);
-    letter-spacing: 2px;
-
-    text-shadow:
-      0 0 24px rgba(255,215,160,.9),
-      0 6px 18px rgba(0,0,0,.5);
-  }
-
-  70% {
-    transform: translateY(4px) scale(.98);
+    transform: translateY(50px);
+    filter: blur(8px);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
-    letter-spacing: 1px;
+    transform: translateY(0);
     filter: blur(0);
-
-    text-shadow:
-      0 0 14px rgba(255,215,160,.65),
-      0 4px 14px rgba(0,0,0,.45);
   }
 }
+
 
 /* BRILLO METÁLICO QUE CRUZA */
 .nombre::after {
@@ -220,18 +200,6 @@ body {
   }
 }
 
-/* RESPIRACIÓN ELEGANTE CONTINUA */
-.nombre {
-  animation:
-    nombreLuxuryReveal 2.6s cubic-bezier(.19,1,.22,1) forwards,
-    nombreBreath 6s ease-in-out 3.2s infinite;
-}
-
-@keyframes nombreBreath {
-  0%   { transform: translateY(0) scale(1); }
-  50%  { transform: translateY(-2px) scale(1.015); }
-  100% { transform: translateY(0) scale(1); }
-}
 
 
 
@@ -779,26 +747,14 @@ border-bottom: 7px solid transparent;
   content: "";
   position: absolute;
   inset: 0;
-
   background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.05),
-    rgba(0,0,0,0.15)
+    to top,
+    rgba(0,0,0,.28),
+    transparent 60%
   );
-
   z-index: 1;
 }
 
-
-.hero img {
-  position: relative;
-  z-index: 0;
-}
-
-.hero-content {
-  position: absolute;
-  z-index: 2;
-}
 /* ===== FECHA DE EVENTO ===== */
 .fecha-evento {
   margin-top: 6px;
