@@ -1331,6 +1331,72 @@ border-bottom: 7px solid transparent;
 body.locked {
   overflow: hidden;
 }
+
+/* ================================
+   HERO · MIS XV ESTILO ELEGANTE
+================================ */
+
+/* MIS XV */
+.mis-xv {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  position: relative;
+
+  background: linear-gradient(
+    90deg,
+    #fff6d5,
+    #f7d774,
+    #d4a93a,
+    #fff6d5
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Línea decorativa arriba y abajo */
+.mis-xv::before,
+.mis-xv::after {
+  content: "";
+  display: block;
+  width: 110px;
+  height: 1px;
+  margin: 12px auto;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212,175,55,.9),
+    rgba(255,241,168,1),
+    rgba(212,175,55,.9),
+    transparent
+  );
+  box-shadow: 0 0 12px rgba(212,175,55,.5);
+}
+
+/* FECHA */
+.fecha-xv {
+  margin-top: 14px;
+  font-size: 16px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: .85;
+
+  background: linear-gradient(
+    90deg,
+    #fff6d5,
+    #f7d774,
+    #d4a93a,
+    #fff6d5
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 0 4px 14px rgba(0,0,0,.4);
+}
+
+  
 </style>
 </head>
 
@@ -1359,10 +1425,14 @@ body.locked {
 <section class="hero">
   <img src="FPrincipal.jpg">
   <div class="hero-content">
-    <div class="mis15">Mis 15 años</div>
-    <div class="nombre" id="nombre" data-text="Sofía Montes">Sofía Montes</div>
+<div class="mis-xv">Mis XV</div>
 
-<div class="fecha-evento" id="fechaEvento"></div>
+<div class="nombre" id="nombre" data-text="Sofía">
+  Sofía
+</div>
+
+<div class="fecha-xv" id="fechaEvento"></div>
+
 
   </div>
 </section>
