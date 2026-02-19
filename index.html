@@ -108,8 +108,25 @@ body {
   width: 100%;
   text-align: center;
   padding: 0 20px;
+
+  z-index: 2; 
 }
 
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0,0,0,0) 35%,
+    rgba(0,0,0,0.4) 65%,
+    rgba(0,0,0,0.8) 100%
+  );
+
+  z-index: 1;
+}
 
 .mis15 {
   font-size: 2rem;
@@ -1394,6 +1411,41 @@ body.locked {
   -webkit-text-fill-color: transparent;
 
   text-shadow: 0 4px 14px rgba(0,0,0,.4);
+}
+
+  .hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0,0,0,0) 35%,
+      rgba(0,0,0,0.35) 60%,
+      rgba(0,0,0,0.75) 100%
+    );
+
+  z-index: 1;
+}
+.hero-content::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  width: 650px;
+  height: 450px;
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0,0,0,0.55) 0%,
+    rgba(0,0,0,0.35) 45%,
+    rgba(0,0,0,0) 80%
+  );
+
+  z-index: -1;
 }
 
   
