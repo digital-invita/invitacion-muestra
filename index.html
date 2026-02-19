@@ -1823,49 +1823,29 @@ toTopBtn.addEventListener('click', () => {
 
 
 
-let lastTime = 0;
-let fps = 60;
+   function animate() {
+  ctx.clearRect(0, 0, w, h);
 
-// reducir fps en pantallas pequeñas (móviles)
-if (window.innerWidth < 768) fps = 40;
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
 
-function animate(time = 0) {
+    p.x += p.vx;
+    p.y += p.vy;
 
-  // si la pestaña no está visible → no dibuja
-  if (document.hidden) {
-    requestAnimationFrame(animate);
-    return;
-  }
-
-  const interval = 1000 / fps;
-  const delta = time - lastTime;
-
-  if (delta > interval) {
-    lastTime = time - (delta % interval);
-
-    ctx.clearRect(0, 0, w, h);
-
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i];
-
-      p.x += p.vx;
-      p.y += p.vy;
-
-      if (p.sparkle) {
-        p.sparklePhase += 0.03;
-        p.alpha = p.baseAlpha + Math.sin(p.sparklePhase) * 0.25;
-      } else {
-        p.alpha = p.baseAlpha;
-      }
-
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
-      ctx.fill();
+    if (p.sparkle) {
+      p.sparklePhase += 0.03;
+      p.alpha = p.baseAlpha + Math.sin(p.sparklePhase) * 0.25;
+    } else {
+      p.alpha = p.baseAlpha;
     }
+
+    if (p.x < 0 || p.x > w) p.vx *= -1;
+    if (p.y < 0 || p.y > h) p.vy *= -1;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,215,160,${p.alpha})`;
+    ctx.fill();
   }
 
   requestAnimationFrame(animate);
