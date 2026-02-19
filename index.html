@@ -111,31 +111,7 @@ body {
   z-index: 2;
 }
 
-.hero-content::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
 
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0) 0%,
-    rgba(0,0,0,0.45) 50%,
-    rgba(0,0,0,0) 100%
-  );
-}
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0) 60%,
-    rgba(0,0,0,0.6) 100%
-  );
-}
 
 
 
@@ -1389,18 +1365,20 @@ body.locked {
 .mis-xv::after {
   content: "";
   display: block;
-  width: 110px;
+  width: min(92vw, 700px); /* 👈 casi todo el ancho */
   height: 1px;
-  margin: 12px auto;
+  margin: 18px auto;
+
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(212,175,55,.9),
+    rgba(212,175,55,.95),
     rgba(255,241,168,1),
-    rgba(212,175,55,.9),
+    rgba(212,175,55,.95),
     transparent
   );
-  box-shadow: 0 0 12px rgba(212,175,55,.5);
+
+  box-shadow: 0 0 18px rgba(212,175,55,.7);
 }
 
 /* FECHA */
@@ -1459,6 +1437,30 @@ body.locked {
   z-index: -1;
 }
 
+  .titulo-bloque {
+  position: relative;
+  display: inline-block;
+  padding: 35px 0; /* espacio exacto entre líneas */
+}
+
+/* Degradado EXACTO entre líneas */
+.titulo-bloque::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 35px;     /* 👈 empieza justo debajo de línea superior */
+  bottom: 35px;  /* 👈 termina justo en línea inferior */
+  z-index: -1;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0.55) 50%,
+    rgba(0,0,0,0) 100%
+  );
+}
+
   
 </style>
 </head>
@@ -1487,14 +1489,14 @@ body.locked {
 
 <section class="hero">
   <img src="FPrincipal.jpg">
-  <div class="hero-content">
-<div class="mis-xv">Mis XV</div>
-
-<div class="nombre" id="nombre" data-text="Sofía">
-  Sofía
+  
+ <div class="hero-content">
+  <div class="titulo-bloque">
+    <div class="mis-xv">Mis XV</div>
+    <div class="nombre">Sofía</div>
+    <div class="fecha-xv"></div>
+  </div>
 </div>
-
-<div class="fecha-xv" id="fechaEvento"></div>
 
 
   </div>
