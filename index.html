@@ -120,40 +120,45 @@ body {
    NOMBRE XV · ULTRA PREMIUM
 ================================ */
 
+/* ================================
+   NOMBRE XV · PREMIUM NEGRO + CONTORNO
+================================ */
+
 .nombre {
   position: relative;
   font-family: 'Great Vibes', cursive;
-  font-size: clamp(56px, 8vw, 110px);
+  font-size: clamp(60px, 9vw, 115px);
   letter-spacing: 1px;
   display: inline-block;
+  color: #000;
   z-index: 2;
-
-  /* dorado metálico profundo */
-  background: linear-gradient(
-    120deg,
-    #fff6d5 0%,
-    #f7d774 25%,
-    #d4a93a 50%,
-    #f7d774 75%,
-    #fff6d5 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  text-shadow:
-    0 1px 0 #fff2b0,
-    0 2px 0 #e6c25a,
-    0 8px 22px rgba(0,0,0,.45);
 
   opacity: 0;
   transform: translateY(80px) scale(.75);
   filter: blur(14px);
 
-  animation: nombreLuxuryReveal 2.6s cubic-bezier(.19,1,.22,1) forwards;
-  animation-delay: .7s;
+  animation:
+    nombreLuxuryReveal 2.4s cubic-bezier(.19,1,.22,1) forwards,
+    nombreBreath 6s ease-in-out 3s infinite;
 }
 
-/* REVELADO LUJO */
+/* CONTORNO BLANCO DETRÁS REAL */
+.nombre::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: #fff;
+
+  text-shadow:
+    -2px -2px 0 #fff,
+     2px -2px 0 #fff,
+    -2px  2px 0 #fff,
+     2px  2px 0 #fff,
+     0 0 18px rgba(255,255,255,.8);
+}
+
+/* REVELADO ELEGANTE */
 @keyframes nombreLuxuryReveal {
 
   0% {
@@ -165,13 +170,9 @@ body {
 
   45% {
     opacity: 1;
-    transform: translateY(-10px) scale(1.08);
+    transform: translateY(-10px) scale(1.06);
     filter: blur(0);
     letter-spacing: 2px;
-
-    text-shadow:
-      0 0 24px rgba(255,215,160,.9),
-      0 6px 18px rgba(0,0,0,.5);
   }
 
   70% {
@@ -183,55 +184,16 @@ body {
     transform: translateY(0) scale(1);
     letter-spacing: 1px;
     filter: blur(0);
-
-    text-shadow:
-      0 0 14px rgba(255,215,160,.65),
-      0 4px 14px rgba(0,0,0,.45);
   }
 }
 
-/* BRILLO METÁLICO QUE CRUZA */
-.nombre::after {
-  content: "";
-  position: absolute;
-  inset: -12% -25%;
-  background: linear-gradient(
-    105deg,
-    transparent 46%,
-    rgba(255,255,255,.9) 50%,
-    transparent 54%
-  );
-  transform: translateX(-140%) skewX(-18deg);
-  opacity: 0;
-  mix-blend-mode: screen;
-  pointer-events: none;
-
-  animation: nombreMetalShine 3.8s ease 2.2s forwards;
-}
-
-@keyframes nombreMetalShine {
-  0% {
-    transform: translateX(-140%) skewX(-18deg);
-    opacity: .9;
-  }
-  100% {
-    transform: translateX(140%) skewX(-18deg);
-    opacity: 0;
-  }
-}
-
-/* RESPIRACIÓN ELEGANTE CONTINUA */
-.nombre {
-  animation:
-    nombreLuxuryReveal 2.6s cubic-bezier(.19,1,.22,1) forwards,
-    nombreBreath 6s ease-in-out 3.2s infinite;
-}
-
+/* RESPIRACIÓN PREMIUM SUAVE */
 @keyframes nombreBreath {
   0%   { transform: translateY(0) scale(1); }
-  50%  { transform: translateY(-2px) scale(1.015); }
+  50%  { transform: translateY(-3px) scale(1.02); }
   100% { transform: translateY(0) scale(1); }
 }
+
 
 
 
