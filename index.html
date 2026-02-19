@@ -1322,6 +1322,38 @@ border-bottom: 7px solid transparent;
 body.locked {
   overflow: hidden;
 }
+
+/* ===== MODO RENDIMIENTO AUTOMÁTICO ===== */
+
+.low-power * {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.low-power .section,
+.low-power .util,
+.low-power .count-box,
+.low-power .rsvp-buttons button,
+.low-power #overlay,
+.low-power #lightbox {
+  background: rgba(0,0,0,0.45) !important;
+}
+.low-power * {
+  box-shadow: 0 8px 18px rgba(0,0,0,.35) !important;
+}
+.low-power .nombre {
+  filter: none !important;
+}
+
+.low-power .nombre::after {
+  display: none;
+}
+.low-power * {
+  animation-duration: .6s !important;
+  transition-duration: .2s !important;
+}
+
+  
 </style>
 </head>
 
@@ -1566,17 +1598,34 @@ const ctx = canvas.getContext('2d');
 let w, h;
 let particles = [];
 
+let TOTAL_PARTICLES = 160;
+
+function devicePower() {
+  const cores = navigator.hardwareConcurrency || 4;
+  const memory = navigator.deviceMemory || 4;
+
+  if (cores <= 4 || memory <= 4) return "low";
+  if (cores <= 8) return "mid";
+  return "high";
+}
+
 function resize() {
   w = canvas.width = window.innerWidth;
   h = canvas.height = document.documentElement.clientHeight;
 
-  TOTAL_PARTICLES = w < 768 ? 80 : 160;
+  const power = devicePower();
 
-  particles = [];
+  if (power === "low") TOTAL_PARTICLES = 110;
+  else if (power === "mid") TOTAL_PARTICLES = 150;
+  else TOTAL_PARTICLES = 190;
+
+  particles.length = 0;
+
   for (let i = 0; i < TOTAL_PARTICLES; i++) {
     particles.push(createParticle());
   }
 }
+
 
 
 
@@ -2089,6 +2138,11 @@ function revealSections() {
 window.addEventListener("scroll", revealSections);
 revealSections();
 
+const lowPower =
+  window.innerWidth < 768 ||
+  navigator.hardwareConcurrency <= 4;
+
+document.documentElement.classList.toggle("low-power", lowPower);
 
 </script>
 </body>
