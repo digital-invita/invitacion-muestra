@@ -120,23 +120,28 @@ body {
 .nombre {
   position: relative;
   font-family: 'Great Vibes', cursive;
-  font-size: clamp(60px, 9vw, 115px);
+  font-size: clamp(70px, 9vw, 120px);
   letter-spacing: 1px;
   display: inline-block;
 
-  color: #000;
+  color: #0a0a0a;
 
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.3),
+    0 6px 18px rgba(0,0,0,.45),
+    0 18px 45px rgba(0,0,0,.35);
 
   z-index: 2;
 
   opacity: 0;
-  transform: translateY(80px) scale(.75);
-  filter: blur(14px);
+  transform: translateY(60px) scale(.9);
+  filter: blur(8px);
 
   animation:
-    nombreLuxuryReveal 2.4s cubic-bezier(.19,1,.22,1) forwards,
-    nombreBreath 6s ease-in-out 3s infinite;
+    nombreLuxuryReveal 2.2s cubic-bezier(.19,1,.22,1) forwards,
+    nombreBreath 8s ease-in-out 2.5s infinite;
 }
+
 
 
 /* CONTORNO BLANCO DETRÁS REAL */
