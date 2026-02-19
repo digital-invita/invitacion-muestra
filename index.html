@@ -108,11 +108,7 @@ body {
   width: 100%;
   text-align: center;
   padding: 0 20px;
-  z-index: 2;
 }
-
-
-
 
 
 .mis15 {
@@ -1365,20 +1361,18 @@ body.locked {
 .mis-xv::after {
   content: "";
   display: block;
-  width: min(92vw, 700px); /* 👈 casi todo el ancho */
+  width: 110px;
   height: 1px;
-  margin: 18px auto;
-
+  margin: 12px auto;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(212,175,55,.95),
+    rgba(212,175,55,.9),
     rgba(255,241,168,1),
-    rgba(212,175,55,.95),
+    rgba(212,175,55,.9),
     transparent
   );
-
-  box-shadow: 0 0 18px rgba(212,175,55,.7);
+  box-shadow: 0 0 12px rgba(212,175,55,.5);
 }
 
 /* FECHA */
@@ -1400,65 +1394,6 @@ body.locked {
   -webkit-text-fill-color: transparent;
 
   text-shadow: 0 4px 14px rgba(0,0,0,.4);
-}
-
-  .hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(0,0,0,0) 35%,
-      rgba(0,0,0,0.35) 60%,
-      rgba(0,0,0,0.75) 100%
-    );
-
-  z-index: 1;
-}
-.hero-content::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  
-  width: 650px;
-  height: 450px;
-
-  background: radial-gradient(
-    ellipse at center,
-    rgba(0,0,0,0.55) 0%,
-    rgba(0,0,0,0.35) 45%,
-    rgba(0,0,0,0) 80%
-  );
-
-  z-index: -1;
-}
-
-  .titulo-bloque {
-  position: relative;
-  display: inline-block;
-  padding: 35px 0; /* espacio exacto entre líneas */
-}
-
-/* Degradado EXACTO entre líneas */
-.titulo-bloque::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 35px;     /* 👈 empieza justo debajo de línea superior */
-  bottom: 35px;  /* 👈 termina justo en línea inferior */
-  z-index: -1;
-
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0) 0%,
-    rgba(0,0,0,0.55) 50%,
-    rgba(0,0,0,0) 100%
-  );
 }
 
   
@@ -1489,14 +1424,14 @@ body.locked {
 
 <section class="hero">
   <img src="FPrincipal.jpg">
-  
- <div class="hero-content">
-  <div class="titulo-bloque">
-    <div class="mis-xv">Mis XV</div>
-    <div class="nombre">Sofía</div>
-    <div class="fecha-xv"></div>
-  </div>
+  <div class="hero-content">
+<div class="mis-xv">Mis XV</div>
+
+<div class="nombre" id="nombre" data-text="Sofía">
+  Sofía
 </div>
+
+<div class="fecha-xv" id="fechaEvento"></div>
 
 
   </div>
