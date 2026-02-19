@@ -116,13 +116,6 @@ body {
   letter-spacing: 2px;
   margin-bottom: 4px;
 }
-/* ================================
-   NOMBRE XV · ULTRA PREMIUM
-================================ */
-
-/* ================================
-   NOMBRE XV · PREMIUM NEGRO + CONTORNO
-================================ */
 
 .nombre {
   position: relative;
@@ -130,7 +123,10 @@ body {
   font-size: clamp(60px, 9vw, 115px);
   letter-spacing: 1px;
   display: inline-block;
+
   color: #000;
+
+
   z-index: 2;
 
   opacity: 0;
@@ -142,21 +138,26 @@ body {
     nombreBreath 6s ease-in-out 3s infinite;
 }
 
+
 /* CONTORNO BLANCO DETRÁS REAL */
 .nombre::before {
   content: attr(data-text);
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
   z-index: -1;
   color: #fff;
 
   text-shadow:
-    -2px -2px 0 #fff,
-     2px -2px 0 #fff,
-    -2px  2px 0 #fff,
-     2px  2px 0 #fff,
-     0 0 18px rgba(255,255,255,.8);
+    -1.5px -1.5px 0 #fff,
+     1.5px -1.5px 0 #fff,
+    -1.5px  1.5px 0 #fff,
+     1.5px  1.5px 0 #fff;
 }
+
 
 /* REVELADO ELEGANTE */
 @keyframes nombreLuxuryReveal {
@@ -738,15 +739,16 @@ border-bottom: 7px solid transparent;
 }
 
 /* ===== FECHA DE EVENTO ===== */
-.fecha-evento {
-  margin-top: 6px;
-  font-size: 1.1rem;
-  letter-spacing: 2px;
-  opacity: 0.85;
+.fecha-xv {
+  margin-top: 18px;
+  font-size: 16px;
+  letter-spacing: 8px;
   text-transform: uppercase;
-  text-align: center;
-  text-shadow: 0 2px 10px rgba(0,0,0,.4)
+
+  color: #000;
+  -webkit-text-stroke: 1px #fff;
 }
+
 .footer-section {
   padding-bottom: 90px; /* espacio para que no tape el botón */
 }
@@ -1305,35 +1307,21 @@ body.locked {
 .mis-xv {
   font-family: 'Playfair Display', serif;
   font-size: 22px;
-  letter-spacing: 8px;
+  letter-spacing: 10px; /* un poco más elegante */
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 
   color: #000;
-  -webkit-text-stroke: 1.5px #fff;
+
+  /* Contorno más fino y limpio */
+  -webkit-text-stroke: 1px #fff;
+
+  position: relative;
+  z-index: 2;
 }
 
 
 
-.nombre {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(70px, 10vw, 120px);
-
-  color: #000;
-  -webkit-text-stroke: 2px #fff;
-
-  margin: 10px 0;
-}
-
-.fecha-xv {
-  margin-top: 18px;
-  font-size: 15px;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-
-  color: #000;
-  -webkit-text-stroke: 1.2px #fff;
-}
 
 
   
