@@ -100,73 +100,31 @@ body {
 }
 
 
-.hero-content {
-  position: absolute;
-  bottom: 20%;
-  left: 0;
-  right: 0;
-  width: 100%;
-  text-align: center;
-  padding: 0 20px;
-  
-  z-index: 2;
-  
-}
 
-
-.mis15 {
-  font-size: 2rem;
-  letter-spacing: 2px;
-  margin-bottom: 4px;
-}
 
 .nombre {
-  position: relative;
   font-family: 'Great Vibes', cursive;
-  font-size: clamp(80px, 10vw, 135px);
-  margin: 8px 0 16px;
-  display: inline-block;
+  font-size: clamp(85px, 10vw, 140px);
+  margin: 10px 0 18px;
 
   background: linear-gradient(
     120deg,
-    #fff8e6 0%,
-    #e7c873 35%,
+    #fff9e8 0%,
+    #e9cc7a 30%,
     #c89f2f 50%,
-    #e7c873 65%,
-    #fff8e6 100%
+    #e9cc7a 70%,
+    #fff9e8 100%
   );
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
   text-shadow:
-    0 4px 10px rgba(0,0,0,.45),
-    0 14px 35px rgba(0,0,0,.55);
-
-  opacity: 0;
-  transform: translateY(60px) scale(.92);
-  filter: blur(8px);
-
-  animation:
-    nombreLuxuryReveal 2.2s cubic-bezier(.19,1,.22,1) forwards,
-    nombreBreath 7s ease-in-out 2.6s infinite;
+    0 4px 10px rgba(0,0,0,.25),
+    0 12px 30px rgba(0,0,0,.35);
 }
 
 
-
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,.65) 0%,
-    rgba(0,0,0,.35) 40%,
-    rgba(0,0,0,.15) 70%,
-    transparent 100%
-  );
-  z-index: 1;
-}
 
 /* REVELADO ELEGANTE */
 @keyframes nombreLuxuryReveal {
@@ -482,15 +440,13 @@ backdrop-filter: blur(18px);
 
 .hero-content {
   position: absolute;
-  bottom: 12%;
+  bottom: 16%;
   left: 50%;
   transform: translateX(-50%);
-
   width: 100%;
   text-align: center;
-}
-.hero-content * {
-  text-align: center;
+  padding: 0 20px;
+  z-index: 2;
 }
 
 /* ===== BOTÓN MÚSICA (CLON DE VOLVER ARRIBA) ===== */
@@ -1304,39 +1260,30 @@ body.locked {
   box-shadow: 0 0 12px rgba(212,175,55,.5);
 }
 
-.hero-content {
-  position: absolute;
-  bottom: 14%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  text-align: center;
-}
 
 .mis15,
 .mis-xv {
   font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  letter-spacing: 12px;
+  font-size: 18px;
+  letter-spacing: 10px;
   text-transform: uppercase;
+  margin-bottom: 14px;
 
   background: linear-gradient(
     120deg,
-    #f8efd6,
-    #d9b95f,
-    #f8efd6
+    #fff4d6 0%,
+    #d9b95f 40%,
+    #b9922e 50%,
+    #d9b95f 60%,
+    #fff4d6 100%
   );
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
   text-shadow:
-    0 2px 8px rgba(0,0,0,.4);
+    0 3px 10px rgba(0,0,0,.35);
 }
-
-
-
-
 
 
   
