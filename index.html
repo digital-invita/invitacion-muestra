@@ -1356,36 +1356,23 @@ body.locked {
 .mis-xv {
   font-family: 'Playfair Display', serif;
   font-size: 18px;
-  letter-spacing: 6px;
+  letter-spacing: 8px;
   text-transform: uppercase;
   color: #ffffff;
 
   text-shadow: 0 2px 6px rgba(0,0,0,.35);
-
-  display: inline-block;
-  position: relative;
-  padding: 12px 26px;
 }
 
-/* Líneas decorativas estilo elegante */
+/* Líneas decorativas estilo fino (igual lenguaje que fecha) */
 .mis-xv::before,
 .mis-xv::after {
   content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70px;
+  display: block;
+  width: 70px;              /* más cortas = más elegante */
   height: 1px;
-  background: rgba(212,175,55,0.75); /* dorado suave */
-}
+  margin: 10px auto;        /* menos separación */
 
-/* Posición de cada línea */
-.mis-xv::before {
-  top: 0;
-}
-
-.mis-xv::after {
-  bottom: 0;
+  background: rgba(212,175,55,0.7); /* dorado suave sin brillo fuerte */
 }
 /* FECHA */
 .fecha-xv {
