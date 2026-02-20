@@ -1386,15 +1386,37 @@ body.locked {
 
 /* FECHA */
 .fecha-xv {
-font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  letter-spacing: 8px;
+  display: inline-block;            /* 👈 evita que se estire */
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;                  /* un poco más pequeño */
+  letter-spacing: 6px;              /* menos separación = más fino */
   text-transform: uppercase;
-
   color: #ffffff;
 
-  text-shadow:
-    0 2px 6px rgba(0,0,0,.35);
+  padding: 10px 22px;               /* espacio interno elegante */
+
+  text-shadow: 0 2px 6px rgba(0,0,0,.35);
+
+  position: relative;
+}
+  .fecha-xv::before,
+.fecha-xv::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 55px;                      /* largo de las líneas */
+  height: 1px;
+  background: rgba(255,255,255,0.55);
+}
+
+.fecha-xv::before {
+  right: 100%;
+  margin-right: 14px;
+}
+
+.fecha-xv::after {
+  left: 100%;
+  margin-left: 14px;
 }
 
   
